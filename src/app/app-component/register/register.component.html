@@ -1,0 +1,45 @@
+<div class="fliud-container jumbotron">
+    <h3>Sign Up</h3>
+    <br>
+    <form #registerForm="ngForm">
+      <div class="form-group" >
+        <div class="form-group">
+          <label class="font-weight-bold">Username</label>
+          <input type="text" class="form-control" name="userName" #username="ngModel" [(ngModel)] = "userData.username" maxlength=150 required>
+          <div [hidden]="username.valid || username.pristine" class="alert alert-danger">
+            Name is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="font-weight-bold">First Name</label>
+          <input type="text" class="form-control" name="firstName" #firstname="ngModel" [(ngModel)] = "userData.first_name" >
+        </div>
+
+        <div class="form-group">
+          <label class="font-weight-bold">Last Name</label>
+          <input type="text" class="form-control" name="lastName" #lastname="ngModel" [(ngModel)] = "userData.last_name" >
+        </div>
+
+        <div class="form-group">
+          <label class="font-weight-bold">Email</label>
+          <input type="email" class="form-control" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" 
+                 name="Email" #email="ngModel" [(ngModel)] = "userData.email" required>
+          <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
+            Email is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="font-weight-bold">Password</label>
+          <input type="password" class="form-control" name="Password" #password="ngModel" [(ngModel)] = "userData.password" required>
+          <div [hidden]="password.valid || password.pristine" class="alert alert-danger">
+            Password is required
+          </div>
+        </div>
+
+        <button (click)="signUp()" type="submit" class="btn btn-primary" [disabled]="!registerForm.form.valid">Submit</button>
+        
+      </div>
+    </form>
+</div>

@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+	<!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	
+	
+	
+	<!-- Google Font: Source Sans Pro -->
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+
+    <title>{{title}}</title>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+  <div class="wrapper">
+    <header class="site-header">
+      <nav class="navbar navbar-expand-sm navbar-dark bg-steel fixed-top">
+        <a class="navbar-brand mr-4 ml-4" routerLink="/">piBee</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarToggle">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-item nav-link" routerLink="">Home</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-item nav-link" routerLink="chatapp/">Chat</a>
+                </li>
+
+                <ng-template [ngIf]="isLoggedIn()" [ngIfElse]="loggedOut">
+                    <li class="nav-item active">
+                        <a class="nav-link" routerLink="logout/">Logout</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" routerLink="profile/">Profile</a>
+                    </li>
+                </ng-template>
+
+                <ng-template #loggedOut>
+                    <li class="nav-item active">
+                        <a class="nav-link" routerLink="login/">Login</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" routerLink="register/">Register</a>
+                    </li>
+                </ng-template>
+            </ul>
+            <ul class="navbar-nav ml-auto"> 
+                <li class="nav-item d-none d-sm-inline-block ml-auto">
+                    <!-- SEARCH FORM -->
+                    <form class="form-inline ml-3">
+                        <div class="input-group input-group-sm">
+                            <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                            <div class="input-group-append">
+                                <button class="btn btn-navbar" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </li>
+            </ul>
+        </div>    	
+      </nav>
+    </header>
+
+    <main role="main" class="fluid-container ml-5 mr-5 mt-2 jumbotron" style="color:black">
+      <div class="row ">
+	    <div class="col-md-6">
+            <router-outlet></router-outlet>
+	    </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
+        <div class="content-section">
+            <h3>Our Sidebar</h3>
+            <p class='text-muted'>You can put any information here you'd like.</p>
+            <ul class="list-group">
+            <li href="#" class="list-group-item list-group-item-light">Latest Post</li>
+            <li href="#" class="list-group-item list-group-item-light">etc</li>
+            <li href="#" class="list-group-item list-group-item-light">Calendars</li>
+            <li href="#" class="list-group-item list-group-item-light">etc</li>
+            </ul>
+	    
+	    </div>
+	  </div>
+    </div>
+      
+      <div class="container-fluid text-center footer mt-5">
+	Coded with &hearts; by <a href="https://github.com/amishm766">Ankit Mishra.</a>
+      </div>
+    </main>
+  
+  </div>
+	
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+</html>
+
+
+
