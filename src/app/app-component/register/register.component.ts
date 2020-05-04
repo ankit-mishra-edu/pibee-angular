@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit {
       "last_name" : '' ,
       "email" : '',
       "password" : '',
-      "is_active" : true
+      "is_active" : false
     }
   }
 

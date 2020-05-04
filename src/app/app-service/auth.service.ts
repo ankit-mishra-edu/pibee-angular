@@ -11,7 +11,7 @@ export class AuthService {
   constructor(private _http : HttpClient) { }
 
   Register(user) : Observable<any>{
-    let returnValue = this._http.post('https://amishm766.pythonanywhere.com/api/register/', user);
+    let returnValue = this._http.post('http://127.0.0.1:8000/api/register/', user);
     return(returnValue)
   }
 
@@ -22,7 +22,7 @@ export class AuthService {
         'Authorization': "Token " + localStorage.getItem('Token')
       })
     };
-    let returnValue = this._http.post('https://amishm766.pythonanywhere.com/api/login/', loginData, httpOptions)
+    let returnValue = this._http.post('http://127.0.0.1:8000/api/login/', loginData, httpOptions)
     return(returnValue)
   }
 
@@ -33,7 +33,12 @@ export class AuthService {
         'Authorization': "Token " + localStorage.getItem('Token')
       })
     };
-    let returnValue = this._http.post('https://amishm766.pythonanywhere.com/api/logout/', "", httpOptions)
+    let returnValue = this._http.post('http://127.0.0.1:8000/api/logout/', "", httpOptions)
+    return(returnValue)
+  }
+
+  saveProfile(profileData) : Observable <any>{
+    let returnValue = this._http.post('http://127.0.0.1:8000/api/profile/', profileData)
     return(returnValue)
   }
   

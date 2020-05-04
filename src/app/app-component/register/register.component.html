@@ -1,45 +1,39 @@
-<div class="fliud-container jumbotron">
-    <h3>Sign Up</h3>
-    <br>
-    <form #registerForm="ngForm">
-      <div class="form-group" >
-        <div class="form-group">
-          <label class="font-weight-bold">Username</label>
-          <input type="text" class="form-control" name="userName" #username="ngModel" [(ngModel)] = "userData.username" maxlength=150 required>
-          <div [hidden]="username.valid || username.pristine" class="alert alert-danger">
-            Name is required
-          </div>
-        </div>
+<br>
+  <form #registerForm="ngForm">
+    <div class="form-group  ml-5" >
+      <h3>Sign Up</h3>
+      <div class="form-group">
+        <label class="font-weight-bold">Username :</label>
+        <input type="text" autofocus class="form-control" name="userName" #username="ngModel" [(ngModel)] = "userData.username" maxlength=150 required>
+        <small style="color: grey">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</small>
+        <div [hidden]="username.valid || username.pristine || username.untouched" ></div>
+      </div>
+      
+      <div class="form-group">
+        <label class="font-weight-bold">First Name :</label>
+        <input type="text" class="form-control" name="firstName" #firstname="ngModel" [(ngModel)] = "userData.first_name" >
+      </div>
 
-        <div class="form-group">
-          <label class="font-weight-bold">First Name</label>
-          <input type="text" class="form-control" name="firstName" #firstname="ngModel" [(ngModel)] = "userData.first_name" >
-        </div>
+      <div class="form-group">
+        <label class="font-weight-bold">Last Name :</label>
+        <input type="text" class="form-control" name="lastName" #lastname="ngModel" [(ngModel)] = "userData.last_name" >
+      </div>
 
-        <div class="form-group">
-          <label class="font-weight-bold">Last Name</label>
-          <input type="text" class="form-control" name="lastName" #lastname="ngModel" [(ngModel)] = "userData.last_name" >
-        </div>
-
-        <div class="form-group">
-          <label class="font-weight-bold">Email</label>
-          <input type="email" class="form-control" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" 
-                 name="Email" #email="ngModel" [(ngModel)] = "userData.email" required>
-          <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
-            Email is required
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="font-weight-bold">Password</label>
-          <input type="password" class="form-control" name="Password" #password="ngModel" [(ngModel)] = "userData.password" required>
-          <div [hidden]="password.valid || password.pristine" class="alert alert-danger">
-            Password is required
-          </div>
-        </div>
-
-        <button (click)="signUp()" type="submit" class="btn btn-primary" [disabled]="!registerForm.form.valid">Submit</button>
+      <div class="form-group">
+        <label class="font-weight-bold">Email :</label>
+        <input type="email" class="form-control" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" 
+               name="Email" #email="ngModel" [(ngModel)] = "userData.email" required>
         
       </div>
-    </form>
-</div>
+
+      <div class="form-group">
+        <label class="font-weight-bold">Password :</label>
+        <input type="password" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" name="Password" #password="ngModel" [(ngModel)] = "userData.password" required>
+        <small style="color: grey">"Must contain at least one number and one uppercase, a lowercase letter, and at least 8 characters.</small>
+        <div [hidden]="password.valid || password.pristine" ></div>
+      </div>
+
+      <button (click)="signUp()" type="submit" class="btn btn-primary" [disabled]="!registerForm.form.valid">Register</button>
+        
+    </div>
+  </form>    
