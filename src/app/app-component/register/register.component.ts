@@ -14,12 +14,13 @@ export class RegisterComponent implements OnInit {
   
   ngOnInit(): void {
     this.userData = {
-      "username" : '' ,
-      "first_name" : '' ,
-      "last_name" : '' ,
-      "email" : '',
-      "password" : '',
-      "is_active" : false
+      "user" : {
+        "username" : '' ,
+        "first_name" : '' ,
+        "last_name" : '' ,
+        "email" : '',
+        "password" : ''
+      }
     }
   }
 
@@ -32,7 +33,7 @@ export class RegisterComponent implements OnInit {
       },
       signUpError => {
         console.log(signUpError)
-        alert(signUpError.error['username'])
+        alert(signUpError.error)
       },
       () => {console.log("Sign up Successful")}
     )
