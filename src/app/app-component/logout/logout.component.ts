@@ -22,6 +22,7 @@ export class LogoutComponent implements OnInit {
           localStorage.setItem('isLoggedIn', 'false')
           localStorage.setItem('username', null)
           localStorage.setItem('password', null)
+          localStorage.setItem('user', null)
           localStorage.setItem('Token', "")
           console.log(logOutResponse)
           this._router.navigate([''])

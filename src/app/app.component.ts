@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
 export class AppComponent {
 
   loggedIn : boolean;
-  title = 'piBeeAngular';
+  username : string;
+  title = 'piBee';
 
   ngOnInit(): void {
     this.isLoggedIn();    
@@ -18,6 +19,7 @@ export class AppComponent {
   isLoggedIn() {
     if (localStorage.getItem('isLoggedIn') == "true") {
       this.loggedIn = true;
+      this.username = localStorage.getItem('username')
     }
     else if (localStorage.getItem('isLoggedIn') == "false") {
       this.loggedIn = false;

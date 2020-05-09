@@ -3,9 +3,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './app-component/home/home.component';
 import { LoginComponent } from './app-component/login/login.component';
 import { ChatappComponent } from './app-component/chatapp/chatapp.component';
-import { ProfileComponent } from './app-component/profile/profile.component';
 import { RegisterComponent } from './app-component/register/register.component';
 import { LogoutComponent } from './app-component/logout/logout.component';
+import { EditProfileComponent } from './app-component/profile/edit-profile/edit-profile.component';
+import { ViewProfileComponent } from './app-component/profile/view-profile/view-profile.component';
 
 
 const routes: Routes = [
@@ -14,7 +15,8 @@ const routes: Routes = [
   {path : 'register', component : RegisterComponent},
   {path : 'logout', component : LogoutComponent},
   {path : 'chatapp', component : ChatappComponent},
-  {path : 'profile', component : ProfileComponent},
+  {path : 'edit-profile', component : EditProfileComponent},
+  {path : 'view-profile', component : ViewProfileComponent},
 ];
 
 @NgModule({

@@ -27,15 +27,18 @@ export class RegisterComponent implements OnInit {
   signUp(){
     this._auth.Register(this.userData).subscribe(
       signUpResponse => {
-        localStorage.setItem('Token', signUpResponse.token)
+        localStorage.setItem('Token', signUpResponse.key)
+        localStorage.setItem('user', signUpResponse.user.id)
         console.log(signUpResponse)
-        this._route.navigate(['login'])
       },
       signUpError => {
         console.log(signUpError)
         alert(signUpError.error)
       },
-      () => {console.log("Sign up Successful")}
+      () => {
+        console.log("Sign up Successful")
+        this._route.navigate(['login'])
+      }
     )
   }
 

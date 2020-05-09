@@ -3,6 +3,19 @@ body {
     color: #333333;
     margin-top: 5rem;
   }
+  #searchBar {
+    width: 200%;
+  }
+
+.dropdown-menu  > a {
+  background-color: white; /* This has an effect */
+    
+  }
+
+.dropdown-menu > a:hover {
+    background-color: skyblue;
+    background-image: none;
+  }
   
   h1, h2, h3, h4, h5, h6 {
     color: #444444;
@@ -11,6 +24,11 @@ body {
   ul {
     margin: 0;
   }
+
+  /* .active {
+    background-color: #4CAF50;
+    color: white;
+  } */
   
   .bg-steel {
     background-color: #041522;

@@ -7,9 +7,10 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './app-component/home/home.component';
 import { LoginComponent } from './app-component/login/login.component';
 import { RegisterComponent } from './app-component/register/register.component';
-import { ProfileComponent } from './app-component/profile/profile.component';
 import { ChatappComponent } from './app-component/chatapp/chatapp.component';
 import { LogoutComponent } from './app-component/logout/logout.component';
+import { EditProfileComponent } from './app-component/profile/edit-profile/edit-profile.component';
+import { ViewProfileComponent } from './app-component/profile/view-profile/view-profile.component';
 
 @NgModule({
   declarations: [
@@ -17,9 +18,10 @@ import { LogoutComponent } from './app-component/logout/logout.component';
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    ProfileComponent,
     ChatappComponent,
-    LogoutComponent
+    LogoutComponent,
+    EditProfileComponent,
+    ViewProfileComponent
   ],
   imports: [
     BrowserModule,

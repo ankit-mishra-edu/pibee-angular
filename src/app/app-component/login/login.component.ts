@@ -24,10 +24,10 @@ export class LoginComponent implements OnInit {
     this._auth.LogIn(this.loginData).subscribe(
       logInResponse => {
         localStorage.setItem('isLoggedIn', 'true')
-        localStorage.setItem('username', this.loginData.username)
-        localStorage.setItem('password', this.loginData.password)
-        localStorage.setItem('Token', logInResponse.token)
-        localStorage.setItem('user', logInResponse.user)
+        localStorage.setItem('username', logInResponse.user.username)
+        localStorage.setItem('password', logInResponse.user.password)
+        localStorage.setItem('Token', logInResponse.key)
+        localStorage.setItem('user', logInResponse.user.id)
         console.log(logInResponse)
         this._router.navigate([''])
       },
