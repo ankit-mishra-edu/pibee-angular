@@ -1,4 +1,5 @@
 <form class="form-group  ml-5" #profileForm="ngForm">
+    <h2>Edit Profile</h2>
     <div class="form-group">
         <label class="font-weight-bold">Bio :</label>
         <textarea class="form-control" rows = "3" cols = "60" name="bio" #bio="ngModel" [(ngModel)] = "profileData.bio"></textarea>
@@ -17,7 +18,7 @@
     <div class="form-group">
         <label class="font-weight-bold">Profile photo :</label>
         <br>
-        <input type="file" name="image" #image="ngModel" ngModel = "profileData.image" />
+        <input type="file" accept="image/*" name="image" #image="ngModel" (ngModel) = "profileData.image" />
     </div>
 
     <div class="form-group">
@@ -25,6 +26,6 @@
         <input type="checkbox" name="email_confirmed" #email_confirmed="ngModel" [(ngModel)] = "profileData.email_confirmed" />
     </div>
 
-    <button (click)="saveProfile()" type="submit" class="btn btn-primary" [disabled]="!profileForm.form.valid">Save profile</button>
+    <button (click)="editProfile()" type="submit" class="btn btn-primary" [disabled]="!profileForm.form.valid">Save profile</button>
 
 </form>

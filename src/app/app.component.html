@@ -1,87 +1,117 @@
-<head>
-    <title>{{title}}</title>
-</head>
-
-<body >
-    <nav class="navbar navbar-expand-sm navbar-dark bg-steel fixed-top">
-        <a class="navbar-brand mr-4 ml-4" routerLink="/">piBee</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        
-        <div class="collapse navbar-collapse" id="navbarToggle">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" routerLink="">Home</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="chatapp/">Chat</a>
-                </li>
-
-                <li class="nav-item d-none d-sm-inline-block ml-auto mt-1" id="searchBar">
-                    <form class="form-inline ml-3">
-                        <div class="input-group input-group-sm">
-                            <input class="form-control form-control-navbar" type="search" name="search" placeholder="Search" aria-label="Search">
-                            <div class="input-group-append">
-                                <button class="btn btn-navbar" type="submit">
-                                    <i class="fa fa-search"></i>
-                                </button>
+<div class="site-container">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-dark bg-steel fixed-top">
+            <a class="navbar-brand mr-2 ml-1" routerLink="/">
+                <img style="background-color: black;" src="../assets/media/logo.jpg" alt="">
+            </a>
+            <a class="navbar-brand mr-4 ml-3 mb-2" routerLink="/">piBee</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarToggle">
+                <!-- Left side navigation links on nav bar -->
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item d-none d-sm-inline-block ml-auto mt-1" id="searchBar">
+                        <form class="form-inline">
+                            <div class="input-group input-group-sm">
+                                <input class="form-control form-control-navbar" type="search" name="search" placeholder="Search" aria-label="Search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-navbar" type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
-                </li>
-            </ul>
-            <ul class="navbar-nav mr-5">
-                <ng-template [ngIf]="isLoggedIn()" [ngIfElse]="loggedOut">
-                    <li class="nav-item dropdown mr-2">
-                        <a class="nav-link" id="navbarToggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="fa fa-bell"></span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarToggle">
-                            <span class="dropdown-item text-light bg-dark">Notifications</span>
-                            <a class="dropdown-item" routerLink="/">Notification 1</a>
-                            <a class="dropdown-item" routerLink="/">Notification 1</a>
-                        </div>
+                        </form>
                     </li>
+                    
+                    <!-- <li class="nav-item active">
+                        <a class="nav-link" routerLink="">Home</a>
+                    </li> -->
+    
+                    <li class="nav-item ml-2">
+                        <a class="nav-link" routerLink="chatapp/">Chat</a>
+                    </li>
+                </ul>
+    
+                <!-- Right side navigation links on nav bar -->
+                <ul class="navbar-nav">
+                    <!-- If the user is Authenticated -->
+                    <ng-template [ngIf]="isLoggedIn()" [ngIfElse]="loggedOut">
+                        <!-- Dropdown for Messages -->
+                        <li class="nav-item dropdown mr-2">
+                            <a class="nav-link" id="navbarToggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="fa fa-envelope"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarToggle">
+                                <span class="dropdown-item text-light bg-dark">Messages</span>
+                                <a class="dropdown-item" routerLink="/">Message 1</a>
+                                <a class="dropdown-item" routerLink="/">Message 1</a>
+                            </div>
+                        </li>
+    
+                        <!-- Dropdown for Notification -->
+                        <li class="nav-item dropdown mr-2">
+                            <a class="nav-link" id="navbarToggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="fa fa-bell"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarToggle">
+                                <span class="dropdown-item text-light bg-dark">Notifications</span>
+                                <a class="dropdown-item" routerLink="/">Notification 1</a>
+                                <a class="dropdown-item" routerLink="/">Notification 1</a>
+                            </div>
+                        </li>
+    
+                        <!-- Dropdown for Settings -->
+                        <li class="nav-item dropdown mr-2">
+                            <a class="nav-link" id="navbarToggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="fa fa-cog"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarToggle">
+                                <span class="dropdown-item text-light bg-dark">Settings</span>
+                                <a class="dropdown-item" routerLink="view-profile/">setting1</a>
+                                <a class="dropdown-item" routerLink="edit-profile/">settin2</a>
+                            </div>
+                        </li>
+    
+                        <!-- Dropdown for User Profile -->
+                        <li class="nav-item dropdown mr-4">
+                            <a class="nav-link" id="navbarToggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="fa fa-user"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarToggle">
+                              <a class="dropdown-item" routerLink="view-profile">{{username}}</a>
+                              <div class="dropdown-divider"></div>
+                              <a class="dropdown-item" routerLink="edit-profile/">Edit Profile</a>
+                              <a class="dropdown-item" routerLink="logout/">Logout</a>
+                            </div>
+                        </li>
+    
+                        <li class="nav-item dropdown mr-1">
+                            <p class="mt-2" style="color:white">Hi </p>
+                        </li>
+    
+                        <!-- Display Username -->
+                        <li class="nav-item dropdown mr-3">
+                            <p class="mt-2" style="color:white">{{username}}</p>
+                        </li>
+                    </ng-template>
+    
+                    <!-- If the user is not Authenticated or Logged Out -->
+                    <ng-template #loggedOut>
+                        <li class="nav-item mr-2">
+                            <a class="nav-link" routerLink="login/">Login</a>
+                        </li>
+                        <li class="nav-item mr-4">
+                            <a class="nav-link" routerLink="register/">Register</a>
+                        </li>
+                    </ng-template>
+                </ul>
+            </div>    	
+        </nav>
+    </header>
 
-                    <li class="nav-item dropdown mr-2">
-                        <a class="nav-link" id="navbarToggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="fa fa-user"></span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarToggle">
-                          <a class="dropdown-item" routerLink="view-profile">{{username}}</a>
-                          <div class="dropdown-divider"></div>
-                          <a class="dropdown-item" routerLink="edit-profile/">Edit Profile</a>
-                          <a class="dropdown-item" routerLink="logout/">Logout</a>
-                        </div>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" id="navbarToggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="fa fa-cog"></span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarToggle">
-                            <span class="dropdown-item text-light bg-dark">Settings</span>
-                            <a class="dropdown-item" routerLink="view-profile/">setting1</a>
-                            <a class="dropdown-item" routerLink="edit-profile/">settin2</a>
-                        </div>
-                    </li>
-                </ng-template>
-
-                <ng-template #loggedOut>
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="login/">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="register/">Register</a>
-                    </li>
-                </ng-template>
-            </ul>
-        </div>    	
-    </nav>
-
-    <main role="main" class="fluid-container ml-5 mr-5 mt-2 jumbotron" style="color:black">
+    <main role="main" class="fluid-container ml-5 mr-5 mt-4 jumbotron" style="color:black">
         <div class="row ">
             <div class="col-md-6">
                 <router-outlet></router-outlet>
@@ -92,22 +122,20 @@
                     <h3>Our Sidebar</h3>
                     <p class='text-muted'>You can put any information here you'd like.</p>
                     <ul class="list-group">
-                    <li href="#" class="list-group-item list-group-item-light">Latest Post</li>
-                    <li href="#" class="list-group-item list-group-item-light">etc</li>
-                    <li href="#" class="list-group-item list-group-item-light">Calendars</li>
-                    <li href="#" class="list-group-item list-group-item-light">etc</li>
+                        <li href="#" class="list-group-item list-group-item-light">Latest Post</li>
+                        <li href="#" class="list-group-item list-group-item-light">etc</li>
+                        <li href="#" class="list-group-item list-group-item-light">Calendars</li>
+                        <li href="#" class="list-group-item list-group-item-light">etc</li>
                     </ul>
-                
+                    
                 </div>
             </div>
         </div>
-      
-        <div class="container-fluid text-center footer ">
-            Coded with &hearts; by <a href="https://github.com/amishm766">Ankit Mishra.</a>
-        </div>
     </main>
 
-</body>
-
-
-
+    <footer class="container-fluid text-center mt-4 bg-steel">
+        <br>
+        <br>
+        <p style="color:white">Coded with <span style="color:red">&hearts;</span> by <a href="https://github.com/amishm766">Ankit Mishra.</a></p>
+    </footer>
+</div>

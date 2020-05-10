@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/app-service/auth.service';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-profile',
@@ -15,7 +16,7 @@ export class EditProfileComponent implements OnInit {
     "location" : "",
     "birth_date" : "",
     "email_confirmed" : "",
-    "image" : File
+    "image" : '' 
   }
 
   constructor(private _auth : AuthService, private _router : Router) { }
@@ -24,17 +25,19 @@ export class EditProfileComponent implements OnInit {
     this.profileData['user'] = +localStorage.getItem('user')
   }
 
-  saveProfile() {
-    // let array = this.profileData['image']['fileName'].split('\\')
+  editProfile() {
+    // let array = this.image.split('\\')
     // console.log(array[array.length-1])
-    // this.profileData['image']['fileName'] = 'http://127.0.0.1:8000/media/profile_pics/' + array[array.length-1]
-    this._auth.saveProfile(this.profileData).subscribe(
-      saveProfileResponse => {
-        console.log(saveProfileResponse)
+    // this.image = 'http://127.0.0.1:8000/media/profile_pics/' + array[array.length-1]
+    // console.log(this.image)
+    
+    this._auth.editProfile(this.profileData).subscribe(
+      editProfileResponse => {
+        console.log(editProfileResponse)
         this._router.navigate(['/'])
       },
-      saveProfileError => {
-        console.log(saveProfileError)
+      editProfileError => {
+        console.log(editProfileError)
       },
       () => {console.log("Fetched profile data Successfully")}
     )

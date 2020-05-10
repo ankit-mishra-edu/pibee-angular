@@ -10,12 +10,16 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   loginData ;
+  
   constructor(private _auth : AuthService, private _router : Router) { }
 
   ngOnInit(): void {
     this.loginData = {
-      "username" : '',
-      "password" : ''
+      "user" : {
+        "username" : '',
+        "password" : '',
+        "email" : 'amishm7@gmail.com'
+      }
     }
   }
 
@@ -33,7 +37,7 @@ export class LoginComponent implements OnInit {
       },
       logInError => {
         console.log(logInError)
-        alert(logInError.error.error)
+        alert(logInError.error)
       },
       () => {console.log("Logged In Successfully")}
     )
