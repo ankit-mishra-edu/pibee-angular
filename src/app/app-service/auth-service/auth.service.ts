@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Observable } from 'rxjs';
-import { User } from '../app-interface/User';
+import { User } from '../../app-interface/User';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class AuthService {
   constructor(private _http : HttpClient) { }
 
   Register(user) : Observable<any>{
-    let returnValue = this._http.post('https://amishm766.pythonanywhere.com/api/register/', user);
+    let returnValue = this._http.post('http://127.0.0.1:8000/api/register/', user);
     return(returnValue)
   }
 
@@ -22,7 +22,7 @@ export class AuthService {
         'Authorization': "Token " + localStorage.getItem('Token')
       })
     };
-    let returnValue = this._http.post('https://amishm766.pythonanywhere.com/api/login/', loginData, httpOptions)
+    let returnValue = this._http.post('http://127.0.0.1:8000/api/login/', loginData, httpOptions)
     return(returnValue)
   }
 
@@ -33,17 +33,17 @@ export class AuthService {
         'Authorization': "Token " + localStorage.getItem('Token')
       })
     };
-    let returnValue = this._http.post('https://amishm766.pythonanywhere.com/api/logout/', "", httpOptions)
+    let returnValue = this._http.post('http://127.0.0.1:8000/api/logout/', "", httpOptions)
     return(returnValue)
   }
 
   editProfile(profileData) : Observable <any>{
-    let returnValue = this._http.put('https://amishm766.pythonanywhere.com/api/profile/', profileData)
+    let returnValue = this._http.put('http://127.0.0.1:8000/api/profile/', profileData)
     return(returnValue)
   }
 
   viewProfile(profileData) : Observable <any>{
-    let returnValue = this._http.get('https://amishm766.pythonanywhere.com/api/profile/', profileData)
+    let returnValue = this._http.get('http://127.0.0.1:8000/api/profile/', profileData)
     return(returnValue)
   }
   
