@@ -5,11 +5,11 @@
         </div>
 
         <div class="form-group mr-auto">
-            <input name="message" #message="ngModel" [(ngModel)] = "chatData.message">
+            <input name="message" #message="ngModel" [(ngModel)] = "sendData.message">
         </div>
 
         <div class="form-group mr-auto">
-            <button (click)="sendMessage($event)" type="submit" class="btn btn-primary" [disabled]="!chatForm.form.valid">Send</button>
+            <button (click)="sendMessage()" type="submit" class="btn btn-primary" [disabled]="!chatForm.form.valid">Send</button>
         </div>
     </div>
 
