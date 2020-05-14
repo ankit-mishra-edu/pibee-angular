@@ -10,23 +10,28 @@ import { async } from '@angular/core/testing';
 export class ChatappComponent implements OnInit {
 
   formData = {
-    display_message : ''
+    'display_message' : '',
+    'author' : ''
   }
 
   sendData = {
     'command' : 'new_message',
-    'from' : '',
-    'message' : "",
+    'author' : '',
+    'content' : "",
   }
 
   constructor(private _chat : ChatService) { }
 
   ngOnInit(): void {
-    this.sendData['from'] = localStorage.getItem('username');
+    this.sendData['author']= this.formData['author'] = localStorage.getItem('username');
     this._chat.connect(this.formData)
   }
 
   sendMessage() {
     this._chat.createMessage(this.sendData)
+  }
+
+  getMessage() {
+    this._chat.getMessage(localStorage.getItem('username'))
   }
 }

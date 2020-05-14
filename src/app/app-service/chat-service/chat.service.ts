@@ -15,13 +15,24 @@ export class ChatService {
   connect(formData) {
     let path = 'ws://127.0.0.1:8000/ws/chat/lobby/';
     this.socketRef = new WebSocket(path);
-
-    this.socketRef.onopen = () => {console.log('websocket open');}
+    
+    this.socketRef.onopen = () => {console.log('websocket open');this.getMessage('amishm766')}
 
     this.socketRef.onmessage = e => {
       console.log(e);
       const data = JSON.parse(e.data);
-      formData['display_message'] += '\n' + data.message['author'] + '   :   ' + data.message.content;
+
+      if (data['command'] === 'messages') {
+        console.log(data['messages'][0])
+        for (let i=0; i<data['messages'].length; i++) {
+          formData['display_message'] += '\n' + data['messages'][i]['author'] + '   :   ' + data['messages'][i]['content'];
+        }
+      }
+      
+      else if (data['command'] === 'new_message'){
+        formData['display_message'] += '\n' + data.message['author'] + '   :   ' + data.message.content;
+      }
+      // formData['display_message'] += '\n' + data.message['author'] + '   :   ' + data.message.content;
     }
 
     this.socketRef.onerror = e => { console.log(e.message);}
@@ -29,6 +40,23 @@ export class ChatService {
     this.socketRef.onclose = () => {
       console.log('websocket is closed');
       this.connect(formData);
+    }
+  }
+
+  getMessage(username) {
+    this.sendMessage({ command : 'fetch_messages'});
+  }
+
+  createMessage(message) {
+    return(this.sendMessage({ command : 'new_message', from : message.author, message : message.content}));
+  }
+
+  sendMessage(data)  {
+    try {
+      return(this.socketRef.send(JSON.stringify({ ...data})))
+
+    } catch (error) {
+      console.log(error)
     }
   }
 
@@ -47,26 +75,9 @@ export class ChatService {
     }
   }
 
-  getMessage(username) {
-    this.sendMessage({ command : 'fetch_messages', username : username});
-  }
-
-  createMessage(message) {
-    return(this.sendMessage({ command : 'new_message', from : message.from, message : message.message}));
-  }
-
   addCallbacks(messagesCallback, createMessageCallback) {
     this.callbacks['messages'] = messagesCallback;
     this.callbacks['new_message'] = createMessageCallback;
-  }
-
-  sendMessage(data)  {
-    try {
-      return(this.socketRef.send(JSON.stringify({ ...data})))
-
-    } catch (error) {
-      console.log(error)
-    }
   }
 
   waitForSocketConnection(callback) {
