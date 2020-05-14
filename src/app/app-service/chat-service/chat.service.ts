@@ -21,8 +21,7 @@ export class ChatService {
     this.socketRef.onmessage = e => {
       console.log(e);
       const data = JSON.parse(e.data);
-      formData['display_message'] += '\n' + data.message['author'] + '   :   ' + data.message.content
-      console.log(formData['display_message']);
+      formData['display_message'] += '\n' + data.message['author'] + '   :   ' + data.message.content;
     }
 
     this.socketRef.onerror = e => { console.log(e.message);}

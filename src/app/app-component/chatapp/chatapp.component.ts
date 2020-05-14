@@ -18,7 +18,7 @@ export class ChatappComponent implements OnInit {
     'from' : '',
     'message' : "",
   }
-  
+
   constructor(private _chat : ChatService) { }
 
   ngOnInit(): void {
@@ -26,7 +26,7 @@ export class ChatappComponent implements OnInit {
     this._chat.connect(this.formData)
   }
 
-  sendMessage($event) {
+  sendMessage() {
     this._chat.createMessage(this.sendData)
   }
 }
