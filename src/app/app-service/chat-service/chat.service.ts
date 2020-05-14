@@ -17,7 +17,7 @@ export class ChatService {
   }
 
   createMessage(socketRef : WebSocket, message) {
-    return(this.sendMessage(socketRef, { command : 'create_message', author : message.author, message : message.content}));
+    return(this.sendMessage(socketRef, { command : 'create_message', sender : message.sender, receiver : 'ankit' , message : message.content}));
   }
 
   sendMessage(socketRef : WebSocket, data : {})  {

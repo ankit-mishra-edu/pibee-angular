@@ -14,19 +14,19 @@ export class ChatappComponent implements OnInit {
 
   formData = {
     'display_message' : '',
-    'author' : ''
+    'sender' : ''
   }
 
   sendData = {
     'command' : 'create_message',
-    'author' : '',
+    'sender' : '',
     'content' : "",
   }
 
   constructor(private _chat : ChatService) { }
 
   ngOnInit(): void {
-    this.sendData['author'] = this.formData['author'] = localStorage.getItem('username');
+    this.sendData['sender'] = this.formData['sender'] = localStorage.getItem('username');
     this.connect()
   }
 
@@ -45,7 +45,7 @@ export class ChatappComponent implements OnInit {
       console.log(data)
       for (let i=0; i<data[data['command']].length; i++) {
         this.formData['display_message'] += '\n' +
-        data[data['command']][i]['author'] + '   :   ' + 
+        data[data['command']][i]['sender'] + '   :   ' + 
         data[data['command']][i]['content'];
       }
     }
