@@ -10,6 +10,7 @@ import { async } from '@angular/core/testing';
 export class ChatappComponent implements OnInit {
   
   input_message = '';
+  display_message = '';
 
   chatData = {
     'command' : 'new_message',
@@ -29,7 +30,7 @@ export class ChatappComponent implements OnInit {
   }
 
   getMessage() {
-    
+
   }
 
 }
