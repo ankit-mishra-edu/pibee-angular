@@ -12,7 +12,7 @@ export class ChatService {
 
   constructor(private _http : HttpClient) { }
 
-  connect(chatData) {
+  connect(formData) {
     let path = 'ws://127.0.0.1:8000/ws/chat/lobby/';
     this.socketRef = new WebSocket(path);
 
@@ -21,14 +21,15 @@ export class ChatService {
     this.socketRef.onmessage = e => {
       console.log(e);
       const data = JSON.parse(e.data);
-      chatData['message'] += '\n' + data.message['author'] + '   :   ' + data.message.content
+      formData['display_message'] += '\n' + data.message['author'] + '   :   ' + data.message.content
+      console.log(formData['display_message']);
     }
 
     this.socketRef.onerror = e => { console.log(e.message);}
 
     this.socketRef.onclose = () => {
       console.log('websocket is closed');
-      this.connect(chatData);
+      this.connect(formData);
     }
   }
 

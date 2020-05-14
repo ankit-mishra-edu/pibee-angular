@@ -8,29 +8,25 @@ import { async } from '@angular/core/testing';
   styleUrls: ['./chatapp.component.css']
 })
 export class ChatappComponent implements OnInit {
-  
-  input_message = '';
-  display_message = '';
 
-  chatData = {
+  formData = {
+    display_message : ''
+  }
+
+  sendData = {
     'command' : 'new_message',
     'from' : '',
     'message' : "",
   }
+  
   constructor(private _chat : ChatService) { }
 
   ngOnInit(): void {
-    this.chatData['from'] = localStorage.getItem('username');
-    this._chat.connect(this.chatData)
+    this.sendData['from'] = localStorage.getItem('username');
+    this._chat.connect(this.formData)
   }
 
   sendMessage($event) {
-    this.chatData['message'] + '\n' +this.chatData['from'] + "   :   " + this.input_message
-    this._chat.createMessage(this.chatData)
+    this._chat.createMessage(this.sendData)
   }
-
-  getMessage() {
-
-  }
-
 }
