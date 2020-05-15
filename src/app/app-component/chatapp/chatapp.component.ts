@@ -13,7 +13,7 @@ export class ChatappComponent implements OnInit {
   path : string = 'ws://127.0.0.1:8000/ws/chat/lobby/' ;
 
   displayMessage = {
-    message : ''
+    message : []
   }
 
   message : IMessage = {
@@ -43,13 +43,17 @@ export class ChatappComponent implements OnInit {
       const data = JSON.parse(e.data);
       let receiverdMessageArray = data[data.command]
       console.log(receiverdMessageArray)
+      let alignment : string = 'left'
       for (let i=0; i<receiverdMessageArray.length; i++) {
-
-        // this.display_message.content.push(messageArray[i]);
-
-        this.displayMessage.message += '\n' +
-        receiverdMessageArray[i].sender + '   :   ' + 
-        receiverdMessageArray[i].content;
+        console.log(receiverdMessageArray[i].sender, localStorage.getItem('username'))
+        if (receiverdMessageArray[i].sender == localStorage.getItem('username')) {
+          alignment = 'right'
+          // receiverdMessageArray[i].sender = 'You';
+        }
+        else {
+          alignment = 'left'
+        }
+        this.displayMessage.message.push({'alignment' : alignment, 'message' : receiverdMessageArray[i]});
       }
     }
 
