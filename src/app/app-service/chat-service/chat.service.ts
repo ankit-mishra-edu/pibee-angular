@@ -12,7 +12,7 @@ export class ChatService {
   getMessage(socketRef : WebSocket, username : string) {
     let data = {
       'command' : 'get_messages',
-      'receiver' : username
+      'receiver' : 'ankit'
     }
     this.sendMessage(socketRef, data);
   }
