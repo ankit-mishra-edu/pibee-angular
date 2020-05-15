@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from 'src/app/app-service/chat-service/chat.service';
-import { async } from '@angular/core/testing';
-
+import { IMessage } from 'src/app/app-interface/Message';
+import { User } from 'src/app/app-interface/User';
 @Component({
   selector: 'app-chatapp',
   templateUrl: './chatapp.component.html',
@@ -10,23 +10,22 @@ import { async } from '@angular/core/testing';
 export class ChatappComponent implements OnInit {
 
   socketRef : WebSocket;
-  path : string = 'ws://127.0.0.1:8000/ws/chat/lobby/' ; 
+  path : string = 'ws://127.0.0.1:8000/ws/chat/lobby/' ;
 
-  formData = {
-    'display_message' : '',
-    'sender' : ''
+  displayMessage = {
+    message : ''
   }
 
-  sendData = {
-    'command' : 'create_message',
+  message : IMessage = {
     'sender' : '',
-    'content' : "",
+    'receiver' : 'ankit',
+    'content' : ''
   }
 
   constructor(private _chat : ChatService) { }
 
   ngOnInit(): void {
-    this.sendData['sender'] = this.formData['sender'] = localStorage.getItem('username');
+    this.message.sender = localStorage.getItem('username');
     this.connect()
   }
 
@@ -42,11 +41,15 @@ export class ChatappComponent implements OnInit {
     this.socketRef.onmessage = e => {
       console.log(e);
       const data = JSON.parse(e.data);
-      console.log(data)
-      for (let i=0; i<data[data['command']].length; i++) {
-        this.formData['display_message'] += '\n' +
-        data[data['command']][i]['sender'] + '   :   ' + 
-        data[data['command']][i]['content'];
+      let receiverdMessageArray = data[data.command]
+      console.log(receiverdMessageArray)
+      for (let i=0; i<receiverdMessageArray.length; i++) {
+
+        // this.display_message.content.push(messageArray[i]);
+
+        this.displayMessage.message += '\n' +
+        receiverdMessageArray[i].sender + '   :   ' + 
+        receiverdMessageArray[i].content;
       }
     }
 
@@ -59,8 +62,8 @@ export class ChatappComponent implements OnInit {
   }
 
   createMessage() {
-    this._chat.createMessage(this.socketRef, this.sendData)
-    this.sendData['content'] = "";  // Refreshes the input element after the message is created
+    this._chat.createMessage(this.socketRef, this.message)
+    this.message.content = "";  // Refreshes the input element after the message is created
   }
 
   getMessage() {

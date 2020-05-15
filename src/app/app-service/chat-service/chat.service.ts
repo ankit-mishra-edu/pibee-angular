@@ -7,21 +7,27 @@ import { Observable } from 'rxjs';
 })
 export class ChatService {
 
-  // socketRef;
-  // callbacks = {}
-
   constructor(private _http : HttpClient) { }
 
   getMessage(socketRef : WebSocket, username : string) {
-    this.sendMessage(socketRef, { command : 'fetch_messages', receiver : username});
+    let data = {
+      'command' : 'get_messages',
+      'receiver' : username
+    }
+    this.sendMessage(socketRef, data);
   }
 
   createMessage(socketRef : WebSocket, message) {
-    return(this.sendMessage(socketRef, { command : 'create_message', sender : message.sender, receiver : 'ankit' , message : message.content}));
+    let data = {
+      'command' : 'create_message',
+      'message' : message
+    }
+    return(this.sendMessage(socketRef, data));
   }
 
   sendMessage(socketRef : WebSocket, data : {})  {
     try {
+      console.log('sent data message', data)
       return(socketRef.send(JSON.stringify({ ...data})))
 
     } catch (error) {
