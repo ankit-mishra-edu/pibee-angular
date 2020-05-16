@@ -12,8 +12,8 @@ export class ChatappComponent implements OnInit {
   socketRef : WebSocket;
   path : string = 'ws://127.0.0.1:8000/ws/chat/lobby/' ;
 
-  displayMessage = {
-    message : []
+  display = {
+    messageArray : []
   }
 
   message : IMessage = {
@@ -45,15 +45,14 @@ export class ChatappComponent implements OnInit {
       console.log(receiverdMessageArray)
       let alignment : string = 'left'
       for (let i=0; i<receiverdMessageArray.length; i++) {
-        console.log(receiverdMessageArray[i].sender, localStorage.getItem('username'))
         if (receiverdMessageArray[i].sender == localStorage.getItem('username')) {
           alignment = 'right'
-          // receiverdMessageArray[i].sender = 'You';
+          receiverdMessageArray[i].sender = 'You';
         }
         else {
           alignment = 'left'
         }
-        this.displayMessage.message.push({'alignment' : alignment, 'message' : receiverdMessageArray[i]});
+        this.display.messageArray.push({'alignment' : alignment, 'message' : receiverdMessageArray[i]});
       }
     }
 
@@ -71,6 +70,6 @@ export class ChatappComponent implements OnInit {
   }
 
   getMessage() {
-    this._chat.getMessage(this.socketRef, localStorage.getItem('username'))
+    this._chat.getMessage(this.socketRef, localStorage.getItem('username'), 'ankit')
   }
 }

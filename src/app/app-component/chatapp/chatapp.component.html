@@ -1,18 +1,16 @@
 <form #chatForm="ngForm">
-    <div class="form-control ml-5 mt-4">
+    <div class="form-group ml-5 mt-4">
         <div class="form-group">
-            <!-- <textarea class="form-control" rows = "13" cols = "60" name="messageBox"> -->
-                <div *ngFor="let messageList of displayMessage.message">
-                    <p class={{messageList.alignment}}>{{messageList.message.sender}}   :   {{messageList.message.content}}</p>
-                </div>
+            <!-- <textarea class="form-control" rows = "13" cols = "60" name="messageBox" > -->
+                <p *ngFor="let messageObj of display.messageArray" [ngClass]="messageObj.alignment">
+                    {{messageObj.message.sender}}   :   {{messageObj.message.content}}
+                </p>
             <!-- </textarea> -->
         </div>
 
         <div class="form-group right" >
             <input name="inputContent" #inputContent="ngModel" [(ngModel)] = "message.content" required >
-            <button (click)="createMessage()" type="submit" [disabled]="!chatForm.form.valid">
-                <i class="fa fa-send ml-1" style="font-size:22px"></i>
-            </button>
+            <button (click)="createMessage()" class="btn btn-primary" type="submit" [disabled]="!chatForm.form.valid">Send</button>
         </div>
     </div>
 

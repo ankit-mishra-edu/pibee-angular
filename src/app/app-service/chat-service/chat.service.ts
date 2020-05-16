@@ -9,10 +9,11 @@ export class ChatService {
 
   constructor(private _http : HttpClient) { }
 
-  getMessage(socketRef : WebSocket, username : string) {
+  getMessage(socketRef : WebSocket, sender : string, receiver : string) {
     let data = {
       'command' : 'get_messages',
-      'receiver' : 'ankit'
+      'sender' : sender,
+      'receiver' : receiver
     }
     this.sendMessage(socketRef, data);
   }
