@@ -7,6 +7,7 @@ import { RegisterComponent } from './app-component/authenticate/register/registe
 import { LogoutComponent } from './app-component/authenticate/logout/logout.component';
 import { EditProfileComponent } from './app-component/authenticate/profile/edit-profile/edit-profile.component';
 import { ViewProfileComponent } from './app-component/authenticate/profile/view-profile/view-profile.component';
+import { EditDetailsComponent } from './app-component/authenticate/edit-details/edit-details.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path : 'chatapp', component : ChatappComponent},
   {path : 'edit-profile', component : EditProfileComponent},
   {path : 'view-profile', component : ViewProfileComponent},
+  {path : 'edit-details', component : EditDetailsComponent},
 ];
 
 @NgModule({

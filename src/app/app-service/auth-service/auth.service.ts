@@ -10,8 +10,23 @@ export class AuthService {
 
   constructor(private _http : HttpClient) { }
 
-  Register(user) : Observable<any>{
-    let returnValue = this._http.post('http://127.0.0.1:8000/api/register/', user);
+  GetUser(id) : Observable<any>{
+    let returnValue = this._http.get('http://127.0.0.1:8000/api/users/', id);
+    return(returnValue)
+  }
+
+  GetAllUserProfiles() : Observable<any>{
+    let returnValue = this._http.get('http://127.0.0.1:8000/api/users_profile/');
+    return(returnValue)
+  }
+
+  GetAllUsers() : Observable<any>{
+    let returnValue = this._http.get('http://127.0.0.1:8000/api/users/');
+    return(returnValue)
+  }
+
+  Register(userData) : Observable<any>{
+    let returnValue = this._http.post('http://127.0.0.1:8000/api/register/', userData);
     return(returnValue)
   }
 
@@ -42,8 +57,13 @@ export class AuthService {
     return(returnValue)
   }
 
-  viewProfile(profileData) : Observable <any>{
+  ViewProfile(profileData) : Observable <any>{
     let returnValue = this._http.get('http://127.0.0.1:8000/api/profile/', profileData)
+    return(returnValue)
+  }
+
+  EditUserDetails(userData) : Observable<any>{
+    let returnValue = this._http.patch('http://127.0.0.1:8000/api/register/', userData);
     return(returnValue)
   }
   

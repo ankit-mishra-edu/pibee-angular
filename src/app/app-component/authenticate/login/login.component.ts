@@ -35,10 +35,12 @@ export class LoginComponent implements OnInit {
         console.log(logInResponse)
         this._router.navigate([''])
       },
+      
       logInError => {
         console.log(logInError)
-        alert(logInError.error)
+        alert(logInError.error.error);
       },
+
       () => {console.log("Logged In Successfully")}
     )
   }

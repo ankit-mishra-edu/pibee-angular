@@ -1,16 +1,21 @@
 <div class="site-container">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-dark bg-steel fixed-top">
-            <a class="navbar-brand mr-2 ml-1" routerLink="/">
-                <img style="background-color: black;" src="../assets/media/logo.jpg" alt="">
-            </a>
-            <a class="navbar-brand mr-4 ml-3 mb-2" routerLink="/">piBee</a>
+        <nav class="navbar navbar-expand-sm bg-steel fixed-top">
+            <div>
+                <a class="navbar-brand ml-1" routerLink="/">
+                    <img style="line-height: 30px;" src="../assets/media/images1.png" alt="">
+                </a>
+            </div>
+            <div>
+                <a class="navbar-brand  mb-2" style="color: white;" routerLink="/">piBee</a>
+            </div>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             
             <div class="collapse navbar-collapse" id="navbarToggle">
                 <!-- Left side navigation links on nav bar -->
+                <!-- Navigation Link for Search Bar -->
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item d-none d-sm-inline-block ml-auto mt-1" id="searchBar">
                         <form class="form-inline">
@@ -25,13 +30,10 @@
                         </form>
                     </li>
                     
-                    <!-- <li class="nav-item active">
-                        <a class="nav-link" routerLink="">Home</a>
-                    </li> -->
-    
+                    <!-- Navigation link for Chat -->
                     <li *ngIf="isLoggedIn()" class="nav-item ml-2">
-                        <a class="nav-link" routerLink="chatapp/">
-                            Chat<i class="fa fa-comments-o ml-2" aria-hidden="true" style="font-size:22px"></i>
+                        <a class="nav-link mt-1" routerLink="chatapp/">
+                            <i class="fa fa-comments-o ml-2" aria-hidden="true" style="font-size:22px"></i>
                         </a>
                     </li>
                 </ul>
@@ -40,10 +42,11 @@
                 <ul class="navbar-nav">
                     <!-- If the user is Authenticated -->
                     <ng-template [ngIf]="isLoggedIn()" [ngIfElse]="loggedOut">
+
                         <!-- Dropdown for Messages -->
-                        <li class="nav-item dropdown mr-2">
+                        <li class="nav-item dropdown mr-2 mt-1">
                             <a class="nav-link" id="navbarToggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="fa fa-envelope" style="font-size:22px"></span>
+                                <span class="fa fa-envelope" style="font-size:20px"></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarToggle">
                                 <span class="dropdown-item text-light bg-dark">Messages</span>
@@ -53,9 +56,9 @@
                         </li>
     
                         <!-- Dropdown for Notification -->
-                        <li class="nav-item dropdown mr-2">
+                        <li class="nav-item dropdown mr-2 mt-1">
                             <a class="nav-link" id="navbarToggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="fa fa-bell" style="font-size:22px"></span>
+                                <span class="fa fa-bell" style="font-size:20px"></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarToggle">
                                 <span class="dropdown-item text-light bg-dark">Notifications</span>
@@ -65,21 +68,36 @@
                         </li>
     
                         <!-- Dropdown for Settings -->
-                        <li class="nav-item dropdown mr-2">
+                        <li class="nav-item dropdown mr-2 mt-1">
+                            <!-- Settings symbol for settings dropdown -->
                             <a class="nav-link" id="navbarToggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="fa fa-cog" style="font-size:22px"></span>
+                                <span class="fa fa-cog" style="font-size:20px"></span>
                             </a>
+
+                            <!-- Settings Dropdown -->
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarToggle">
                                 <span class="dropdown-item text-light bg-dark">Settings</span>
-                                <a class="dropdown-item" routerLink="view-profile/">setting1</a>
-                                <a class="dropdown-item" routerLink="edit-profile/">settin2</a>
+
+                                <!-- Link for Editing User Details -->
+                                <a class="dropdown-item" routerLink="edit-details/">
+                                    <span class="fa fa-edit mr-2"></span>Edit Details
+                                </a>
+
+                                <!-- Link for Changing User Password -->
+                                <a class="dropdown-item" routerLink="edit-profile/">
+                                    <span class="fa fa-edit mr-2"></span>Chnage Password
+                                </a>
+
+                                <button class="dropdown-item" (click)="deactivateUser()" routerLink="/">
+                                    <span class="fa fa-times mr-2"></span>Deactivate Account
+                                </button>
                             </div>
                         </li>
     
                         <!-- Dropdown for User Profile -->
-                        <li class="nav-item dropdown mr-4">
+                        <li class="nav-item dropdown mr-4 mt-1">
                             <a class="nav-link" id="navbarToggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="fa fa-user-circle-o" style="font-size:22px"></span>
+                                <span class="fa fa-user" style="font-size:20px"></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarToggle">
                                 <a class="dropdown-item" routerLink="view-profile">
@@ -98,45 +116,51 @@
                             </div>
                         </li>
     
-                        <li class="nav-item dropdown mr-1">
-                            <p class="mt-2" style="color:white">Hi </p>
+                        <li class="nav-item dropdown mr-1 mt-2">
+                            <p style="color:white">Hi </p>
                         </li>
     
                         <!-- Display Username -->
-                        <li class="nav-item dropdown mr-3">
-                            <p class="mt-2" style="color:white">{{username}}</p>
+                        <li class="nav-item dropdown mr-3 mt-2">
+                            <p style="color:white">{{username}}</p>
                         </li>
+
                     </ng-template>
     
                     <!-- If the user is not Authenticated or Logged Out -->
                     <ng-template #loggedOut>
-                        <li class="nav-item mr-2">
+
+                        <!-- Navigation Link to Login -->
+                        <li class="nav-item mr-2 mt-1">
                             <a class="nav-link" routerLink="login/">
                                 Login<i class="fa fa-sign-out ml-2" aria-hidden="true"></i>
                             </a>
                         </li>
-                        <li class="nav-item mr-4">
+
+                        <!-- Navigation Link to Register -->
+                        <li class="nav-item mr-4 mt-1">
                             <a class="nav-link" routerLink="register/">
                                 Register
                             </a>
                         </li>
+
                     </ng-template>
                 </ul>
             </div>    	
         </nav>
     </header>
 
-    <main role="main" class="fluid-container ml-5 mr-5 mt-5 jumbotron" style="color:black">
+    <main role="main" class="fluid-container ml-4 mr-4 mt-5 jumbotron">
         <div class="row ">
-            <div class="col-md-6">
+            <div class="col-md-7">
                 <router-outlet></router-outlet>
             </div>
-            <div class="col-md-2"></div>
+            <div class="col-md-1" style="border-right: 1px solid #333;"></div>
             <div class="col-md-4">
                 <div class="content-section">
-                    <h3>Our Sidebar</h3>
+                    <h3 class="article-title">Sidebar</h3>
                     <p class='text-muted'>You can put any information here you'd like.</p>
-                    <ul class="list-group">
+                    <ul class="article-content list-group">
                         <li href="#" class="list-group-item list-group-item-light">Latest Post</li>
                         <li href="#" class="list-group-item list-group-item-light">etc</li>
                         <li href="#" class="list-group-item list-group-item-light">Calendars</li>
@@ -148,9 +172,12 @@
         </div>
     </main>
 
-    <footer class="container-fluid text-center mt-4 bg-steel">
-        <br>
-        <br>
-        <p style="color:white">Coded with <span style="color:red">&hearts;</span> by <a href="https://github.com/amishm766">Ankit Mishra.</a></p>
+    <footer class="container-fluid bg-steel">
+        <!-- <br> -->
+        <a class="ml-1" routerLink="/">
+            <img style="line-height: 30px;" src="../assets/media/images1.png" alt="">
+        </a>
+        <a class="navbar-brand ml-2" style="color: white; font-size : 30px;" routerLink="/">piBee</a>
+        <p class="text-center" style="color:white">Coded with <span style="color:red">&hearts;</span> by <a href="https://github.com/amishm766">Ankit Mishra.</a></p>
     </footer>
 </div>

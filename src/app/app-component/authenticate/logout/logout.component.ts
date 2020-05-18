@@ -27,6 +27,7 @@ export class LogoutComponent implements OnInit {
           console.log(logOutResponse)
           this._router.navigate([''])
         },
+
         logOutError => {
           console.log(logOutError)
           alert(logOutError.error['detail'])
@@ -38,7 +39,6 @@ export class LogoutComponent implements OnInit {
     else {
       this._router.navigate([''])
     }
-    //window.location.reload()
   }
 
 }

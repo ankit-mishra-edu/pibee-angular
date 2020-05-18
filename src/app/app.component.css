@@ -1,8 +1,36 @@
+h1, h2, h3, h4, h5, h6 {
+    color: #444444;
+}
+  
+ul {
+    margin: 0;
+}
+
 body {
     background: #fafafa;
     color: #333333;
-    margin-top: 5rem;
-  }
+    /* margin-top: 5rem; */
+}
+  
+.bg-steel {
+    background-color: #08192b;
+}
+
+.navbar-nav .nav-link {
+    color: #cbd5db;
+}
+  
+.navbar-nav .nav-link:hover {
+    color: #ffffff;
+}
+  
+.navbar-nav .nav-link.active {
+    font-weight: 500;
+}
+
+.jumbotron {
+    margin: 0 auto;
+}
 
 input {
   max-width: 230px;
@@ -10,39 +38,16 @@ input {
 
 .dropdown-menu  > a {
   background-color: white; /* This has an effect */
-  }
+}
 
 .dropdown-menu > a:hover {
     background-color : #0366d6;
     background-image: none;
-  }
-  
-h1, h2, h3, h4, h5, h6 {
-    color: #444444;
-  }
-  
-ul {
-    margin: 0;
-}
-  
-.bg-steel {
-    background-color: #08192b;
 }
 
-footer {
-    box-shadow: 0 50vh 0 50vh #08192b;
-}
-  
-.site-header .navbar-nav .nav-link {
-    color: #cbd5db;
-}
-  
-.site-header .navbar-nav .nav-link:hover {
-    color: #ffffff;
-}
-  
-.site-header .navbar-nav .nav-link.active {
-    font-weight: 500;
+.dropdown-menu > button:hover {
+    background-color : #0366d6;
+    background-image: none;
 }
   
 .content-section {
@@ -57,7 +62,7 @@ footer {
     color: #444444;
 }
   
-a.article-title:hover {
+.article-title:hover {
     color: #428bca;
     text-decoration: none;
 }
@@ -99,4 +104,7 @@ a.article-title:hover {
 .account-heading {
     font-size: 2.5rem;
 }
-  
+
+footer {
+    box-shadow: 0 100vh 0 100vh #08192b;
+}
