@@ -10,7 +10,7 @@ import { NgForm } from '@angular/forms';
 })
 export class EditProfileComponent implements OnInit {
 
-  profileData = {
+  profileFormData = {
     "user" : 0,
     "bio" : "",
     "location" : "",
@@ -22,16 +22,32 @@ export class EditProfileComponent implements OnInit {
   constructor(private _auth : AuthService, private _router : Router) { }
 
   ngOnInit(): void {
-    this.profileData['user'] = +localStorage.getItem('user')
+    // this.profileFormData['user'] = +localStorage.getItem('user')
+    this.getUserProfile()
+  }
+
+  getUserProfile() {
+    this._auth.GetAllUserProfiles().subscribe(
+      getAllUserProfilesResponse => {
+        console.log(getAllUserProfilesResponse)
+
+        getAllUserProfilesResponse.forEach(userProfilesArray => {
+          if (userProfilesArray.user.id == +localStorage.getItem('user')) {
+            this.profileFormData = userProfilesArray;
+          }
+        });
+      },
+
+      getUserProfileError => {
+        console.log(getUserProfileError)
+      },
+
+      () => {console.log("Fetched profile data Successfully")}
+    )
   }
 
   editProfile() {
-    // let array = this.image.split('\\')
-    // console.log(array[array.length-1])
-    // this.image = 'http://127.0.0.1:8000/media/profile_pics/' + array[array.length-1]
-    // console.log(this.image)
-    
-    this._auth.editProfile(this.profileData).subscribe(
+    this._auth.editProfile(this.profileFormData).subscribe(
       editProfileResponse => {
         console.log(editProfileResponse)
         this._router.navigate(['/'])
@@ -39,7 +55,7 @@ export class EditProfileComponent implements OnInit {
       editProfileError => {
         console.log(editProfileError)
       },
-      () => {console.log("Fetched profile data Successfully")}
+      () => {console.log("Edit profile Service called Successfully")}
     )
   }
 

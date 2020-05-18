@@ -11,7 +11,6 @@ export class ViewProfileComponent implements OnInit {
   profileData = {
     'user' : 0
   }
-  profilePic;
 
   constructor(private _auth : AuthService) { }
 
@@ -21,15 +20,21 @@ export class ViewProfileComponent implements OnInit {
   }
 
   viewProfile() {
-    this._auth.editProfile(this.profileData).subscribe(
-      viewProfileResponse => {
-        this.profileData = viewProfileResponse
-        this.profilePic = 'http://127.0.0.1:8000' + viewProfileResponse['image']
-        console.log(viewProfileResponse)
+    this._auth.GetAllUserProfiles().subscribe(
+      getAllUserProfilesResponse => {
+        console.log(getAllUserProfilesResponse)
+
+        getAllUserProfilesResponse.forEach(userProfilesArray => {
+          if (userProfilesArray.user.id == +localStorage.getItem('user')) {
+            this.profileData = userProfilesArray;
+          }
+        });
       },
-      viewProfileError => {
-        console.log(viewProfileError)
+
+      getUserProfileError => {
+        console.log(getUserProfileError)
       },
+
       () => {console.log("Fetched profile data Successfully")}
     )
   }
