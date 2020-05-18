@@ -1,0 +1,54 @@
+<ng-template [ngIf]="!isUserConfirmed" [ngIfElse]="confirmed">
+    <form #confirmUserForm="ngForm">
+        <h3 class="ml-4">Confirm your Password</h3>
+        <div class="form-group">
+            <div class="form-group ml-5 mt-5">
+                <label class="font-weight-bold">Password :</label>
+                <input type="password" class="form-control" name="password" #password="ngModel" ngModel required>
+            </div>
+
+            <button (click)="confirmUser(confirmUserForm)" type="submit" class="btn btn-primary ml-5" [disabled]="!confirmUserForm.form.valid">Confirm</button>
+        </div>
+    </form>
+</ng-template>
+
+<ng-template #confirmed>
+    <form #changeUserDetailsForm="ngForm">
+        <div class="form-group ml-5" >
+          <h3>Edit Details</h3>
+          <div class="form-group">
+            <label class="font-weight-bold">Username :</label>
+            <input type="text" autofocus class="form-control" name="userName" #username="ngModel" [(ngModel)] = "editDetailFormData.user.username" maxlength=150 required>
+          </div>
+          
+          <div class="form-group">
+            <label class="font-weight-bold">First Name :</label>
+            <input type="text" class="form-control" name="firstName" #firstname="ngModel" [(ngModel)] = "editDetailFormData.user.first_name" >
+          </div>
+    
+          <div class="form-group">
+            <label class="font-weight-bold">Last Name :</label>
+            <input type="text" class="form-control" name="lastName" #lastname="ngModel" [(ngModel)] = "editDetailFormData.user.last_name" >
+          </div>
+    
+          <div class="form-group">
+            <label class="font-weight-bold">Email :</label>
+            <input type="email" class="form-control" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" 
+                   name="Email" #email="ngModel" [(ngModel)] = "editDetailFormData.user.email" required>
+            
+          </div>
+    
+          <!-- <div class="form-group">
+            <label class="font-weight-bold">Password :</label>
+            <input type="password" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" name="Password" #password="ngModel" [(ngModel)] = "editDetailFormData.user.password" required>
+            <small style="color: grey">"Must contain at least one number, an uppercase, a lowercase letter, and at least 8 characters.</small>
+            <div [hidden]="password.valid || password.pristine" ></div>
+          </div> -->
+    
+          <button (click)="changeUserDetails()" type="submit" class="btn btn-primary" [disabled]="!changeUserDetailsForm.form.valid">Change</button>
+            
+        </div>
+    </form>
+</ng-template>
+
+    
