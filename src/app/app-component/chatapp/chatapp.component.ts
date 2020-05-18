@@ -52,6 +52,7 @@ export class ChatappComponent implements OnInit {
         else {
           alignment = 'left'
         }
+        // document.getElementById("dataBlock").append('<p>receiverdMessageArray[i].content</p>')
         this.display.messageArray.push({'alignment' : alignment, 'message' : receiverdMessageArray[i]});
       }
     }
