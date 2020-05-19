@@ -6,10 +6,21 @@ ul {
     margin: 0;
 }
 
+i .fa {
+    font-size:20px
+}
+
+label {
+    font-size: 10px;
+}
+
 body {
     background: #fafafa;
     color: #333333;
     /* margin-top: 5rem; */
+}
+.navbar {
+    height: 50px;
 }
   
 .bg-steel {
@@ -17,6 +28,7 @@ body {
 }
 
 .navbar-nav .nav-link {
+    margin-top: 8px;
     color: #cbd5db;
 }
   
@@ -30,10 +42,13 @@ body {
 
 .jumbotron {
     margin: 0 auto;
+    padding-top: 10px;
+    padding-bottom: 3px;
 }
 
 input {
   max-width: 230px;
+  font-size: 30px;
 }
 
 .dropdown-menu  > a {
@@ -48,6 +63,11 @@ input {
 .dropdown-menu > button:hover {
     background-color : #0366d6;
     background-image: none;
+}
+
+.article-container {
+    margin-top: auto;
+    margin-bottom: auto;
 }
   
 .content-section {
@@ -103,6 +123,12 @@ input {
   
 .account-heading {
     font-size: 2.5rem;
+}
+
+.card-container {
+    margin-top: -13px;
+    overflow: auto;
+    max-height: 85px;
 }
 
 footer {
