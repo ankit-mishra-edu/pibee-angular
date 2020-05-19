@@ -16,13 +16,12 @@ export class EditProfileComponent implements OnInit {
     "location" : "",
     "birth_date" : "",
     "email_confirmed" : "",
-    "image" : '' 
+    "image" : "" 
   }
 
   constructor(private _auth : AuthService, private _router : Router) { }
 
   ngOnInit(): void {
-    // this.profileFormData['user'] = +localStorage.getItem('user')
     this.getUserProfile()
   }
 
@@ -34,6 +33,8 @@ export class EditProfileComponent implements OnInit {
         getAllUserProfilesResponse.forEach(userProfilesArray => {
           if (userProfilesArray.user.id == +localStorage.getItem('user')) {
             this.profileFormData = userProfilesArray;
+            this.profileFormData.user = userProfilesArray.user.id;
+            delete this.profileFormData.image;
           }
         });
       },

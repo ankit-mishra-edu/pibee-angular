@@ -9,7 +9,12 @@ import { AuthService } from 'src/app/app-service/auth-service/auth.service';
 export class ViewProfileComponent implements OnInit {
 
   profileData = {
-    'user' : 0
+    "user" : 0,
+    "bio" : "",
+    "location" : "",
+    "birth_date" : "",
+    "email_confirmed" : "",
+    "image" : '' 
   }
 
   constructor(private _auth : AuthService) { }
