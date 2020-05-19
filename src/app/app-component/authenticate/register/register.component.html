@@ -1,9 +1,9 @@
 <form #registerForm="ngForm">
     <div class="form-group ml-5" >
-      <h3>Sign Up</h3>
+      <h4 class="font-weight-bold">Sign Up</h4>
       <div class="form-group">
         <label class="font-weight-bold">Username :</label>
-        <input type="text" autofocus class="form-control" name="userName" #username="ngModel" [(ngModel)] = "userData.user.username" maxlength=150 required>
+        <input type="text" autofocus class="form-control input-sm" name="userName" #username="ngModel" [(ngModel)] = "userData.user.username" maxlength=150 required>
       </div>
       
       <div class="form-group">
@@ -26,7 +26,7 @@
       <div class="form-group">
         <label class="font-weight-bold">Password :</label>
         <input type="password" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" name="Password" #password="ngModel" [(ngModel)] = "userData.user.password" required>
-        <small style="color: grey">"Must contain at least one number, an uppercase, a lowercase letter, and at least 8 characters.</small>
+        <small style="color: grey">*Must contain at least 8 characters with a number, an uppercase and lowercase letter.</small>
         <div [hidden]="password.valid || password.pristine" ></div>
       </div>
 
