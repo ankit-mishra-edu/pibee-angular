@@ -8,25 +8,27 @@ import { User } from '../../app-interface/User';
 })
 export class AuthService {
 
+  baseUrl : string = 'https://pibeedjango.herokuapp.com/api/';
+
   constructor(private _http : HttpClient) { }
 
   GetUser(id) : Observable<any>{
-    let returnValue = this._http.get('https://pibeedjango.herokuapp.com/api/users/', id);
+    let returnValue = this._http.get(this.baseUrl + 'users/', id);
     return(returnValue)
   }
 
   GetAllUserProfiles() : Observable<any>{
-    let returnValue = this._http.get('https://pibeedjango.herokuapp.com/api/users_profile/');
+    let returnValue = this._http.get(this.baseUrl + 'users_profile/');
     return(returnValue)
   }
 
   GetAllUsers() : Observable<any>{
-    let returnValue = this._http.get('https://pibeedjango.herokuapp.com/api/users/');
+    let returnValue = this._http.get(this.baseUrl + 'users/');
     return(returnValue)
   }
 
   Register(userData) : Observable<any>{
-    let returnValue = this._http.post('https://pibeedjango.herokuapp.com/api/register/', userData);
+    let returnValue = this._http.post(this.baseUrl + 'register/', userData);
     return(returnValue)
   }
 
@@ -37,7 +39,7 @@ export class AuthService {
         'Authorization': "Token " + localStorage.getItem('Token')
       })
     };
-    let returnValue = this._http.post('https://pibeedjango.herokuapp.com/api/login/', loginData, httpOptions)
+    let returnValue = this._http.post(this.baseUrl + 'login/', loginData, httpOptions)
     return(returnValue)
   }
 
@@ -48,22 +50,22 @@ export class AuthService {
         'Authorization': "Token " + localStorage.getItem('Token')
       })
     };
-    let returnValue = this._http.post('https://pibeedjango.herokuapp.com/api/logout/', "", httpOptions)
+    let returnValue = this._http.post(this.baseUrl + 'logout/', "", httpOptions)
     return(returnValue)
   }
 
   editProfile(profileData) : Observable <any>{
-    let returnValue = this._http.patch('https://pibeedjango.herokuapp.com/api/profile/', profileData)
+    let returnValue = this._http.patch(this.baseUrl + 'profile/', profileData)
     return(returnValue)
   }
 
   ViewProfile(profileData) : Observable <any>{
-    let returnValue = this._http.get('https://pibeedjango.herokuapp.com/api/profile/', profileData)
+    let returnValue = this._http.get(this.baseUrl + 'profile/', profileData)
     return(returnValue)
   }
 
   EditUserDetails(userData) : Observable<any>{
-    let returnValue = this._http.patch('https://pibeedjango.herokuapp.com/api/register/', userData);
+    let returnValue = this._http.patch(this.baseUrl + 'register/', userData);
     return(returnValue)
   }
   
