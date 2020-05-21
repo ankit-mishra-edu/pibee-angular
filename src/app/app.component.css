@@ -21,8 +21,8 @@ label {
 
 main {
     /* margin: 0 auto; */
-    padding: 10px 0px 10px 0px;
-    margin: 56px 40px 0px 40px;
+    padding: 10px 0px 0px 0px;
+    margin: 56px 30px 0px 30px;
 }
   
 .bg-steel {
@@ -37,6 +37,7 @@ main {
 
 .site-header #navbarToggle .navbar-nav .dropdown {
     padding: 4px;
+    margin: 0px 8px 0px 0px;
     background-color: #08192b;
 }
 
