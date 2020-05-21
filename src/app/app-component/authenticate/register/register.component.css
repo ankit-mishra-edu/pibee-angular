@@ -10,3 +10,7 @@
   input {
     max-width: 230px;
   }
+
+  form {
+    margin: 0 0 0 48px;
+  }
