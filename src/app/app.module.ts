@@ -13,6 +13,7 @@ import { LogoutComponent } from './app-component/authenticate/logout/logout.comp
 import { EditProfileComponent } from './app-component/authenticate/profile/edit-profile/edit-profile.component';
 import { ViewProfileComponent } from './app-component/authenticate/profile/view-profile/view-profile.component';
 import { EditDetailsComponent } from './app-component/authenticate/edit-details/edit-details.component';
+import { ChangePasswordComponent } from './app-component/authenticate/change-password/change-password.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { EditDetailsComponent } from './app-component/authenticate/edit-details/
     EditProfileComponent,
     ViewProfileComponent,
     EditDetailsComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     CommonModule,
