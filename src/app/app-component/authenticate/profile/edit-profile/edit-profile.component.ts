@@ -48,7 +48,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   editProfile() {
-    this._auth.editProfile(this.profileFormData).subscribe(
+    this._auth.EditProfile(this.profileFormData).subscribe(
       editProfileResponse => {
         console.log(editProfileResponse)
         this._router.navigate(['/'])

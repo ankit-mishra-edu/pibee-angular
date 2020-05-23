@@ -75,20 +75,21 @@ export class EditDetailsComponent implements OnInit {
   }
 
   changeUserDetails(){
+    
     if (this.editDetailFormData.user.username == localStorage.getItem('username')) {
       this._auth.EditUserDetails(this.editDetailFormData).subscribe(
         editUserDetailsResponse => {
-          console.log(editUserDetailsResponse)
+          console.log(editUserDetailsResponse);
         },
   
         editUserDetailsError => {
-          console.log(editUserDetailsError)
-          alert(editUserDetailsError.error)
+          console.log(editUserDetailsError);
+          alert(editUserDetailsError.error);
         },
   
         () => {
-          console.log("Sign up Successful")
-          this._route.navigate([''])
+          console.log("Sign up Successful");
+          this._route.navigate(['']);
         }
       )
     }

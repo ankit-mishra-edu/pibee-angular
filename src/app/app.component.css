@@ -36,8 +36,7 @@ main {
 }
 
 .site-header #navbarToggle .navbar-nav .dropdown {
-    padding: 4px;
-    margin: 0px 8px 0px 0px;
+    padding: 4px 12px 4px 4px;
     background-color: #08192b;
 }
 
@@ -57,7 +56,7 @@ main {
 
 .site-header #navbarToggle .navbar-nav .dropdown .nav-link {
     margin: 0;
-    padding: 4px;
+    padding: 4px 4px 4px 4px;
     color:white
 }
 

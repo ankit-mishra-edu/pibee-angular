@@ -11,6 +11,19 @@
     max-width: 230px;
   }
 
+  .btn-primary {
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(134, 38, 195) !important;
+    border-width: initial !important;
+    border-style: none !important;
+    border-color: initial !important;
+    border-image: initial !important;
+  }
+
+  .btn-primary :hover {
+    background-color: rgb(241, 108, 81) !important;
+  }
+
   form {
     margin: 0 0 0 48px;
   }
