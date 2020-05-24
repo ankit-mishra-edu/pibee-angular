@@ -9,7 +9,7 @@ import { User } from '../../app-interface/User';
 })
 export class AuthService {
 
-  baseUrl : string = 'https://pibeedjango.herokuapp.com/api/';
+  baseUrl : string = 'http://localhost:8000/api/';
 
   constructor(private _http : HttpClient) { }
 
