@@ -10,7 +10,7 @@ import { User } from 'src/app/app-interface/User';
 export class ChatappComponent implements OnInit {
 
   socketRef : WebSocket;
-  path : string = 'ws://127.0.0.1:8000/ws/chat/lobby/' ;
+  path : string = 'ws://172.25.187.241:8000/ws/chat/ankit/' ;
 
   display = {
     messageArray : []
@@ -18,7 +18,7 @@ export class ChatappComponent implements OnInit {
 
   message : IMessage = {
     'sender' : '',
-    'receiver' : 'ankit',
+    'receiver' : 'amishm766',
     'content' : ''
   }
 
@@ -71,6 +71,6 @@ export class ChatappComponent implements OnInit {
   }
 
   getMessage() {
-    this._chat.getMessage(this.socketRef, localStorage.getItem('username'), 'ankit')
+    this._chat.getMessage(this.socketRef, localStorage.getItem('username'), 'amishm766')
   }
 }
