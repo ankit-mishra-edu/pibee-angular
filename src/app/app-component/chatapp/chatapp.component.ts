@@ -10,7 +10,7 @@ import { User } from 'src/app/app-interface/User';
 export class ChatappComponent implements OnInit {
 
   socketRef : WebSocket;
-  path : string = 'wss://172.25.187.241:8000/ws/chat/ankit/' ;
+  path : string = 'ws://127.0.0.1:8000/ws/chat/ankit/' ;
 
   display = {
     messageArray : []
