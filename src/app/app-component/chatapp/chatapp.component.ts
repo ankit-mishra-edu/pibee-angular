@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from 'src/app/app-service/chat-service/chat.service';
 import { IMessage } from 'src/app/app-interface/Message';
-import { User } from 'src/app/app-interface/User';
+import { IUser } from 'src/app/app-interface/User';
 @Component({
   selector: 'app-chatapp',
   templateUrl: './chatapp.component.html',

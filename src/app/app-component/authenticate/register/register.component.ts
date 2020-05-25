@@ -28,7 +28,7 @@ export class RegisterComponent implements OnInit {
     this._auth.Register(this.userData).subscribe(
       signUpResponse => {
         localStorage.setItem('Token', signUpResponse.key)
-        localStorage.setItem('user', signUpResponse.user.id)
+        localStorage.setItem('user', signUpResponse.user.toString())
         console.log(signUpResponse)
       },
       signUpError => {

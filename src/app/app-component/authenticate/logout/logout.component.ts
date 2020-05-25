@@ -30,7 +30,7 @@ export class LogoutComponent implements OnInit {
 
         logOutError => {
           console.log(logOutError)
-          alert(logOutError.error['detail'])
+          alert(logOutError)
         },
         () => {console.log("Logged Out Successfully")}
       )
