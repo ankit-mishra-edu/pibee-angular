@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/app-service/auth-service/auth.service';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-edit-details',
   templateUrl: './edit-details.component.html',
   styleUrls: ['./edit-details.component.css']
 })
-export class EditDetailsComponent implements OnInit {
+export class EditDetailsComponent implements OnInit, OnDestroy {
 
   editDetailFormData;
   isUserConfirmed : boolean = false;
+  subscriptions = new SubSink();
 
   constructor(private _auth : AuthService, private _route : Router) { }
 
@@ -36,7 +38,8 @@ export class EditDetailsComponent implements OnInit {
         "email" : 'amishm7@gmail.com'
       }
     }
-    this._auth.LogIn(loginFormData).subscribe(
+    this.subscriptions.sink = this._auth.LogIn(loginFormData)
+    .subscribe(
       logInResponse => {
         console.log(logInResponse)
         localStorage.setItem('username', logInResponse.user.username)
@@ -56,7 +59,8 @@ export class EditDetailsComponent implements OnInit {
   }
 
   changeUserDetails(){  
-    this._auth.EditUserDetails(this.editDetailFormData).subscribe(
+    this.subscriptions.sink = this._auth.EditUserDetails(this.editDetailFormData)
+    .subscribe(
       editUserDetailsResponse => {
         console.log(editUserDetailsResponse);
         this._route.navigate(['']);
@@ -73,8 +77,13 @@ export class EditDetailsComponent implements OnInit {
     )
   }
 
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
+
   // getUserDetails() {
-  //   this._auth.GetUser(this.editDetailFormData.user.id).subscribe(
+  //   this.subscriptions.sink = this._auth.GetUser(this.editDetailFormData.user.id)
+  //   .subscribe(
   //     getUserResponse => {
   //       console.log(getUserResponse)
   //       this.editDetailFormData.user = getUserResponse;

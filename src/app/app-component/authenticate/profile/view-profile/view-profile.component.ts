@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/app-service/auth-service/auth.service';
 import { IProfile } from 'src/app/app-interface/Profile';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-view-profile',
   templateUrl: './view-profile.component.html',
   styleUrls: ['./view-profile.component.css']
 })
-export class ViewProfileComponent implements OnInit {
+export class ViewProfileComponent implements OnInit, OnDestroy {
 
+  subscriptions = new SubSink();
   profileData : IProfile = {
     "user" : 0,
     "bio" : "",
@@ -26,7 +28,8 @@ export class ViewProfileComponent implements OnInit {
   }
 
   viewProfile() {
-    this._auth.GetUserProfile(+localStorage.getItem('user')).subscribe(
+    this.subscriptions.sink = this._auth.GetUserProfile(+localStorage.getItem('user'))
+    .subscribe(
       getUserProfileResponse => {
         console.log(getUserProfileResponse)
         this.profileData = getUserProfileResponse;
@@ -38,6 +41,10 @@ export class ViewProfileComponent implements OnInit {
 
       () => {console.log("Fetched profile data Successfully")}
     )
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
 }

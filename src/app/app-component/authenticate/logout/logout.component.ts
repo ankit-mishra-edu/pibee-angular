@@ -1,14 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/app-service/auth-service/auth.service';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-logout',
   templateUrl: './logout.component.html',
   styleUrls: ['./logout.component.css']
 })
-export class LogoutComponent implements OnInit {
+export class LogoutComponent implements OnInit, OnDestroy {
 
+  subscriptions = new SubSink();
+  
   constructor(private _auth : AuthService, private _router : Router) { }
 
   ngOnInit(): void {
@@ -17,7 +20,8 @@ export class LogoutComponent implements OnInit {
 
   logout(){
     if(localStorage.getItem('isLoggedIn') == 'true'){
-      this._auth.LogOut().subscribe(
+      this.subscriptions.sink = this._auth.LogOut()
+      .subscribe(
         logOutResponse => {
           localStorage.setItem('isLoggedIn', 'false')
           localStorage.setItem('username', null)
@@ -39,6 +43,10 @@ export class LogoutComponent implements OnInit {
     else {
       this._router.navigate([''])
     }
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
 }

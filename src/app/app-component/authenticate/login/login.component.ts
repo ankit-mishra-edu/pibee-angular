@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/app-service/auth-service/auth.service';
 import { Router } from '@angular/router';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   loginData ;
+  subscriptions = new SubSink();
   
   constructor(private _auth : AuthService, private _router : Router) { }
 
@@ -25,7 +27,8 @@ export class LoginComponent implements OnInit {
 
   logIn(){
     //console.log(this.loginData)
-    this._auth.LogIn(this.loginData).subscribe(
+    this.subscriptions.sink = this._auth.LogIn(this.loginData)
+    .subscribe(
       logInResponse => {
         localStorage.setItem('isLoggedIn', 'true')
         localStorage.setItem('username', logInResponse.user.username)
@@ -43,6 +46,10 @@ export class LoginComponent implements OnInit {
 
       () => {console.log("Logged In Successfully")}
     )
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
   
 

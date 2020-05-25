@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './app-service/auth-service/auth.service';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,7 @@ export class AppComponent {
   loggedIn : boolean;
   username : string;
   title = 'piBee';
+  subscriptions = new SubSink();
 
   constructor(private _auth : AuthService, private _route : Router) { }
 
@@ -39,7 +41,7 @@ export class AppComponent {
       }
     }
     this._route.navigate(['logout']);
-    this._auth.EditUserDetails(deactivateFormData).subscribe(
+    this.subscriptions.sink = this._auth.EditUserDetails(deactivateFormData).subscribe(
       deactivateUserResponse => {
         localStorage.setItem('isLoggedIn', 'false')
         localStorage.setItem('username', null)
@@ -58,5 +60,9 @@ export class AppComponent {
         console.log("Deactivation service called Successfully")
       }
     )
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 }

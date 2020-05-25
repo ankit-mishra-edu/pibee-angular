@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/app-service/auth-service/auth.service';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { IProfile } from 'src/app/app-interface/Profile';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.component.html',
   styleUrls: ['./edit-profile.component.css']
 })
-export class EditProfileComponent implements OnInit {
+export class EditProfileComponent implements OnInit, OnDestroy {
 
+  subscriptions = new SubSink()
   profileFormData : IProfile = {
     "user" : 0,
     "bio" : "",
@@ -28,7 +30,8 @@ export class EditProfileComponent implements OnInit {
   }
 
   getUserProfile() {
-    this._auth.GetUserProfile(+localStorage.getItem('user')).subscribe(
+    this.subscriptions.sink = this._auth.GetUserProfile(+localStorage.getItem('user'))
+    .subscribe(
       getUserProfileResponse => {
         console.log(getUserProfileResponse)
         this.profileFormData = getUserProfileResponse;
@@ -44,7 +47,8 @@ export class EditProfileComponent implements OnInit {
   }
 
   editProfile() {
-    this._auth.EditProfile(this.profileFormData).subscribe(
+    this.subscriptions.sink = this._auth.EditProfile(this.profileFormData)
+    .subscribe(
       editProfileResponse => {
         console.log(editProfileResponse)
         this._router.navigate(['/'])
@@ -54,6 +58,10 @@ export class EditProfileComponent implements OnInit {
       },
       () => {console.log("Edit profile Service called Successfully")}
     )
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
 }

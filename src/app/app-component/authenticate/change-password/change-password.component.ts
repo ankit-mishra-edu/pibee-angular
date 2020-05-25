@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/app-service/auth-service/auth.service';
 import { Router } from '@angular/router';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
   styleUrls: ['./change-password.component.css']
 })
-export class ChangePasswordComponent implements OnInit {
+export class ChangePasswordComponent implements OnInit, OnDestroy {
 
+  subscriptions = new SubSink();
   changePasswordFormData = {
     user : {
       id : +localStorage.getItem('user'),
@@ -30,7 +32,8 @@ export class ChangePasswordComponent implements OnInit {
         "email" : 'amishm7@gmail.com'
       }
     }
-    this._auth.LogIn(loginFormData).subscribe(
+    this.subscriptions.sink = this._auth.LogIn(loginFormData)
+    .subscribe(
       logInResponse => {
         console.log(logInResponse)
        this.changePassword()
@@ -47,21 +50,26 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   changePassword() {
-      this._auth.EditUserDetails(this.changePasswordFormData).subscribe(
-        editUserDetailsResponse => {
-          console.log(editUserDetailsResponse);
-          this._route.navigate(['']);
-        },
-  
-        editUserDetailsError => {
-          console.log(editUserDetailsError);
-          alert(editUserDetailsError.error);
-        },
-  
-        () => {
-          console.log("Sign up Successful");
-        }
-      )
+    this.subscriptions.sink = this._auth.EditUserDetails(this.changePasswordFormData)
+    .subscribe(
+      editUserDetailsResponse => {
+        console.log(editUserDetailsResponse);
+        this._route.navigate(['']);
+      },
+
+      editUserDetailsError => {
+        console.log(editUserDetailsError);
+        alert(editUserDetailsError.error);
+      },
+
+      () => {
+        console.log("Sign up Successful");
+      }
+    )
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
 }

@@ -31,7 +31,7 @@
                     
                     
                     <!-- Navigation link for Chat -->
-                    <li *ngIf="isLoggedIn()" class="nav-item dropdown">
+                    <li *ngIf="isLoggedIn()" class="nav-item nav-tabs dropdown">
                         <a class="nav-link" routerLink="chatapp/">
                             <i class="fa fa-comments-o" aria-hidden="true"></i>
                         </a>
@@ -45,7 +45,7 @@
                     <ng-template [ngIf]="isLoggedIn()" [ngIfElse]="loggedOut">
 
                         <!-- Dropdown for Messages -->
-                        <li class="nav-item dropdown">
+                        <li class="nav-item nav-tabs dropdown">
                             <a class="nav-link" id="navbarToggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-envelope" aria-hidden="true"></i>
                             </a>
@@ -57,7 +57,7 @@
                         </li>
     
                         <!-- Dropdown for Notification -->
-                        <li class="nav-item dropdown">
+                        <li class="nav-item nav-tabs dropdown">
                             <a class="nav-link" id="navbarToggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-bell"></i>
                             </a>
@@ -69,7 +69,7 @@
                         </li>
     
                         <!-- Dropdown for Settings -->
-                        <li class="nav-item dropdown">
+                        <li class="nav-item nav-tabs dropdown">
                             <!-- Settings symbol for settings dropdown -->
                             <a class="nav-link" id="navbarToggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-cog"></i>
@@ -96,7 +96,7 @@
                         </li>
     
                         <!-- Dropdown for User Profile -->
-                        <li class="nav-item dropdown">
+                        <li class="nav-item nav-tabs dropdown">
                             <a class="nav-link" id="navbarToggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-user-circle-o"></i>
                             </a>
@@ -142,14 +142,14 @@
                     <ng-template #loggedOut>
 
                         <!-- Navigation Link to Login -->
-                        <li class="nav-item dropdown">
+                        <li class="nav-item nav-tabs dropdown">
                             <a class="nav-link" routerLink="login/">
                                 <i class="fa fa-sign-in mr-2" aria-hidden="true"></i>Login
                             </a>
                         </li>
 
                         <!-- Navigation Link to Register -->
-                        <li class="nav-item dropdown">
+                        <li class="nav-item nav-tabs dropdown">
                             <a class="nav-link" routerLink="register/">
                                 Register
                             </a>
