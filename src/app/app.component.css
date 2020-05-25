@@ -127,14 +127,10 @@ main {
     max-height: 85px;
 }
 
-/* footer {
-    bottom : 0;
-    position: fixed;
-    box-shadow: 0 100vh 0 100vh #08192b;
-} */
-
-/* footer .text-center {
-    bottom : 0;
-    color:white;
-    margin: 0;
-} */
+.footer {
+    padding: 0px 0px 16px 0px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    background-color: #08192b;
+}
