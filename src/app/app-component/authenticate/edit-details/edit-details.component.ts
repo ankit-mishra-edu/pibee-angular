@@ -39,6 +39,7 @@ export class EditDetailsComponent implements OnInit {
     this._auth.LogIn(loginFormData).subscribe(
       logInResponse => {
         console.log(logInResponse)
+        localStorage.setItem('username', logInResponse.user.username)
         this.editDetailFormData.user = logInResponse.user;
         this.isUserConfirmed = true;
         // this.getUserDetails();
@@ -47,7 +48,7 @@ export class EditDetailsComponent implements OnInit {
       logInError => {
         console.log(logInError)
         this.isUserConfirmed = false;
-        alert(logInError.error.error)
+        alert(logInError)
       },
 
       () => {console.log("Logged In Successfully")}
@@ -58,6 +59,7 @@ export class EditDetailsComponent implements OnInit {
     this._auth.EditUserDetails(this.editDetailFormData).subscribe(
       editUserDetailsResponse => {
         console.log(editUserDetailsResponse);
+        this._route.navigate(['']);
       },
 
       editUserDetailsError => {
@@ -67,7 +69,6 @@ export class EditDetailsComponent implements OnInit {
 
       () => {
         console.log("Sign up Successful");
-        this._route.navigate(['']);
       }
     )
   }
