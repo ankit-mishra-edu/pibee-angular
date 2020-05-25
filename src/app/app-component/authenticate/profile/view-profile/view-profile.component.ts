@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/app-service/auth-service/auth.service';
+import { IProfile } from 'src/app/app-interface/Profile';
 
 @Component({
   selector: 'app-view-profile',
@@ -8,7 +9,7 @@ import { AuthService } from 'src/app/app-service/auth-service/auth.service';
 })
 export class ViewProfileComponent implements OnInit {
 
-  profileData = {
+  profileData : IProfile = {
     "user" : 0,
     "bio" : "",
     "location" : "",
@@ -20,20 +21,15 @@ export class ViewProfileComponent implements OnInit {
   constructor(private _auth : AuthService) { }
 
   ngOnInit(): void {
-    this.profileData['user'] = +localStorage.getItem('user')
+    this.profileData.user = +localStorage.getItem('user')
     this.viewProfile()
   }
 
   viewProfile() {
-    this._auth.GetAllUserProfiles().subscribe(
-      getAllUserProfilesResponse => {
-        console.log(getAllUserProfilesResponse)
-
-        getAllUserProfilesResponse.forEach(userProfilesArray => {
-          if (userProfilesArray.user.id == +localStorage.getItem('user')) {
-            this.profileData = userProfilesArray;
-          }
-        });
+    this._auth.GetUserProfile(this.profileData.user).subscribe(
+      getUserProfileResponse => {
+        console.log(getUserProfileResponse)
+        this.profileData = getUserProfileResponse;
       },
 
       getUserProfileError => {
