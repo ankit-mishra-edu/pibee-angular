@@ -4,6 +4,13 @@
       <div class="form-group">
         <label class="font-weight-bold">Username :</label>
         <input type="text" autofocus class="form-control input-sm" name="userName" #username="ngModel" [(ngModel)] = "userData.user.username" maxlength=150 required>
+        
+        <div *ngFor="let user of usersArray">
+          <div *ngIf="username.value==user.username && (password.valid || password.pristine)" class="alert alert-danger" style="width: 230px;">
+            Username already taken.
+          </div>
+        </div>
+        
       </div>
       
       <div class="form-group">
@@ -20,6 +27,12 @@
         <label class="font-weight-bold">Email :</label>
         <input type="email" class="form-control" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" 
                name="Email" #email="ngModel" [(ngModel)] = "userData.user.email" required>
+
+        <div *ngFor="let user of usersArray">
+          <div *ngIf="email.value==user.email" class="alert alert-danger" style="width: 230px;">
+            Email already taken.
+          </div>
+        </div>
         
       </div>
 
