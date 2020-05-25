@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('username', logInResponse.user.username)
         localStorage.setItem('password', logInResponse.user.password)
         localStorage.setItem('Token', logInResponse.key)
-        localStorage.setItem('user', logInResponse.user.toString())
+        localStorage.setItem('user', logInResponse.user.id.toString())
         console.log(logInResponse)
         this._router.navigate([''])
       },
