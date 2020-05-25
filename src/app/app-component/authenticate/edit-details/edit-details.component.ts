@@ -18,6 +18,7 @@ export class EditDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.editDetailFormData = {
       "user" : {
+        'id' : 0,
         "username" : '' ,
         "first_name" : '' ,
         "last_name" : '' ,
@@ -38,7 +39,9 @@ export class EditDetailsComponent implements OnInit {
     this._auth.LogIn(loginFormData).subscribe(
       logInResponse => {
         console.log(logInResponse)
-        this.getUserDetails();
+        this.editDetailFormData.user = logInResponse.user;
+        this.isUserConfirmed = true;
+        // this.getUserDetails();
       },
 
       logInError => {
@@ -51,50 +54,40 @@ export class EditDetailsComponent implements OnInit {
     )
   }
 
-  getUserDetails() {
-    this._auth.GetAllUsers().subscribe(
-      getAllUsersResponse => {
-        console.log(getAllUsersResponse)
-        getAllUsersResponse.forEach(usersArray => {
-          if (usersArray.id == +localStorage.getItem('user')) {
-            this.editDetailFormData.user = usersArray;
-            this.isUserConfirmed = true;
-          }
-        });
+  changeUserDetails(){  
+    this._auth.EditUserDetails(this.editDetailFormData).subscribe(
+      editUserDetailsResponse => {
+        console.log(editUserDetailsResponse);
       },
 
-      getAllUsersError => {
-        console.log(getAllUsersError)
-        alert("Login first to change details")
+      editUserDetailsError => {
+        console.log(editUserDetailsError);
+        alert(editUserDetailsError.error);
       },
 
       () => {
-        console.log("Users Fetched Successfully")
+        console.log("Sign up Successful");
+        this._route.navigate(['']);
       }
     )
   }
 
-  changeUserDetails(){
-    
-    if (this.editDetailFormData.user.username == localStorage.getItem('username')) {
-      this._auth.EditUserDetails(this.editDetailFormData).subscribe(
-        editUserDetailsResponse => {
-          console.log(editUserDetailsResponse);
-        },
-  
-        editUserDetailsError => {
-          console.log(editUserDetailsError);
-          alert(editUserDetailsError.error);
-        },
-  
-        () => {
-          console.log("Sign up Successful");
-          this._route.navigate(['']);
-        }
-      )
-    }
-    else {
-      alert("You can't change details as you are not signed in as " + this.editDetailFormData.user.username)
-    }
-  }
+  // getUserDetails() {
+  //   this._auth.GetUser(this.editDetailFormData.user.id).subscribe(
+  //     getUserResponse => {
+  //       console.log(getUserResponse)
+  //       this.editDetailFormData.user = getUserResponse;
+  //       this.isUserConfirmed = true;
+  //     },
+
+  //     getUserError => {
+  //       console.log(getAllUsersError)
+  //       alert("Login first to change details")
+  //     },
+
+  //     () => {
+  //       console.log("Users Fetched Successfully")
+  //     }
+  //   )
+  // }
 }
