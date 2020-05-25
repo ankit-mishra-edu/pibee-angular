@@ -26,7 +26,7 @@ export class ViewProfileComponent implements OnInit {
   }
 
   viewProfile() {
-    this._auth.GetUserProfile(this.profileData.user).subscribe(
+    this._auth.GetUserProfile(+localStorage.getItem('user')).subscribe(
       getUserProfileResponse => {
         console.log(getUserProfileResponse)
         this.profileData = getUserProfileResponse;

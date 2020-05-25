@@ -28,7 +28,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   getUserProfile() {
-    this._auth.GetUserProfile(this.profileFormData.user).subscribe(
+    this._auth.GetUserProfile(+localStorage.getItem('user')).subscribe(
       getUserProfileResponse => {
         console.log(getUserProfileResponse)
         this.profileFormData = getUserProfileResponse;
