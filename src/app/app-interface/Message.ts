@@ -1,4 +1,4 @@
-import { User } from './User';
+import { IUser } from './User';
 
 export interface IMessage {
     sender : String;
