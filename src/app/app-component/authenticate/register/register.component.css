@@ -7,8 +7,34 @@
     border-left: 5px solid #a94442; /* red */
   }
 
+  .alert-danger {
+    color: red;
+    margin-left: 10px;
+    padding: 0px;
+  }
+  
+  .alert-danger::before {
+    position: absolute;
+    top: 50%;
+    width: 0;
+    height: 0;
+    left: -9px;
+    border-width: 5px;
+    border-top: solid transparent;
+    border-right: solid red;
+    border-bottom: solid transparent;
+  }
+
+  .alert-icon {
+    background-position: -4px;
+    background-size : 1.5rem;
+    background-repeat: no-repeat;
+    background-image: url(../../../../assets/media/dangerImage.webp);
+  }
+
   input {
-    max-width: 230px;
+    min-width: 230px;
+    max-width : 50%;
   }
 
   .btn-primary {
