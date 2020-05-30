@@ -10,21 +10,20 @@ import { ViewProfileComponent } from './app-component/authenticate/profile/view-
 import { EditDetailsComponent } from './app-component/authenticate/edit-details/edit-details.component';
 import { ChangePasswordComponent } from './app-component/authenticate/change-password/change-password.component';
 
-
 const routes: Routes = [
-  {path : '', component : HomeComponent},
-  {path : 'login', component : LoginComponent},
-  {path : 'register', component : RegisterComponent},
-  {path : 'logout', component : LogoutComponent},
-  {path : 'chatapp', component : ChatappComponent},
-  {path : 'edit-profile', component : EditProfileComponent},
-  {path : 'view-profile', component : ViewProfileComponent},
-  {path : 'edit-details', component : EditDetailsComponent},
-  {path : 'change-password', component : ChangePasswordComponent},
+  { path: '', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'logout', component: LogoutComponent },
+  { path: 'chatapp', component: ChatappComponent },
+  { path: 'edit-profile', component: EditProfileComponent },
+  { path: 'view-profile', component: ViewProfileComponent },
+  { path: 'edit-details', component: EditDetailsComponent },
+  { path: 'change-password', component: ChangePasswordComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
