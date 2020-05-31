@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/app-service/auth-service/auth.service';
 import { Router } from '@angular/router';
 import { SubSink } from 'subsink';
 import { IUser } from 'src/app/app-interface/User';
+import { DataService } from 'src/app/app-service/data-service/data.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   loginData;
   subscriptions = new SubSink();
 
-  constructor(private _auth: AuthService, private _router: Router) {}
+  constructor(
+    private _auth: AuthService,
+    private _data: DataService,
+    private _router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loginData = {
@@ -46,7 +51,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   changeLoggedInUser(loggedInUser: IUser) {
-    this._auth.ChangeLoggedInUser$(loggedInUser);
+    this._data.ChangeLoggedInUser$(loggedInUser);
   }
 
   ngOnDestroy() {

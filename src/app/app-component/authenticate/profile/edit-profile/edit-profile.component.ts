@@ -1,10 +1,10 @@
+import { SubSink } from 'subsink';
+import { Router } from '@angular/router';
+import { IUser } from 'src/app/app-interface/User';
+import { IProfile } from 'src/app/app-interface/Profile';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/app-service/auth-service/auth.service';
-import { Router } from '@angular/router';
-import { NgForm } from '@angular/forms';
-import { IProfile } from 'src/app/app-interface/Profile';
-import { SubSink } from 'subsink';
-import { IUser } from 'src/app/app-interface/User';
+import { DataService } from 'src/app/app-service/data-service/data.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -13,7 +13,7 @@ import { IUser } from 'src/app/app-interface/User';
 })
 export class EditProfileComponent implements OnInit, OnDestroy {
   subscriptions = new SubSink();
-  loggedInUser: IUser = this._auth.GetLoggedInUser();
+  loggedInUser: IUser = this._data.GetLoggedInUser();
   profileFormData: IProfile = {
     user: this.loggedInUser.id,
     bio: '',
@@ -23,14 +23,18 @@ export class EditProfileComponent implements OnInit, OnDestroy {
     image: '',
   };
 
-  constructor(private _auth: AuthService, private _router: Router) {}
+  constructor(
+    private _auth: AuthService,
+    private _data: DataService,
+    private _router: Router
+  ) {}
 
   ngOnInit(): void {
     this.getUserProfile();
   }
 
   getUserProfile() {
-    this.subscriptions.sink = this._auth
+    this.subscriptions.sink = this._data
       .GetUserProfile(this.profileFormData.user)
       .subscribe(
         (getUserProfileResponse) => {

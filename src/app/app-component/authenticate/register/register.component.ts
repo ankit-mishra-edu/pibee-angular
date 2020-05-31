@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthService } from 'src/app/app-service/auth-service/auth.service';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { SubSink } from 'subsink';
 import { IUser } from 'src/app/app-interface/User';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { AuthService } from 'src/app/app-service/auth-service/auth.service';
+import { DataService } from 'src/app/app-service/data-service/data.service';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
   userData;
   usersArray: IUser[];
   subscriptions = new SubSink();
-  constructor(private _auth: AuthService, private _route: Router) {}
+  constructor(
+    private _auth: AuthService,
+    private _data: DataService,
+    private _route: Router
+  ) {}
 
   ngOnInit(): void {
     this.userData = {
@@ -29,7 +34,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   getAllUsers() {
-    this.subscriptions.sink = this._auth.GetAllUsers().subscribe(
+    this.subscriptions.sink = this._data.GetAllUsers().subscribe(
       (getAllUsersResponse) => {
         console.log(getAllUsersResponse);
         this.usersArray = getAllUsersResponse;

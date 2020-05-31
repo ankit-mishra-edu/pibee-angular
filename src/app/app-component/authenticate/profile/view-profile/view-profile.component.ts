@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthService } from 'src/app/app-service/auth-service/auth.service';
-import { IProfile } from 'src/app/app-interface/Profile';
 import { SubSink } from 'subsink';
 import { IUser } from 'src/app/app-interface/User';
+import { IProfile } from 'src/app/app-interface/Profile';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { AuthService } from 'src/app/app-service/auth-service/auth.service';
+import { DataService } from 'src/app/app-service/data-service/data.service';
 
 @Component({
   selector: 'app-view-profile',
@@ -11,7 +12,7 @@ import { IUser } from 'src/app/app-interface/User';
 })
 export class ViewProfileComponent implements OnInit, OnDestroy {
   subscriptions = new SubSink();
-  loggedInUser: IUser = this._auth.GetLoggedInUser();
+  loggedInUser: IUser = this._data.GetLoggedInUser();
   profileData: IProfile = {
     user: this.loggedInUser.id,
     bio: '',
@@ -21,14 +22,14 @@ export class ViewProfileComponent implements OnInit, OnDestroy {
     image: '',
   };
 
-  constructor(private _auth: AuthService) {}
+  constructor(private _auth: AuthService, private _data: DataService) {}
 
   ngOnInit(): void {
     this.viewProfile();
   }
 
   viewProfile() {
-    this.subscriptions.sink = this._auth
+    this.subscriptions.sink = this._data
       .GetUserProfile(this.profileData.user)
       .subscribe(
         (getUserProfileResponse) => {

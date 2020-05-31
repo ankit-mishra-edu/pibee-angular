@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from 'src/app/app-service/auth-service/auth.service';
 import { SubSink } from 'subsink';
+import { Router } from '@angular/router';
 import { IUser } from 'src/app/app-interface/User';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { AuthService } from 'src/app/app-service/auth-service/auth.service';
 
 @Component({
   selector: 'app-logout',
@@ -16,7 +16,6 @@ export class LogoutComponent implements OnInit, OnDestroy {
   constructor(private _auth: AuthService, private _router: Router) {}
 
   ngOnInit(): void {
-    this.loggedInUser = this._auth.GetLoggedInUser();
     this.logout();
   }
 

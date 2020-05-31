@@ -1,8 +1,9 @@
+import { SubSink } from 'subsink';
+import { Router } from '@angular/router';
+import { IUser } from 'src/app/app-interface/User';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/app-service/auth-service/auth.service';
-import { Router } from '@angular/router';
-import { SubSink } from 'subsink';
-import { IUser } from 'src/app/app-interface/User';
+import { DataService } from 'src/app/app-service/data-service/data.service';
 
 @Component({
   selector: 'app-change-password',
@@ -11,7 +12,7 @@ import { IUser } from 'src/app/app-interface/User';
 })
 export class ChangePasswordComponent implements OnInit, OnDestroy {
   subscriptions = new SubSink();
-  loggedInUser: IUser = this._auth.GetLoggedInUser();
+  loggedInUser: IUser = this._data.GetLoggedInUser();
   changePasswordFormData = {
     user: {
       id: this.loggedInUser.id.toString,
@@ -20,7 +21,11 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
     },
   };
 
-  constructor(private _auth: AuthService, private _route: Router) {}
+  constructor(
+    private _auth: AuthService,
+    private _data: DataService,
+    private _route: Router
+  ) {}
 
   ngOnInit(): void {}
 

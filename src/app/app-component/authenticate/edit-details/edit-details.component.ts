@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { SubSink } from 'subsink';
 import { IUser } from 'src/app/app-interface/User';
+import { DataService } from 'src/app/app-service/data-service/data.service';
 
 @Component({
   selector: 'app-edit-details',
@@ -14,9 +15,13 @@ export class EditDetailsComponent implements OnInit, OnDestroy {
   editDetailFormData;
   subscriptions = new SubSink();
   isUserConfirmed: boolean = false;
-  loggedInUser: IUser = this._auth.GetLoggedInUser();
+  loggedInUser: IUser = this._data.GetLoggedInUser();
 
-  constructor(private _auth: AuthService, private _route: Router) {}
+  constructor(
+    private _auth: AuthService,
+    private _data: DataService,
+    private _route: Router
+  ) {}
 
   ngOnInit(): void {
     this.editDetailFormData = {
