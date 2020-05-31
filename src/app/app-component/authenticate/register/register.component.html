@@ -26,6 +26,7 @@
                 >{{ "Username already taken" }}.</small
               >
             </div>
+          </div>
           <div *ngIf="username.errors">
             <div [hidden]="!username.errors.required">
               <small style="margin-left: 20px;">Username is Mandatory.</small>
