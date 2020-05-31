@@ -1,7 +1,22 @@
-<!-- <div *ngFor="let user of userArray$">
-  <p>{{ user.username }}</p>
-</div> -->
+<div *ngIf="loggedInUser$ | async">
+  <p>Welcome : {{ (loggedInUser$ | async).username }}</p>
 
-<p>{{ loggedInUser }}</p>
+  <input
+    type="test"
+    autofocus
+    placeholder="Search term"
+    name="searchBox"
+    #searchBox
+    [ngModel]="usernameChange | async"
+    (ngModelChange)="usernameChange.next($event)"
+  />
 
-<!-- <img src="../../../assets/media/home.jfif" style="width: 785px;height: 300px;object-fit: fill;"> -->
+  <ul>
+    <li *ngFor="let username of usernameList | async">
+      {{ username }}
+    </li>
+  </ul>
+</div>
+<div *ngIf="!loggedInUser$">
+  <p>{{ "Not logged In" }}</p>
+</div>
