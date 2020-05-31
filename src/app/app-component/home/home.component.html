@@ -17,6 +17,6 @@
     </li>
   </ul>
 </div>
-<div *ngIf="!loggedInUser$">
+<div *ngIf="!(loggedInUser$ | async)">
   <p>{{ "Not logged In" }}</p>
 </div>

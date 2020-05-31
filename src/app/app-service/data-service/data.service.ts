@@ -25,11 +25,11 @@ export class DataService {
     }
   }
 
-  suggestNames(partial: string): Observable<string[]> {
+  suggestNames(userArray: IUser[], partial: string): Observable<string[]> {
     let usernamesArray: string[] = [];
-    ['Ankit', 'Amishm', 'ank', 'amis', 'an'].forEach((username) => {
-      if (username.startsWith(partial)) {
-        usernamesArray.push(username);
+    userArray.forEach((user) => {
+      if (user.username.toLowerCase().includes(partial.toLowerCase())) {
+        usernamesArray.push(user.username);
       }
     });
     console.log(usernamesArray);

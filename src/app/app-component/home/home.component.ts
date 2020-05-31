@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
   subscriptions = new SubSink();
 
   searchTerm: string;
+  usersArray: IUser[];
   usernameChange = new Subject<string>();
 
   constructor(
@@ -27,9 +28,27 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.loggedInUser$ = this._data.loggedInUser$;
+    this.getAllUsers();
+  }
+
+  getAllUsers() {
+    this.subscriptions.sink = this._data.GetAllUsers().subscribe(
+      (getAllUsersResponse) => {
+        console.log(getAllUsersResponse);
+        this.usersArray = getAllUsersResponse;
+      },
+
+      (getAllUsersError) => {
+        console.log(getAllUsersError);
+      },
+
+      () => {
+        console.log('All Users fetched successfully');
+      }
+    );
   }
 
   usernameList = this.usernameChange.pipe(
-    switchMap((partial) => this._data.suggestNames(partial))
+    switchMap((partial) => this._data.suggestNames(this.usersArray, partial))
   );
 }
