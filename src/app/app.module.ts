@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './app-component/home/home.component';
@@ -14,11 +14,12 @@ import { EditProfileComponent } from './app-component/authenticate/profile/edit-
 import { ViewProfileComponent } from './app-component/authenticate/profile/view-profile/view-profile.component';
 import { EditDetailsComponent } from './app-component/authenticate/edit-details/edit-details.component';
 import { ChangePasswordComponent } from './app-component/authenticate/change-password/change-password.component';
-
+import { NavbarComponent } from './app-component/navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    NavbarComponent,
     HomeComponent,
     LoginComponent,
     RegisterComponent,
@@ -38,6 +39,6 @@ import { ChangePasswordComponent } from './app-component/authenticate/change-pas
     AppRoutingModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
