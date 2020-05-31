@@ -14,11 +14,9 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
   subscriptions = new SubSink();
   loggedInUser: IUser = this._data.GetLoggedInUser();
   changePasswordFormData = {
-    user: {
-      id: this.loggedInUser.id.toString,
-      oldPassword: '',
-      password: '',
-    },
+    id: this.loggedInUser.id,
+    oldPassword: '',
+    password: '',
   };
 
   constructor(
@@ -31,11 +29,9 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
 
   confirmUser() {
     let loginFormData = {
-      user: {
-        username: this.loggedInUser.username,
-        password: this.changePasswordFormData.user.oldPassword,
-        email: 'amishm7@gmail.com',
-      },
+      username: this.loggedInUser.username,
+      password: this.changePasswordFormData.oldPassword,
+      email: 'amishm7@gmail.com',
     };
     this.subscriptions.sink = this._auth.LogIn(loginFormData).subscribe(
       (logInResponse) => {
@@ -70,7 +66,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
         },
 
         () => {
-          console.log('Sign up Successful');
+          console.log('Change password service called Successful');
         }
       );
   }

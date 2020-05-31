@@ -22,11 +22,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loginData = {
-      user: {
-        username: '',
-        password: '',
-        email: 'amishm7@gmail.com',
-      },
+      username: '',
+      password: '',
+      email: 'amishm7@gmail.com',
     };
   }
 

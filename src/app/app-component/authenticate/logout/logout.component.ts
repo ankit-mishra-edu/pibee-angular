@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { IUser } from 'src/app/app-interface/User';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/app-service/auth-service/auth.service';
+import { DataService } from 'src/app/app-service/data-service/data.service';
 
 @Component({
   selector: 'app-logout',
@@ -13,9 +14,14 @@ export class LogoutComponent implements OnInit, OnDestroy {
   loggedInUser: IUser;
   subscriptions = new SubSink();
 
-  constructor(private _auth: AuthService, private _router: Router) {}
+  constructor(
+    private _auth: AuthService,
+    private _data: DataService,
+    private _router: Router
+  ) {}
 
   ngOnInit(): void {
+    this.loggedInUser = this._data.GetLoggedInUser();
     this.logout();
   }
 

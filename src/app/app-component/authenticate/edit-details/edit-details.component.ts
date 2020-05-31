@@ -25,24 +25,20 @@ export class EditDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.editDetailFormData = {
-      user: {
-        id: this.loggedInUser.id,
-        username: '',
-        first_name: '',
-        last_name: '',
-        email: '',
-        password: '',
-      },
+      id: this.loggedInUser.id,
+      username: '',
+      first_name: '',
+      last_name: '',
+      email: '',
+      password: '',
     };
   }
 
   confirmUser(form: NgForm) {
     let loginFormData = {
-      user: {
-        username: this.loggedInUser.username,
-        password: form.value.password,
-        email: 'amishm7@gmail.com',
-      },
+      username: this.loggedInUser.username,
+      password: form.value.password,
+      email: 'amishm7@gmail.com',
     };
     this.subscriptions.sink = this._auth.LogIn(loginFormData).subscribe(
       (logInResponse) => {

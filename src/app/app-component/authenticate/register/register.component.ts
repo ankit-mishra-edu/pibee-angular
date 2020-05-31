@@ -1,7 +1,7 @@
 import { SubSink } from 'subsink';
 import { IUser } from 'src/app/app-interface/User';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/app-service/auth-service/auth.service';
 import { DataService } from 'src/app/app-service/data-service/data.service';
 
@@ -22,13 +22,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.userData = {
-      user: {
-        username: '',
-        first_name: '',
-        last_name: '',
-        email: '',
-        password: '',
-      },
+      username: '',
+      first_name: '',
+      last_name: '',
+      email: '',
+      password: '',
     };
     this.getAllUsers();
   }
