@@ -54,6 +54,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         localStorage.setItem('Token', signUpResponse.key);
         localStorage.setItem('user', signUpResponse.user.toString());
         console.log(signUpResponse);
+        alert('Hit the link sent to your email to activate acount');
       },
       (signUpError) => {
         console.log(signUpError);

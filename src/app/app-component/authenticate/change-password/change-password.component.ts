@@ -37,7 +37,6 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
       (logInResponse) => {
         console.log(logInResponse);
         this.changePassword();
-        alert('Check your email to reactivate account with this password');
       },
 
       (logInError) => {

@@ -30,6 +30,7 @@ export class LogoutComponent implements OnInit, OnDestroy {
       this.subscriptions.sink = this._auth.LogOut().subscribe(
         (logOutResponse) => {
           sessionStorage.clear();
+          this._data.ChangeLoggedInUser$(null);
           console.log(logOutResponse);
           this._router.navigate(['']);
         },
