@@ -4,8 +4,8 @@ import {
   HttpHeaders,
   HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable, throwError, BehaviorSubject } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, throwError, BehaviorSubject, of } from 'rxjs';
+import { catchError, distinctUntilChanged } from 'rxjs/operators';
 import { IUser } from '../../app-interface/User';
 import { IProfile } from 'src/app/app-interface/Profile';
 import { IToken } from 'src/app/app-interface/Token';
@@ -16,53 +16,69 @@ import { IToken } from 'src/app/app-interface/Token';
 export class AuthService {
   baseUrl: string = 'https://pibeedjango.herokuapp.com/api/';
 
-  loggedInUserSubject$ = new BehaviorSubject<IUser>(null);
-  loggedInUser: IUser;
+  // private _loggedInUserSubject$ = new BehaviorSubject<IUser>(null);
+  // loggedInUser: IUser;
+
+  // loggedInUser$ = this._loggedInUserSubject$
+  //   .asObservable()
+  //   .pipe(distinctUntilChanged());
 
   constructor(private _http: HttpClient) {
-    if (sessionStorage.length > 0) {
-      this.ChangeLoggedInUser$(
-        <IUser>JSON.parse(sessionStorage.getItem('userToken')).user
-      );
-    }
+    // if (sessionStorage.length > 0) {
+    //   this.ChangeLoggedInUser$(
+    //     <IUser>JSON.parse(sessionStorage.getItem('userToken')).user
+    //   );
+    // }
   }
 
-  ChangeLoggedInUser$(loggedInUser: IUser) {
-    this.loggedInUserSubject$.next(loggedInUser);
-  }
+  // suggestNames(partial: string): Observable<string[]> {
+  //   let usernamesArray: string[] = [];
+  //   ['Ankit', 'Amishm', 'ank', 'amis', 'an'].forEach((username) => {
+  //     if (username.startsWith(partial)) {
+  //       usernamesArray.push(username);
+  //     }
+  //   });
+  //   console.log(usernamesArray);
+  //   return of(usernamesArray);
+  // }
 
-  GetLoggedInUser(): IUser {
-    this.loggedInUserSubject$
-      .asObservable()
-      .subscribe((loggedInUserResponse) => {
-        this.loggedInUser = loggedInUserResponse;
-      });
-    return this.loggedInUser;
-  }
+  // ChangeLoggedInUser$(loggedInUser: IUser) {
+  //   this._loggedInUserSubject$.next(loggedInUser);
+  // }
 
-  GetUser(id): Observable<IUser> {
-    return this._http
-      .get<IUser>(this.baseUrl + 'user/' + <number>id)
-      .pipe(catchError(this.errorHandler));
-  }
+  // GetLoggedInUser(): IUser {
+  //   this._loggedInUserSubject$
+  //     .asObservable()
+  //     .pipe(distinctUntilChanged())
+  //     .subscribe((loggedInUserResponse) => {
+  //       this.loggedInUser = loggedInUserResponse;
+  //     });
+  //   return this.loggedInUser;
+  // }
 
-  GetAllUsers(): Observable<IUser[]> {
-    return this._http
-      .get<IUser[]>(this.baseUrl + 'user/')
-      .pipe(catchError(this.errorHandler));
-  }
+  // GetUser(id): Observable<IUser> {
+  //   return this._http
+  //     .get<IUser>(this.baseUrl + 'user/' + <number>id)
+  //     .pipe(catchError(this.errorHandler));
+  // }
 
-  GetUserProfile(id): Observable<IProfile> {
-    return this._http
-      .get<IProfile>(this.baseUrl + 'user_profile/' + <number>id)
-      .pipe(catchError(this.errorHandler));
-  }
+  // GetAllUsers(): Observable<IUser[]> {
+  //   return this._http
+  //     .get<IUser[]>(this.baseUrl + 'user/')
+  //     .pipe(catchError(this.errorHandler));
+  // }
 
-  GetAllUserProfiles(): Observable<IProfile[]> {
-    return this._http
-      .get<IProfile[]>(this.baseUrl + 'user_profile/')
-      .pipe(catchError(this.errorHandler));
-  }
+  // GetUserProfile(id): Observable<IProfile> {
+  //   return this._http
+  //     .get<IProfile>(this.baseUrl + 'user_profile/' + <number>id)
+  //     .pipe(catchError(this.errorHandler));
+  // }
+
+  // GetAllUserProfiles(): Observable<IProfile[]> {
+  //   return this._http
+  //     .get<IProfile[]>(this.baseUrl + 'user_profile/')
+  //     .pipe(catchError(this.errorHandler));
+  // }
 
   Register(userData): Observable<IToken> {
     return this._http

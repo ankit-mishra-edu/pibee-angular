@@ -1,0 +1,81 @@
+import { Injectable } from '@angular/core';
+import { IUser } from 'src/app/app-interface/User';
+import { IProfile } from 'src/app/app-interface/Profile';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { distinctUntilChanged, catchError } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class DataService {
+  loggedInUser: IUser;
+  baseUrl: string = 'https://pibeedjango.herokuapp.com/api/';
+  private _loggedInUserSubject$ = new BehaviorSubject<IUser>(null);
+
+  loggedInUser$ = this._loggedInUserSubject$
+    .asObservable()
+    .pipe(distinctUntilChanged());
+
+  constructor(private _http: HttpClient) {
+    if (sessionStorage.length > 0) {
+      this.ChangeLoggedInUser$(
+        <IUser>JSON.parse(sessionStorage.getItem('userToken')).user
+      );
+    }
+  }
+
+  suggestNames(partial: string): Observable<string[]> {
+    let usernamesArray: string[] = [];
+    ['Ankit', 'Amishm', 'ank', 'amis', 'an'].forEach((username) => {
+      if (username.startsWith(partial)) {
+        usernamesArray.push(username);
+      }
+    });
+    console.log(usernamesArray);
+    return of(usernamesArray);
+  }
+
+  ChangeLoggedInUser$(loggedInUser: IUser) {
+    this._loggedInUserSubject$.next(loggedInUser);
+  }
+
+  GetLoggedInUser(): IUser {
+    this._loggedInUserSubject$
+      .asObservable()
+      .pipe(distinctUntilChanged())
+      .subscribe((loggedInUserResponse) => {
+        this.loggedInUser = loggedInUserResponse;
+      });
+    return this.loggedInUser;
+  }
+
+  GetUser(id): Observable<IUser> {
+    return this._http
+      .get<IUser>(this.baseUrl + 'user/' + <number>id)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  GetAllUsers(): Observable<IUser[]> {
+    return this._http
+      .get<IUser[]>(this.baseUrl + 'user/')
+      .pipe(catchError(this.errorHandler));
+  }
+
+  GetUserProfile(id): Observable<IProfile> {
+    return this._http
+      .get<IProfile>(this.baseUrl + 'user_profile/' + <number>id)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  GetAllUserProfiles(): Observable<IProfile[]> {
+    return this._http
+      .get<IProfile[]>(this.baseUrl + 'user_profile/')
+      .pipe(catchError(this.errorHandler));
+  }
+
+  errorHandler(error: HttpErrorResponse) {
+    console.error(error);
+    return throwError(error.error || 'Server Error');
+  }
+}
