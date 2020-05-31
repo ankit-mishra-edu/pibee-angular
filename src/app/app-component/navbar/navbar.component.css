@@ -54,12 +54,14 @@ main {
 }
 
 .site-header #navbarToggle .navbar-nav .dropdown .dropdown-menu > button:hover {
+  cursor: pointer;
   background-color: #0366d6;
   background-image: none;
 }
 
 .site-header #navbarToggle .navbar-nav .dropdown .nav-link {
   margin: 0;
+  cursor: pointer;
   padding: 4px 4px 4px 4px;
   color: white;
 }

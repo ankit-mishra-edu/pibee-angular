@@ -15,7 +15,7 @@
       routerLink="/"
       >piBee</a
     >
-
+    <!-- Navigation Link for Search Bar -->
     <li class="nav-item d-none d-sm-inline-block mr-auto" id="searchBar">
       <form class="form-inline">
         <div class="input-group input-group-sm">
@@ -48,7 +48,6 @@
     </button>
 
     <div class="navbar-collapse collapse show" id="navbarToggle">
-      <!-- Navigation Link for Search Bar -->
       <ul class="navbar-nav ml-auto">
         <!-- If the user is Authenticated -->
         <ng-template [ngIf]="isLoggedIn()" [ngIfElse]="loggedOut">

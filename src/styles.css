@@ -1,1 +1,41 @@
-/* You can add global styles to this file, and also import other style files */
+.ng-valid[required],
+.ng-valid.required {
+  border-left: 5px solid #42a948;
+}
+
+.ng-invalid:not(form) {
+  content: "!";
+  border-left: 5px solid #a94442;
+}
+
+.btn-primary {
+  color: rgb(255, 255, 255) !important;
+  background-color: rgb(134, 38, 195) !important;
+  border-width: initial !important;
+  border-style: none !important;
+  border-color: initial !important;
+  border-image: initial !important;
+}
+
+/* input [type="text"],
+input [type="password"] {
+  min-width: 230px;
+  max-width: 40%;
+} */
+
+.alert-danger {
+  color: red;
+  margin-left: 10px;
+  padding: 0px;
+}
+
+.alert-icon {
+  background-position: -4px;
+  background-size: 1.5rem;
+  background-repeat: no-repeat;
+  background-image: url(assets/media/dangerImage.webp);
+}
+
+form {
+  margin: 0 0 0 48px;
+}
