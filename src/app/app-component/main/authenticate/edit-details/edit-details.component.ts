@@ -15,6 +15,11 @@ export class EditDetailsComponent implements OnInit, OnDestroy {
   subscriptions = new SubSink();
   isUserConfirmed: boolean = false;
   loggedInUser: IUser = this._data.GetLoggedInUser();
+  loginFormData = {
+    username: this.loggedInUser.username,
+    password: '',
+    email: 'amishm7@gmail.com',
+  };
   editDetailFormData: IUser = {
     id: this.loggedInUser.id,
     username: '',
@@ -32,13 +37,8 @@ export class EditDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {}
 
-  confirmUser(form: NgForm) {
-    let loginFormData = {
-      username: this.loggedInUser.username,
-      password: form.value.password,
-      email: 'amishm7@gmail.com',
-    };
-    this.subscriptions.sink = this._auth.LogIn(loginFormData).subscribe(
+  confirmUser() {
+    this.subscriptions.sink = this._auth.LogIn(this.loginFormData).subscribe(
       (logInResponse) => {
         console.log(logInResponse);
         localStorage.setItem('username', logInResponse.user.username);
