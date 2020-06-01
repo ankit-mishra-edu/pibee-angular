@@ -12,10 +12,17 @@ import { DataService } from 'src/app/app-service/data-service/data.service';
   styleUrls: ['./edit-details.component.css'],
 })
 export class EditDetailsComponent implements OnInit, OnDestroy {
-  editDetailFormData;
   subscriptions = new SubSink();
   isUserConfirmed: boolean = false;
   loggedInUser: IUser = this._data.GetLoggedInUser();
+  editDetailFormData: IUser = {
+    id: this.loggedInUser.id,
+    username: '',
+    first_name: '',
+    last_name: '',
+    email: '',
+    password: '',
+  };
 
   constructor(
     private _auth: AuthService,
@@ -23,16 +30,7 @@ export class EditDetailsComponent implements OnInit, OnDestroy {
     private _route: Router
   ) {}
 
-  ngOnInit(): void {
-    this.editDetailFormData = {
-      id: this.loggedInUser.id,
-      username: '',
-      first_name: '',
-      last_name: '',
-      email: '',
-      password: '',
-    };
-  }
+  ngOnInit(): void {}
 
   confirmUser(form: NgForm) {
     let loginFormData = {
@@ -44,7 +42,7 @@ export class EditDetailsComponent implements OnInit, OnDestroy {
       (logInResponse) => {
         console.log(logInResponse);
         localStorage.setItem('username', logInResponse.user.username);
-        this.editDetailFormData.user = logInResponse.user;
+        this.editDetailFormData = logInResponse.user;
         this.isUserConfirmed = true;
       },
 

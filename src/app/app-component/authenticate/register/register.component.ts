@@ -11,7 +11,14 @@ import { DataService } from 'src/app/app-service/data-service/data.service';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit, OnDestroy {
-  userData;
+  userData: IUser = {
+    id: 0,
+    username: '',
+    first_name: '',
+    last_name: '',
+    email: '',
+    password: '',
+  };
   usersArray: IUser[];
   subscriptions = new SubSink();
   constructor(
@@ -21,13 +28,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.userData = {
-      username: '',
-      first_name: '',
-      last_name: '',
-      email: '',
-      password: '',
-    };
     this.getAllUsers();
   }
 

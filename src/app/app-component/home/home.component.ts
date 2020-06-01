@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { IUser } from 'src/app/app-interface/User';
-import { Observable, BehaviorSubject, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { AuthService } from 'src/app/app-service/auth-service/auth.service';
 import { DataService } from 'src/app/app-service/data-service/data.service';
 
@@ -16,7 +16,6 @@ export class HomeComponent implements OnInit {
   loggedInUser$: Observable<IUser>;
   subscriptions = new SubSink();
 
-  searchTerm: string;
   usersArray: IUser[];
   usernameChange = new Subject<string>();
 
@@ -28,7 +27,9 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.loggedInUser$ = this._data.loggedInUser$;
-    this.getAllUsers();
+    if (this.loggedInUser$) {
+      this.getAllUsers();
+    }
   }
 
   getAllUsers() {
