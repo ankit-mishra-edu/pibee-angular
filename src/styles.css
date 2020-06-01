@@ -8,6 +8,14 @@
   border-left: 5px solid #a94442;
 }
 
+.right {
+  text-align: right;
+}
+
+.left {
+  text-align: left;
+}
+
 .btn-primary {
   color: rgb(255, 255, 255) !important;
   background-color: rgb(134, 38, 195) !important;
