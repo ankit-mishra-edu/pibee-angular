@@ -90,9 +90,3 @@ label {
 .account-heading {
   font-size: 2.5rem;
 }
-
-.card-container {
-  margin-top: -13px;
-  overflow: auto;
-  max-height: 85px;
-}

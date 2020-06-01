@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
   loggedInUser$: Observable<IUser>;
   subscriptions = new SubSink();
 
-  usersArray: IUser[];
+  allUsersArray: IUser[];
   usernameChange = new Subject<string>();
 
   constructor(
@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
     this.subscriptions.sink = this._data.GetAllUsers().subscribe(
       (getAllUsersResponse) => {
         console.log(getAllUsersResponse);
-        this.usersArray = getAllUsersResponse;
+        this.allUsersArray = getAllUsersResponse;
       },
 
       (getAllUsersError) => {
@@ -49,7 +49,7 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  usernameList = this.usernameChange.pipe(
-    switchMap((partial) => this._data.suggestNames(this.usersArray, partial))
+  matchingUsersArray = this.usernameChange.pipe(
+    switchMap((partial) => this._data.suggestNames(this.allUsersArray, partial))
   );
 }

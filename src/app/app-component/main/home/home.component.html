@@ -1,21 +1,38 @@
 <div *ngIf="loggedInUser$ | async">
   <p>Welcome : {{ (loggedInUser$ | async).username }}</p>
 
-  <input
-    type="test"
-    autofocus
-    placeholder="Search user"
-    name="searchBox"
-    #searchBox
-    [ngModel]="usernameChange | async"
-    (ngModelChange)="usernameChange.next($event)"
-  />
+  <div *ngIf="allUsersArray" class="row">
+    <div class="col-md-3">
+      <input
+        type="test"
+        autofocus
+        placeholder="Search user"
+        name="searchBox"
+        #searchBox
+        [ngModel]="usernameChange | async"
+        (ngModelChange)="usernameChange.next($event)"
+      />
+    </div>
 
-  <ul>
-    <li *ngFor="let username of usernameList | async">
-      {{ username }}
-    </li>
-  </ul>
+    <div class="col-md-1"></div>
+
+    <div class="col-md-8">
+      <table class="table table-sm table-dark table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of matchingUsersArray | async">
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 <div *ngIf="!(loggedInUser$ | async)">
   <p>{{ "Not logged In" }}</p>
