@@ -31,7 +31,6 @@ label {
 }
 
 .article-container {
-  margin-top: auto;
   margin-bottom: auto;
 }
 
@@ -77,7 +76,7 @@ label {
 .article-svg {
   width: 25px;
   height: 25px;
-  vertical-align: middle;
+  /* vertical-align: middle; */
 }
 
 .account-img {

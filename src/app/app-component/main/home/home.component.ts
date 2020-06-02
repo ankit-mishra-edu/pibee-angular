@@ -15,6 +15,7 @@ import { DataService } from 'src/app/app-service/data-service/data.service';
 export class HomeComponent implements OnInit {
   loggedInUser$: Observable<IUser>;
   subscriptions = new SubSink();
+  numberArray = [1, 2, 3];
 
   allUsersArray: IUser[];
   usernameChange = new Subject<string>();
