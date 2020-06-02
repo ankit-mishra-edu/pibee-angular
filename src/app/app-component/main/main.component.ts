@@ -6,8 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./main.component.css'],
 })
 export class MainComponent implements OnInit {
-  numberArray = [1, 2, 3];
-
   constructor() {}
 
   ngOnInit(): void {}

@@ -11,10 +11,7 @@
       class="active"
     ></li>
     <div *ngFor="let number of numberArray">
-      <li
-        data-target="#carouselExampleCaptions"
-        data-slide-to="{{ number }}"
-      ></li>
+      <li data-target="#carouselExampleCaptions" data-slide-to="number"></li>
     </div>
   </ol>
   <div class="carousel-inner">

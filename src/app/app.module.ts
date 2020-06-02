@@ -17,6 +17,7 @@ import { ChangePasswordComponent } from './app-component/main/authenticate/chang
 import { NavbarComponent } from './app-component/navbar/navbar.component';
 import { MainComponent } from './app-component/main/main.component';
 import { FooterComponent } from './app-component/footer/footer.component';
+import { SidebarComponent } from './app-component/main/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { FooterComponent } from './app-component/footer/footer.component';
     ChangePasswordComponent,
     MainComponent,
     FooterComponent,
+    SidebarComponent,
   ],
   imports: [
     CommonModule,
