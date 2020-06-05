@@ -3,5 +3,18 @@
   position: relative;
   bottom: 0;
   width: 100%;
+  color: white;
   background-color: #08192b;
+}
+
+.footer .footer-container {
+  padding: 1% 6% 0px 6%;
+}
+
+.footer p {
+  cursor: pointer;
+}
+
+.footer * {
+  color: white;
 }

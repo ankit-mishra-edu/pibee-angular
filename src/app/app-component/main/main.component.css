@@ -1,33 +1,11 @@
 main {
-  /* margin: 0 auto; */
   padding: 10px 0px 0px 0px;
-  margin: 48px 30px 0px 30px;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: #444444;
-}
-
-ul {
-  margin: 0;
-}
-
-i .fa {
-  font-size: 20px;
+  margin: 48px 3% 0px 3%;
 }
 
 input {
   max-width: 230px;
   font-size: 30px;
-}
-
-label {
-  font-size: 10px;
 }
 
 .article-container {

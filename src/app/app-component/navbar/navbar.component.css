@@ -20,29 +20,31 @@ input {
   font-size: 30px;
 }
 
-label {
-  font-size: 10px;
-}
-
-.bg-steel {
-  background-color: #08192b;
-}
-
 .navbar {
   padding: 0%;
   background-color: #08192b;
 }
 
-.site-header #navbarToggle .navbar-nav .dropdown {
-  padding: 4px 8px 4px 8px;
-  background-color: #08192b;
+.site-header #navbarToggle .navbar-nav .nav-item {
+  margin: 0;
+  height: 100%;
+  cursor: pointer;
+  padding: 0px 4px 0px 4px;
 }
 
-.site-header #navbarToggle .navbar-nav .dropdown .dropdown-menu > a {
+.site-header #navbarToggle .navbar-nav .nav-item :hover {
+  color: white;
+}
+
+.site-header #navbarToggle .navbar-nav .nav-item p {
+  margin-bottom: 0px;
+}
+
+.site-header #navbarToggle .navbar-nav .dropdown .dropdown-menu a {
   background-color: white;
 }
 
-.site-header #navbarToggle .navbar-nav .dropdown .dropdown-menu > a:hover {
+.site-header #navbarToggle .navbar-nav .dropdown .dropdown-menu a:hover {
   background-color: #0366d6;
   background-image: none;
 }
@@ -51,11 +53,4 @@ label {
   cursor: pointer;
   background-color: #0366d6;
   background-image: none;
-}
-
-.site-header #navbarToggle .navbar-nav .dropdown .nav-link {
-  margin: 0;
-  cursor: pointer;
-  padding: 4px 4px 4px 4px;
-  color: white;
 }

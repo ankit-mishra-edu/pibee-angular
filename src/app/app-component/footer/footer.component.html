@@ -1,23 +1,39 @@
 <footer class="footer">
-  <!-- <br> -->
-  <a class="ml-1" routerLink="/">
-    <img
-      style="line-height: 30px;"
-      src="../assets/media/logos/footerImage.png"
-      alt=""
-    />
-  </a>
-  <a
-    class="navbar-brand ml-2"
-    style="color: white; font-size: 30px;"
-    routerLink="/"
-    >piBee</a
-  >
-  <p
-    class="text-center"
-    style="margin-bottom: 0px; color: white; text-align: center;"
-  >
-    Coded with <span style="color: red;">&hearts;</span> by
-    <a href="https://github.com/amishm766">Ankit Mishra.</a>
-  </p>
+  <div class="container-fluid footer-container">
+    <a routerLink="/">
+      <img src="../assets/media/logos/footerImage.png" alt="" />
+    </a>
+    <a
+      class="navbar-brand"
+      style="color: white; font-size: 25px;"
+      routerLink="/"
+      >piBee</a
+    >
+
+    <div class="row mt-2">
+      <p [routerLink]="['/']" routerLinkActive="router-link-active">
+        About piBee
+      </p>
+      <p *ngIf="!(loggedInUser$ | async)" class="ml-4">
+        Have an account?
+      </p>
+      <p
+        *ngIf="!(loggedInUser$ | async)"
+        class="ml-2"
+        [routerLink]="['/login']"
+      >
+        Sign In
+      </p>
+    </div>
+
+    <p
+      class="text-center"
+      style="margin-bottom: 0px; color: white; text-align: center;"
+    >
+      Coded with <span style="color: red;">&hearts;</span> by
+      <a href="https://github.com/amishm766" style="color: #0366d6;"
+        >Ankit Mishra.</a
+      >
+    </p>
+  </div>
 </footer>

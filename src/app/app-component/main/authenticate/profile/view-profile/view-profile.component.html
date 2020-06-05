@@ -1,11 +1,7 @@
-<div *ngIf="!profileData.image">
-  <p>Loading...</p>
-</div>
-
-<div *ngIf="profileData.image">
+<div class="container-fluid">
   <div class="row">
     <div class="col-md-6">
-      <div>
+      <div *ngIf="profileData.image" style="text-align: center;">
         <img
           name="image"
           class="rounded-circle"
@@ -13,31 +9,55 @@
         />
         <br />
       </div>
+
+      <div *ngIf="!profileData.image" style="margin: 50% 50%;">
+        <p>Loading...</p>
+        <div class="spinner-grow spinner-grow-sm" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
     </div>
 
     <div class="col-md-6">
-      <div>
-        <label>Bio :</label>
-        <p name="bio">{{ profileData.bio }}</p>
-        <br />
+      <div *ngIf="profileData.bio">
+        <div>
+          <label>Bio :</label>
+          <p name="bio">{{ profileData.bio }}</p>
+          <br />
+        </div>
+
+        <div>
+          <label>Location :</label>
+          <p name="location">{{ profileData.location }}</p>
+          <br />
+        </div>
+
+        <div>
+          <label>DOB :</label>
+          <p name="birth_date">{{ profileData.birth_date }}</p>
+          <br />
+        </div>
+
+        <div>
+          <label>Email Status :</label>
+          <p *ngIf="profileData.email_confirmed" name="email_confirmed">
+            {{ "Verified" }}
+          </p>
+          <p *ngIf="!profileData.email_confirmed" name="email_confirmed">
+            {{ "Not Verified" }}
+          </p>
+          <br />
+        </div>
       </div>
 
-      <div>
-        <label>Location :</label>
-        <p name="location">{{ profileData.location }}</p>
-        <br />
-      </div>
-
-      <div>
-        <label>DOB :</label>
-        <p name="birth_date">{{ profileData.birth_date }}</p>
-        <br />
-      </div>
-
-      <div>
-        <label>Email Status :</label>
-        <p name="email_confirmed">{{ profileData.email_confirmed }}</p>
-        <br />
+      <div *ngIf="!profileData.bio">
+        <div
+          class="spinner-border"
+          style="width: 3rem; height: 3rem; margin: 50% 50%;"
+          role="status"
+        >
+          <span class="sr-only">Loading...</span>
+        </div>
       </div>
     </div>
   </div>
