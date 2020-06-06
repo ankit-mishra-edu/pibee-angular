@@ -18,6 +18,7 @@ import { NavbarComponent } from './app-component/navbar/navbar.component';
 import { MainComponent } from './app-component/main/main.component';
 import { FooterComponent } from './app-component/footer/footer.component';
 import { SidebarComponent } from './app-component/main/sidebar/sidebar.component';
+import { SearchComponent } from './app-component/main/search/search.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { SidebarComponent } from './app-component/main/sidebar/sidebar.component
     MainComponent,
     FooterComponent,
     SidebarComponent,
+    SearchComponent,
   ],
   imports: [
     CommonModule,

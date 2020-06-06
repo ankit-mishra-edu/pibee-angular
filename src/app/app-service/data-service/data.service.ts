@@ -1,8 +1,15 @@
 import { Injectable } from '@angular/core';
 import { IUser } from 'src/app/app-interface/User';
 import { IProfile } from 'src/app/app-interface/Profile';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
-import { distinctUntilChanged, catchError } from 'rxjs/operators';
+import {
+  BehaviorSubject,
+  Observable,
+  of,
+  throwError,
+  interval,
+  Subject,
+} from 'rxjs';
+import { distinctUntilChanged, catchError, delay } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
@@ -10,7 +17,10 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 })
 export class DataService {
   loggedInUser: IUser;
+  allUsersArray: IUser[];
   baseUrl: string = 'https://pibeedjango.herokuapp.com/api/';
+
+  public searchQueryChangeSubject$ = new Subject<string>();
   private _loggedInUserSubject$ = new BehaviorSubject<IUser>(null);
 
   loggedInUser$ = this._loggedInUserSubject$
@@ -40,14 +50,10 @@ export class DataService {
     this._loggedInUserSubject$.next(loggedInUser);
   }
 
-  GetLoggedInUser(): IUser {
-    this._loggedInUserSubject$
+  GetLoggedInUser(): Observable<IUser> {
+    return this._loggedInUserSubject$
       .asObservable()
-      .pipe(distinctUntilChanged())
-      .subscribe((loggedInUserResponse) => {
-        this.loggedInUser = loggedInUserResponse;
-      });
-    return this.loggedInUser;
+      .pipe(distinctUntilChanged());
   }
 
   GetUser(id): Observable<IUser> {
