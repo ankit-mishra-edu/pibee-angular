@@ -21,8 +21,4 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
     this.loggedInUser$ = this._data.loggedInUser$;
   }
-
-  matchingUsersArray = this.usernameChange.pipe(
-    switchMap((partial) => this._data.suggestNames(this.allUsersArray, partial))
-  );
 }

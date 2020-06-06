@@ -1,14 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IUser } from 'src/app/app-interface/User';
 import { IProfile } from 'src/app/app-interface/Profile';
-import {
-  BehaviorSubject,
-  Observable,
-  of,
-  throwError,
-  interval,
-  Subject,
-} from 'rxjs';
+import { BehaviorSubject, Observable, of, throwError, Subject } from 'rxjs';
 import { distinctUntilChanged, catchError, delay } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
@@ -35,9 +28,9 @@ export class DataService {
     }
   }
 
-  suggestNames(userArray: IUser[], partial: string): Observable<IUser[]> {
+  suggestNames(allUsersArray: IUser[], partial: string): Observable<IUser[]> {
     let usernamesArray: IUser[] = [];
-    userArray.forEach((user) => {
+    allUsersArray.forEach((user) => {
       if (user.username.toLowerCase().includes(partial.toLowerCase())) {
         usernamesArray.push(user);
       }
@@ -63,6 +56,7 @@ export class DataService {
   }
 
   GetAllUsers(): Observable<IUser[]> {
+    console.log('Called GetAllUsers() in service');
     return this._http
       .get<IUser[]>(this.baseUrl + 'user/')
       .pipe(catchError(this.errorHandler));

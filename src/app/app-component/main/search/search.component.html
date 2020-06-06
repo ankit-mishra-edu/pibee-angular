@@ -1,21 +1,14 @@
-<li class="nav-item d-none d-sm-inline-block" id="searchBar">
-  <form class="form-inline">
-    <div class="input-group input-group-sm">
-      <input
-        class="form-control form-control-navbar"
-        type="search"
-        placeholder="Search"
-        aria-label="Search"
-        name="search"
-        #search
-        [ngModel]="_data.searchQueryChangeSubject$ | async"
-        (ngModelChange)="_data.searchQueryChangeSubject$.next($event)"
-      />
-      <!-- <div class="input-group-append">
-        <button class="btn btn-navbar" type="submit" style="color: white;">
-          <i class="fa fa-search"></i>
-        </button>
-      </div> -->
-    </div>
-  </form>
-</li>
+<form class="form-inline" style="margin-left: 0px;">
+  <div class="input-group input-group-sm">
+    <input
+      class="form-control form-control-navbar"
+      type="search"
+      placeholder="Search User"
+      aria-label="Search"
+      name="search"
+      #search
+      [ngModel]="_data.searchQueryChangeSubject$ | async"
+      (ngModelChange)="_data.searchQueryChangeSubject$.next($event)"
+    />
+  </div>
+</form>
