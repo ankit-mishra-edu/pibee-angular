@@ -9,11 +9,11 @@ import { DataService } from 'src/app/app-service/data-service/data.service';
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.component.html',
-  styleUrls: ['./edit-profile.component.css'],
+  styleUrls: ['./edit-profile.component.scss'],
 })
 export class EditProfileComponent implements OnInit, OnDestroy {
   subscriptions = new SubSink();
-  loggedInUser: IUser = this._data.GetLoggedInUser();
+  loggedInUser: IUser = this._data.loggedInUser;
   profileFormData: IProfile = {
     user: this.loggedInUser.id,
     bio: '',

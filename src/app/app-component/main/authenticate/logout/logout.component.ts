@@ -8,7 +8,7 @@ import { DataService } from 'src/app/app-service/data-service/data.service';
 @Component({
   selector: 'app-logout',
   templateUrl: './logout.component.html',
-  styleUrls: ['./logout.component.css'],
+  styleUrls: ['./logout.component.scss'],
 })
 export class LogoutComponent implements OnInit, OnDestroy {
   loggedInUser: IUser;
@@ -21,7 +21,7 @@ export class LogoutComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.loggedInUser = this._data.GetLoggedInUser();
+    this.loggedInUser = this._data.loggedInUser;
     this.logout();
   }
 

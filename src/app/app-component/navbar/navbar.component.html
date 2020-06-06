@@ -15,25 +15,6 @@
       routerLink="/"
       >piBee</a
     >
-    <!-- Navigation Link for Search Bar -->
-    <li class="nav-item d-none d-sm-inline-block mr-auto" id="searchBar">
-      <form class="form-inline">
-        <div class="input-group input-group-sm">
-          <input
-            class="form-control form-control-navbar"
-            type="search"
-            name="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-          <div class="input-group-append">
-            <button class="btn btn-navbar" type="submit">
-              <i class="fa fa-search"></i>
-            </button>
-          </div>
-        </div>
-      </form>
-    </li>
 
     <button
       class="navbar-toggler"
@@ -47,19 +28,32 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="navbar-collapse collapse show" id="navbarToggle">
-      <ul class="navbar-nav ml-auto">
+    <div class="navbar-collapse collapse" id="navbarToggle">
+      <ul class="navbar-nav mr-auto">
+        <!-- Navigation Link for Search Bar -->
+        <app-search></app-search>
+      </ul>
+
+      <ul class="navbar-nav nav-pills ml-auto">
         <!-- If the user is Authenticated -->
         <ng-template [ngIf]="isLoggedIn()" [ngIfElse]="loggedOut">
           <!-- Navigation link for Chat -->
-          <li class="nav-item">
+          <li
+            class="nav-item"
+            data-toggle="collapse"
+            data-target=".navbar-collapse.show"
+          >
             <p class="nav-link" routerLink="chatapp/">
               <i class="fa fa-comments-o" aria-hidden="true"></i>
             </p>
           </li>
 
           <!-- Dropdown for Messages -->
-          <li class="nav-item nav-tabs dropdown">
+          <li
+            class="nav-item dropdown"
+            data-toggle="collapse"
+            data-target=".navbar-collapse.show"
+          >
             <a
               class="nav-link"
               id="messageToggle"
@@ -73,14 +67,18 @@
               class="dropdown-menu dropdown-menu-right"
               aria-labelledby="messageToggle"
             >
-              <span class="dropdown-item text-light bg-dark">Messages</span>
+              <span class="dropdown-header text-light bg-dark">Messages</span>
               <a class="dropdown-item" routerLink="/">Message 1</a>
               <a class="dropdown-item" routerLink="/">Message 1</a>
             </div>
           </li>
 
           <!-- Dropdown for Notification -->
-          <li class="nav-item nav-tabs dropdown">
+          <li
+            class="nav-item dropdown"
+            data-toggle="collapse"
+            data-target=".navbar-collapse.show"
+          >
             <a
               class="nav-link"
               id="notificationToggle"
@@ -103,7 +101,11 @@
           </li>
 
           <!-- Dropdown for Settings -->
-          <li class="nav-item nav-tabs dropdown">
+          <li
+            class="nav-item dropdown"
+            data-toggle="collapse"
+            data-target=".navbar-collapse.show"
+          >
             <!-- Settings symbol for settings dropdown -->
             <a
               class="nav-link"
@@ -143,7 +145,11 @@
           </li>
 
           <!-- Dropdown for User Profile -->
-          <li class="nav-item nav-tabs dropdown">
+          <li
+            class="nav-item dropdown"
+            data-toggle="collapse"
+            data-target=".navbar-collapse.show"
+          >
             <a
               class="nav-link"
               id="userProfileToggle"
@@ -185,12 +191,20 @@
             </div>
           </li>
 
-          <li class="nav-item">
+          <li
+            class="nav-item"
+            data-toggle="collapse"
+            data-target=".navbar-collapse.show"
+          >
             <p class="nav-link">Hi</p>
           </li>
 
           <!-- Display Username -->
-          <li class="nav-item">
+          <li
+            class="nav-item"
+            data-toggle="collapse"
+            data-target=".navbar-collapse.show"
+          >
             <p [routerLink]="['/view-profile']" class="nav-link">
               {{ loggedInUser.username }}
             </p>
@@ -200,14 +214,22 @@
         <!-- If the user is not Authenticated or Logged Out -->
         <ng-template #loggedOut>
           <!-- Navigation Link to Login -->
-          <li class="nav-item dropdown">
+          <li
+            class="nav-item dropdown"
+            data-toggle="collapse"
+            data-target=".navbar-collapse.show"
+          >
             <p class="nav-link" routerLink="login/">
               <i class="fa fa-sign-in mr-2" aria-hidden="true"></i>Login
             </p>
           </li>
 
           <!-- Navigation Link to Register -->
-          <li class="nav-item dropdown">
+          <li
+            class="nav-item dropdown"
+            data-toggle="collapse"
+            data-target=".navbar-collapse.show"
+          >
             <p class="nav-link" routerLink="register/">
               Register
             </p>

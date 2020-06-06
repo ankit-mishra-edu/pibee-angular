@@ -8,11 +8,11 @@ import { DataService } from 'src/app/app-service/data-service/data.service';
 @Component({
   selector: 'app-view-profile',
   templateUrl: './view-profile.component.html',
-  styleUrls: ['./view-profile.component.css'],
+  styleUrls: ['./view-profile.component.scss'],
 })
 export class ViewProfileComponent implements OnInit, OnDestroy {
   subscriptions = new SubSink();
-  loggedInUser: IUser = this._data.GetLoggedInUser();
+  loggedInUser: IUser = this._data.loggedInUser;
   profileData: IProfile = {
     user: this.loggedInUser.id,
     bio: '',

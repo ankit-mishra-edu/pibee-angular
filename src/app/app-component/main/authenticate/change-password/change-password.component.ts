@@ -8,11 +8,11 @@ import { DataService } from 'src/app/app-service/data-service/data.service';
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
-  styleUrls: ['./change-password.component.css'],
+  styleUrls: ['./change-password.component.scss'],
 })
 export class ChangePasswordComponent implements OnInit, OnDestroy {
   subscriptions = new SubSink();
-  loggedInUser: IUser = this._data.GetLoggedInUser();
+  loggedInUser: IUser = this._data.loggedInUser;
   changePasswordFormData = {
     id: this.loggedInUser.id,
     oldPassword: '',
@@ -45,7 +45,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
       },
 
       () => {
-        console.log('Logged In Successfully');
+        console.log('Confirm user service called Successfully');
       }
     );
   }

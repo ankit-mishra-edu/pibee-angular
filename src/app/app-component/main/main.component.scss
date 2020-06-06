@@ -1,12 +1,16 @@
 main {
   padding: 10px 0px 0px 0px;
   margin: 48px 3% 0px 3%;
+  input {
+    max-width: 230px;
+    font-size: 30px;
+  }
 }
 
-input {
-  max-width: 230px;
-  font-size: 30px;
-}
+// input {
+//   max-width: 230px;
+//   font-size: 30px;
+// }
 
 .article-container {
   width: 100%;

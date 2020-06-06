@@ -9,12 +9,12 @@ import { DataService } from 'src/app/app-service/data-service/data.service';
 @Component({
   selector: 'app-edit-details',
   templateUrl: './edit-details.component.html',
-  styleUrls: ['./edit-details.component.css'],
+  styleUrls: ['./edit-details.component.scss'],
 })
 export class EditDetailsComponent implements OnInit, OnDestroy {
   subscriptions = new SubSink();
   isUserConfirmed: boolean = false;
-  loggedInUser: IUser = this._data.GetLoggedInUser();
+  loggedInUser: IUser = this._data.loggedInUser;
   loginFormData = {
     username: this.loggedInUser.username,
     password: '',

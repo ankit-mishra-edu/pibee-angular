@@ -10,7 +10,7 @@ import { DataService } from 'src/app/app-service/data-service/data.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
   loggedInUser$: Observable<IUser>;
@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  matchingUsersArray = this.usernameChange.pipe(
+  matchingUsersArray = this._data.searchQueryChangeSubject$.pipe(
     switchMap((partial) => this._data.suggestNames(this.allUsersArray, partial))
   );
 }

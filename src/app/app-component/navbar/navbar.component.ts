@@ -9,7 +9,7 @@ import { DataService } from 'src/app/app-service/data-service/data.service';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css'],
+  styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
   title = 'piBee';
@@ -30,7 +30,7 @@ export class NavbarComponent implements OnInit {
 
   isLoggedIn() {
     if (sessionStorage.length > 0) {
-      this.loggedInUser = this._data.GetLoggedInUser();
+      this.loggedInUser = this._data.loggedInUser;
       return true;
     }
     return false;
