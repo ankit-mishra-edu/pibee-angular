@@ -1,142 +1,173 @@
-<form #registerForm="ngForm">
+<form [formGroup]="signUpForm">
   <div class="form-group">
     <h4 class="font-weight-bold">Register</h4>
 
     <div class="form-group">
-      <label>Username :</label>
+      <label class="control-label required">Username</label>
       <div class="row" style="margin: 0px;">
         <input
           type="text"
-          autofocus
           class="form-control input-sm"
-          placeholder="*Mandatory"
-          name="userName"
-          #username="ngModel"
-          [(ngModel)]="userData.username"
-          maxlength="150"
-          required
+          formControlName="username"
+          [ngClass]="{
+            'is-invalid': isInValid('username'),
+            'is-valid': isValid('username')
+          }"
         />
         <div
-          *ngIf="username.dirty || username.touched"
+          *ngIf="
+            signUpForm.get('username').dirty ||
+            signUpForm.get('username').touched
+          "
           class="alert alert-danger alert-icon"
         >
-          <div *ngFor="let user of usersArray">
-            <div *ngIf="username.value == user.username">
-              <small style="margin-left: 20px;"
-                >{{ "Username already taken" }}.</small
-              >
-            </div>
-          </div>
-          <div *ngIf="username.errors">
-            <div [hidden]="!username.errors.required">
-              <small style="margin-left: 20px;">Username is Mandatory.</small>
-            </div>
-          </div>
+          <small
+            *ngIf="signUpForm.get('username').errors?.alreadyTakenError"
+            style="margin-left: 20px;"
+            >{{ "Username is already Taken" }}.</small
+          >
+
+          <small
+            *ngIf="signUpForm.get('username').errors?.minlength"
+            style="margin-left: 20px;"
+            >Username need
+            {{
+              signUpForm.get("username").errors?.minlength.requiredLength -
+                signUpForm.get("username").errors?.minlength.actualLength
+            }}
+            more characters.</small
+          >
+
+          <small
+            *ngIf="signUpForm.get('username').errors?.required"
+            style="margin-left: 20px;"
+            >{{ "Username is Mandatory" }}.</small
+          >
         </div>
       </div>
     </div>
 
     <div class="form-group">
-      <label>First Name :</label>
-      <input
-        type="text"
-        class="form-control"
-        placeholder="*Optional"
-        name="firstName"
-        #firstname="ngModel"
-        [(ngModel)]="userData.first_name"
-      />
+      <label class="control-label">First Name</label>
+      <input type="text" class="form-control" formControlName="first_name" />
     </div>
 
     <div class="form-group">
-      <label>Last Name :</label>
-      <input
-        type="text"
-        class="form-control"
-        placeholder="*Optional"
-        name="lastName"
-        #lastname="ngModel"
-        [(ngModel)]="userData.last_name"
-      />
+      <label class="control-label">Last Name</label>
+      <input type="text" class="form-control" formControlName="last_name" />
     </div>
 
     <div class="form-group">
-      <label class="font-weight-bold">Email :</label>
+      <label class="control-label required">Email</label>
       <div class="row" style="margin: 0px;">
         <input
           type="email"
-          placeholder="*Mandatory"
           class="form-control"
-          pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
-          name="Email"
-          #email="ngModel"
-          [(ngModel)]="userData.email"
-          required
+          formControlName="email"
+          [ngClass]="{
+            'is-valid': isValid('email'),
+            'is-invalid': isInValid('email')
+          }"
         />
 
         <div
-          *ngIf="email.dirty || email.touched"
+          *ngIf="
+            signUpForm.get('email').dirty || signUpForm.get('email').touched
+          "
           class="alert alert-danger alert-icon"
         >
-          <div *ngFor="let user of usersArray">
-            <div *ngIf="email.value == user.email">
-              <small style="margin-left: 20px;">Email already taken.</small>
-            </div>
-          </div>
-          <div *ngIf="email.errors">
-            <div [hidden]="!email.errors.required">
-              <small style="margin-left: 20px;">Email is Mandatory.</small>
-            </div>
-            <div [hidden]="!email.errors.pattern">
-              <small style="margin-left: 20px;"
-                >Email not in proper format.</small
-              >
-            </div>
-          </div>
+          <small
+            *ngIf="signUpForm.get('email').errors?.alreadyTakenError"
+            style="margin-left: 20px;"
+            >{{ "Username is already Taken" }}.</small
+          >
+
+          <small
+            *ngIf="signUpForm.get('email').errors?.required"
+            style="margin-left: 20px;"
+            >Email is Mandatory.</small
+          >
+
+          <small
+            *ngIf="signUpForm.get('email').errors?.pattern"
+            style="margin-left: 20px;"
+            >Enter email in valid format.</small
+          >
         </div>
       </div>
     </div>
 
     <div class="form-group">
-      <label>Password :</label>
+      <label class="control-label required">Password</label>
       <div class="row" style="margin: 0px;">
         <input
           type="password"
-          placeholder="*Mandatory"
           class="form-control"
-          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-          name="Password"
-          #password="ngModel"
-          [(ngModel)]="userData.password"
-          required
+          formControlName="password"
+          [ngClass]="{
+            'is-valid': isValid('password'),
+            'is-invalid': isInValid('password')
+          }"
         />
 
         <div
-          *ngIf="password.errors && (password.dirty || password.touched)"
+          *ngIf="
+            signUpForm.get('password').dirty ||
+            signUpForm.get('password').touched
+          "
           class="alert alert-danger alert-icon"
         >
-          <div [hidden]="!password.errors.required">
-            <small style="margin-left: 20px;">Password is Mandatory.</small>
-          </div>
-          <div [hidden]="!password.errors.pattern">
-            <small style="margin-left: 20px;"
-              >Password not in proper format.</small
-            >
-          </div>
-        </div>
-      </div>
+          <small
+            *ngIf="signUpForm.get('password').errors?.required"
+            style="margin-left: 20px;"
+            >Email is Mandatory.</small
+          >
 
-      <small style="color: grey;"
-        >*Must contain at least 8 characters with a number, an uppercase and
-        lowercase letter.</small
-      >
+          <small
+            *ngIf="signUpForm.get('password').errors?.pattern"
+            style="margin-left: 20px;"
+            >Enter password in valid format.</small
+          >
+        </div>
+        <small
+          *ngIf="
+            signUpForm.get('password').errors &&
+            signUpForm.get('password').dirty
+          "
+          style="color: grey;"
+          >*Need
+          <span *ngIf="signUpForm.get('password').errors?.minlength">
+            {{
+              signUpForm.get("password").errors?.minlength.requiredLength -
+                signUpForm.get("password").errors?.minlength.actualLength
+            }}
+          </span>
+          more characters including
+          <span *ngIf="signUpForm.get('password').errors?.hasNumber"
+            >a number</span
+          >
+          <span *ngIf="signUpForm.get('password').errors?.hasCapitalCase"
+            >,an Uppercase</span
+          >
+          <span *ngIf="signUpForm.get('password').errors?.hasSmallCase"
+            >and lowercase
+          </span>
+          <span
+            *ngIf="
+              signUpForm.get('password').errors?.hasSmallCase ||
+              signUpForm.get('password').errors?.hasCapitalCase
+            "
+            >letter.</span
+          >
+        </small>
+      </div>
     </div>
 
     <button
       (click)="signUp()"
       type="submit"
-      class="btn btn-primary"
-      [disabled]="!registerForm.form.valid"
+      class="btn"
+      [disabled]="signUpForm.invalid"
     >
       Register
     </button>

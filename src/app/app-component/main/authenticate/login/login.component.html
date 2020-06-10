@@ -1,39 +1,41 @@
-<form #loginForm="ngForm">
+<form [formGroup]="signInForm">
   <div class="form-group mt-5 mb-5">
     <h2>Log In</h2>
 
     <div class="form-group mt-3">
-      <label class="font-weight-bold">Username :</label>
+      <label class="control-label required">Username</label>
       <input
         type="text"
         class="form-control"
-        name="userName"
-        #username="ngModel"
-        [(ngModel)]="loginData.username"
-        maxlength="150"
-        required
+        formControlName="username"
+        [ngClass]="{
+          'is-invalid': isInValid('username'),
+          'is-valid': isValid('username')
+        }"
       />
     </div>
 
     <div class="form-group">
-      <label class="font-weight-bold">Password :</label>
+      <label class="control-label required">Password</label>
       <input
+        required
         type="password"
         class="form-control"
-        name="Password"
-        #password="ngModel"
-        [(ngModel)]="loginData.password"
-        required
+        formControlName="password"
+        [ngClass]="{
+          'is-invalid': isInValid('password'),
+          'is-valid': isValid('password')
+        }"
       />
     </div>
 
     <button
-      (click)="logIn()"
       type="submit"
-      class="btn btn-primary"
-      [disabled]="!loginForm.form.valid"
+      (click)="signIn()"
+      class="btn"
+      [disabled]="signInForm.invalid"
     >
-      Login
+      Sign In
     </button>
   </div>
 </form>

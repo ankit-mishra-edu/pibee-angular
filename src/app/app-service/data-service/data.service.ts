@@ -74,6 +74,13 @@ export class DataService {
       .pipe(catchError(this.errorHandler));
   }
 
+  isFieldValid(form, field: string) {
+    return (
+      form.get(field).invalid &&
+      (form.get(field).touched || form.get(field).dirty)
+    );
+  }
+
   errorHandler(error: HttpErrorResponse) {
     console.error(error);
     return throwError(error.error || 'Server Error');

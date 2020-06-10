@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { SubSink } from 'subsink';
 import { IUser } from 'src/app/app-interface/User';
 import { DataService } from 'src/app/app-service/data-service/data.service';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -11,8 +12,12 @@ import { DataService } from 'src/app/app-service/data-service/data.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  loginData;
   subscriptions = new SubSink();
+  signInForm = new FormBuilder().group({
+    username: ['', [Validators.required]],
+    password: ['', [Validators.required]],
+    email: 'amishm766@gmail.com',
+  });
 
   constructor(
     private _auth: AuthService,
@@ -20,20 +25,14 @@ export class LoginComponent implements OnInit, OnDestroy {
     private _router: Router
   ) {}
 
-  ngOnInit(): void {
-    this.loginData = {
-      username: '',
-      password: '',
-      email: 'amishm7@gmail.com',
-    };
-  }
+  ngOnInit(): void {}
 
-  logIn() {
-    this.subscriptions.sink = this._auth.LogIn(this.loginData).subscribe(
+  signIn() {
+    this.subscriptions.sink = this._auth.LogIn(this.signInForm.value).subscribe(
       (logInResponse) => {
         console.log(logInResponse);
         sessionStorage.setItem('userToken', JSON.stringify(logInResponse));
-        this.changeLoggedInUser(logInResponse.user);
+        this._changeLoggedInUser(logInResponse.user);
         this._router.navigate(['']);
       },
 
@@ -48,8 +47,23 @@ export class LoginComponent implements OnInit, OnDestroy {
     );
   }
 
-  changeLoggedInUser(loggedInUser: IUser) {
+  private _changeLoggedInUser(loggedInUser: IUser) {
     this._data.ChangeLoggedInUser$(loggedInUser);
+  }
+
+  isInValid(controlName: string) {
+    return (
+      this.signInForm.get(controlName).invalid &&
+      (this.signInForm.get(controlName).touched ||
+        this.signInForm.get(controlName).dirty)
+    );
+  }
+
+  isValid(controlName: string) {
+    return (
+      this.signInForm.get(controlName).valid &&
+      this.signInForm.get(controlName).dirty
+    );
   }
 
   ngOnDestroy() {

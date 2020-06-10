@@ -14,5 +14,9 @@ export class AppComponent {
     this._data.GetLoggedInUser().subscribe((loggedInUserResponse) => {
       this._data.loggedInUser = loggedInUserResponse;
     });
+
+    this._data.GetAllUsers().subscribe((getAllUsersResponse) => {
+      this._data.allUsersArray = getAllUsersResponse;
+    });
   }
 }

@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.loggedInUser$ = this._data.loggedInUser$;
-    if (this.loggedInUser$) {
+    if (this._data.loggedInUser) {
       this.getAllUsers();
     }
   }
@@ -51,6 +51,8 @@ export class HomeComponent implements OnInit {
   }
 
   matchingUsersArray = this._data.searchQueryChangeSubject$.pipe(
-    switchMap((partial) => this._data.suggestNames(this.allUsersArray, partial))
+    switchMap((partial) =>
+      this._data.suggestNames(this._data.allUsersArray, partial)
+    )
   );
 }
