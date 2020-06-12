@@ -35,7 +35,7 @@ export class EditProfileComponent implements OnInit, OnDestroy {
 
   getUserProfile() {
     this.subscriptions.sink = this._data
-      .GetUserProfile(this.profileFormData.user)
+      .GetUserProfileById(this.profileFormData.user)
       .subscribe(
         (getUserProfileResponse) => {
           console.log(getUserProfileResponse);

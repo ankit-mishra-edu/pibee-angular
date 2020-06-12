@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { IUser } from 'src/app/app-interface/User';
+import { Observable, Subject } from 'rxjs';
 import { AuthService } from 'src/app/app-service/auth-service/auth.service';
 import { DataService } from 'src/app/app-service/data-service/data.service';
 
@@ -12,11 +13,12 @@ import { DataService } from 'src/app/app-service/data-service/data.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  loggedInUser$: Observable<IUser>;
   subscriptions = new SubSink();
   numberArray = [1, 2, 3];
 
-  loggedInUser: IUser = this._data.loggedInUser;
-  allUsersArray: IUser[] = this._data.allUsersArray;
+  allUsersArray: IUser[];
+  usernameChange = new Subject<string>();
 
   constructor(
     private _auth: AuthService,
@@ -25,6 +27,7 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loggedInUser$ = this._data.loggedInUser$;
     if (this._data.loggedInUser) {
       this.getAllUsers();
     }
@@ -49,7 +52,7 @@ export class HomeComponent implements OnInit {
 
   matchingUsersArray = this._data.searchQueryChangeSubject$.pipe(
     switchMap((partial) =>
-      this._data.searchQuery(this._data.allUsersArray, partial)
+      this._data.suggestNames(this._data.allUsersArray, partial)
     )
   );
 }

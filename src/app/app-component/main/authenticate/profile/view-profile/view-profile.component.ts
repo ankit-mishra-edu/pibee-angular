@@ -30,7 +30,7 @@ export class ViewProfileComponent implements OnInit, OnDestroy {
 
   viewProfile() {
     this.subscriptions.sink = this._data
-      .GetUserProfile(this.profileData.user)
+      .GetUserProfileById(this.profileData.user)
       .subscribe(
         (getUserProfileResponse) => {
           console.log(getUserProfileResponse);
