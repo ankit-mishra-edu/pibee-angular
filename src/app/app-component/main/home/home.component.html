@@ -54,8 +54,8 @@
   </a>
 </div>
 
-<div *ngIf="loggedInUser$ | async">
-  <h5>Welcome : {{ (loggedInUser$ | async).username }}</h5>
+<div *ngIf="loggedInUser">
+  <h5>Welcome : {{ loggedInUser.username }}</h5>
   <h4>Search in the search box to see users</h4>
   <div *ngIf="allUsersArray">
     <div style="margin: 0px 5px 0px 5px;">
@@ -76,6 +76,6 @@
     </div>
   </div>
 </div>
-<div *ngIf="!(loggedInUser$ | async)">
+<div *ngIf="!loggedInUser">
   <p>{{ "Not logged In" }}</p>
 </div>

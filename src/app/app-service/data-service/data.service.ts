@@ -10,7 +10,9 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 })
 export class DataService {
   loggedInUser: IUser;
+  userProfile: IProfile;
   allUsersArray: IUser[];
+  allUsersProfileArray: IProfile[];
   baseUrl: string = 'https://pibeedjango.herokuapp.com/api/';
 
   public searchQueryChangeSubject$ = new Subject<string>();
@@ -28,15 +30,8 @@ export class DataService {
     }
   }
 
-  suggestNames(allUsersArray: IUser[], partial: string): Observable<IUser[]> {
-    let usernamesArray: IUser[] = [];
-    allUsersArray.forEach((user) => {
-      if (user.username.toLowerCase().includes(partial.toLowerCase())) {
-        usernamesArray.push(user);
-      }
-    });
-    console.log(usernamesArray);
-    return of(usernamesArray);
+  GetAllUsersArray() {
+    return this.allUsersArray;
   }
 
   ChangeLoggedInUser$(loggedInUser: IUser) {
@@ -49,7 +44,7 @@ export class DataService {
       .pipe(distinctUntilChanged());
   }
 
-  GetUser(id): Observable<IUser> {
+  GetUserById(id): Observable<IUser> {
     return this._http
       .get<IUser>(this.baseUrl + 'user/' + <number>id)
       .pipe(catchError(this.errorHandler));
@@ -62,23 +57,27 @@ export class DataService {
       .pipe(catchError(this.errorHandler));
   }
 
-  GetUserProfile(id): Observable<IProfile> {
+  GetUserProfileById(id): Observable<IProfile> {
     return this._http
       .get<IProfile>(this.baseUrl + 'user_profile/' + <number>id)
       .pipe(catchError(this.errorHandler));
   }
 
-  GetAllUserProfiles(): Observable<IProfile[]> {
+  GetAllUsersProfiles(): Observable<IProfile[]> {
     return this._http
       .get<IProfile[]>(this.baseUrl + 'user_profile/')
       .pipe(catchError(this.errorHandler));
   }
 
-  isFieldValid(form, field: string) {
-    return (
-      form.get(field).invalid &&
-      (form.get(field).touched || form.get(field).dirty)
-    );
+  searchQuery(allUsersArray: IUser[], partial: string): Observable<IUser[]> {
+    let usernamesArray: IUser[] = [];
+    allUsersArray.forEach((user) => {
+      if (user.username.toLowerCase().includes(partial.toLowerCase())) {
+        usernamesArray.push(user);
+      }
+    });
+    console.log(usernamesArray);
+    return of(usernamesArray);
   }
 
   errorHandler(error: HttpErrorResponse) {
