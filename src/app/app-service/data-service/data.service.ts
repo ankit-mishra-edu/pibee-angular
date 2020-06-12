@@ -11,6 +11,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 export class DataService {
   loggedInUser: IUser;
   allUsersArray: IUser[];
+  userProfile: IProfile;
+  allUsersProfileArray: IProfile[];
   baseUrl: string = 'https://pibeedjango.herokuapp.com/api/';
 
   public searchQueryChangeSubject$ = new Subject<string>();
@@ -68,7 +70,7 @@ export class DataService {
       .pipe(catchError(this.errorHandler));
   }
 
-  GetAllUserProfiles(): Observable<IProfile[]> {
+  GetAllUsersProfiles(): Observable<IProfile[]> {
     return this._http
       .get<IProfile[]>(this.baseUrl + 'user_profile/')
       .pipe(catchError(this.errorHandler));
