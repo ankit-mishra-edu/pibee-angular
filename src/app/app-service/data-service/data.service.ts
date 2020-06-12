@@ -62,7 +62,7 @@ export class DataService {
       .pipe(catchError(this.errorHandler));
   }
 
-  GetUserProfile(id): Observable<IProfile> {
+  GetUserProfileById(id): Observable<IProfile> {
     return this._http
       .get<IProfile>(this.baseUrl + 'user_profile/' + <number>id)
       .pipe(catchError(this.errorHandler));
