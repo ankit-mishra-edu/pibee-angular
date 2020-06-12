@@ -4,14 +4,13 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/app-service/auth-service/auth.service';
 import { DataService } from 'src/app/app-service/data-service/data.service';
-import {
-  FormBuilder,
-  Validators,
-  ValidationErrors,
-  AbstractControl,
-  ValidatorFn,
-} from '@angular/forms';
+import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { of } from 'rxjs';
+import {
+  patternValidator,
+  isValid,
+  isInValid,
+} from 'src/app/app-validators/custom.validator';
 
 @Component({
   selector: 'app-register',
@@ -20,6 +19,8 @@ import { of } from 'rxjs';
 })
 export class RegisterComponent implements OnInit, OnDestroy {
   usersArray: IUser[];
+  isValid = isValid;
+  isInValid = isInValid;
   subscriptions = new SubSink();
 
   signUpForm = new FormBuilder().group({
@@ -48,16 +49,20 @@ export class RegisterComponent implements OnInit, OnDestroy {
         Validators.pattern(
           '(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=[^0-9]*[0-9]).{8,}'
         ),
-        this.patternValidator(/\d/, { hasNumber: true }),
-        this.patternValidator(/[A-Z]/, { hasCapitalCase: true }),
-        this.patternValidator(/[a-z]/, { hasSmallCase: true }),
+        patternValidator(/\d/, { hasNumber: true }),
+        patternValidator(/[A-Z]/, { hasCapitalCase: true }),
+        patternValidator(/[a-z]/, { hasSmallCase: true }),
       ],
     ],
   });
 
+  value(controlName: string) {
+    return this.signUpForm.get(controlName);
+  }
+
   constructor(
     private _auth: AuthService,
-    private _data: DataService,
+    public _data: DataService,
     private _route: Router
   ) {}
 
@@ -107,8 +112,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     const controlName = Object.keys(control.parent.controls).find(
       (key) => control.parent.controls[key] === control
     );
-    if (this.usersArray) {
-      for (let user of this.usersArray) {
+    if (this._data.allUsersArray) {
+      for (let user of this._data.allUsersArray) {
         if (user[controlName] == control.value) {
           validationStatus = true;
           break;
@@ -117,36 +122,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
 
     return of(validationStatus ? { alreadyTakenError: true } : null);
-  }
-
-  patternValidator(regex: RegExp, error: ValidationErrors): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } => {
-      if (!control.value) {
-        // if control is empty return no error
-        return null;
-      }
-
-      // test the value of the control against the regexp supplied
-      const valid = regex.test(control.value);
-
-      // if true, return no error (no error), else return error passed in the second parameter
-      return valid ? null : error;
-    };
-  }
-
-  isInValid(controlName: string) {
-    return (
-      this.signUpForm.get(controlName).invalid &&
-      (this.signUpForm.get(controlName).touched ||
-        this.signUpForm.get(controlName).dirty)
-    );
-  }
-
-  isValid(controlName: string) {
-    return (
-      this.signUpForm.get(controlName).valid &&
-      this.signUpForm.get(controlName).dirty
-    );
   }
 
   ngOnDestroy() {

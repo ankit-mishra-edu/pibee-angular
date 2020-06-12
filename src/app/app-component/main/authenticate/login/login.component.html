@@ -9,8 +9,8 @@
         class="form-control"
         formControlName="username"
         [ngClass]="{
-          'is-invalid': isInValid('username'),
-          'is-valid': isValid('username')
+          'is-invalid': isInValid(signInForm, 'username'),
+          'is-valid': isValid(signInForm, 'username')
         }"
       />
     </div>
@@ -23,8 +23,8 @@
         class="form-control"
         formControlName="password"
         [ngClass]="{
-          'is-invalid': isInValid('password'),
-          'is-valid': isValid('password')
+          'is-invalid': isInValid(signInForm, 'password'),
+          'is-valid': isValid(signInForm, 'password')
         }"
       />
     </div>

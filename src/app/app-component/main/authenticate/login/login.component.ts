@@ -5,6 +5,7 @@ import { SubSink } from 'subsink';
 import { IUser } from 'src/app/app-interface/User';
 import { DataService } from 'src/app/app-service/data-service/data.service';
 import { FormBuilder, Validators } from '@angular/forms';
+import { isValid, isInValid } from 'src/app/app-validators/custom.validator';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +13,8 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
+  isValid = isValid;
+  isInValid = isInValid;
   subscriptions = new SubSink();
   signInForm = new FormBuilder().group({
     username: ['', [Validators.required]],
@@ -49,21 +52,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   private _changeLoggedInUser(loggedInUser: IUser) {
     this._data.ChangeLoggedInUser$(loggedInUser);
-  }
-
-  isInValid(controlName: string) {
-    return (
-      this.signInForm.get(controlName).invalid &&
-      (this.signInForm.get(controlName).touched ||
-        this.signInForm.get(controlName).dirty)
-    );
-  }
-
-  isValid(controlName: string) {
-    return (
-      this.signInForm.get(controlName).valid &&
-      this.signInForm.get(controlName).dirty
-    );
   }
 
   ngOnDestroy() {

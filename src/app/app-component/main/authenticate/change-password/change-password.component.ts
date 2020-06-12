@@ -4,6 +4,12 @@ import { IUser } from 'src/app/app-interface/User';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/app-service/auth-service/auth.service';
 import { DataService } from 'src/app/app-service/data-service/data.service';
+import {
+  isValid,
+  isInValid,
+  patternValidator,
+} from 'src/app/app-validators/custom.validator';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-change-password',
@@ -11,13 +17,32 @@ import { DataService } from 'src/app/app-service/data-service/data.service';
   styleUrls: ['./change-password.component.scss'],
 })
 export class ChangePasswordComponent implements OnInit, OnDestroy {
+  isValid = isValid;
+  isInValid = isInValid;
   subscriptions = new SubSink();
   loggedInUser: IUser = this._data.loggedInUser;
-  changePasswordFormData = {
-    id: this.loggedInUser.id,
-    oldPassword: '',
-    password: '',
-  };
+
+  changePasswordForm = new FormBuilder().group({
+    id: [this.loggedInUser.id],
+    oldPassword: [''],
+    password: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.pattern(
+          '(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=[^0-9]*[0-9]).{8,}'
+        ),
+        patternValidator(/\d/, { hasNumber: true }),
+        patternValidator(/[A-Z]/, { hasCapitalCase: true }),
+        patternValidator(/[a-z]/, { hasSmallCase: true }),
+      ],
+    ],
+  });
+
+  value(controlName: string) {
+    return this.changePasswordForm.get(controlName);
+  }
 
   constructor(
     private _auth: AuthService,
@@ -30,7 +55,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
   confirmUser() {
     let loginFormData = {
       username: this.loggedInUser.username,
-      password: this.changePasswordFormData.oldPassword,
+      password: this.value('oldPassword'),
       email: 'amishm7@gmail.com',
     };
     this.subscriptions.sink = this._auth.LogIn(loginFormData).subscribe(
@@ -45,14 +70,14 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
       },
 
       () => {
-        console.log('Confirm user service called Successfully');
+        console.log('Login() service called Successfully');
       }
     );
   }
 
   changePassword() {
     this.subscriptions.sink = this._auth
-      .EditUserDetails(this.changePasswordFormData)
+      .EditUserDetails(this.changePasswordForm.value)
       .subscribe(
         (editUserDetailsResponse) => {
           console.log(editUserDetailsResponse);
