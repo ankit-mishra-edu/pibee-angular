@@ -13,7 +13,7 @@
       class="navbar-brand mt-2"
       style="color: white; font-weight: 700;"
       routerLink="/"
-      >piBee</a
+      >PiBee</a
     >
 
     <button
@@ -32,7 +32,7 @@
       <!-- Navigation Link for Search Bar -->
       <app-search></app-search>
 
-      <ul class="navbar-nav nav-pills ml-auto">
+      <ul class="navbar-nav nav-pills ml-auto" style="text-align: center;">
         <!-- If the user is Authenticated -->
         <ng-template [ngIf]="isLoggedIn()" [ngIfElse]="loggedOut">
           <!-- Navigation link for Chat -->
@@ -189,14 +189,6 @@
             </div>
           </li>
 
-          <li
-            class="nav-item"
-            data-toggle="collapse"
-            data-target=".navbar-collapse.show"
-          >
-            <p class="nav-link">Hi</p>
-          </li>
-
           <!-- Display Username -->
           <li
             class="nav-item"
@@ -204,7 +196,7 @@
             data-target=".navbar-collapse.show"
           >
             <p [routerLink]="['/view-profile']" class="nav-link">
-              {{ loggedInUser.username }}
+              {{ "Hi " }}{{ loggedInUser.username }}
             </p>
           </li>
         </ng-template>

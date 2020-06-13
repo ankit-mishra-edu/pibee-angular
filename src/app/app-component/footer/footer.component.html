@@ -1,18 +1,22 @@
-<footer class="footer">
+<footer class="site-footer">
   <div class="container-fluid footer-container">
-    <a routerLink="/">
-      <img src="../assets/media/logos/footerImage.png" alt="" />
-    </a>
-    <a
-      class="navbar-brand"
-      style="color: white; font-size: 25px;"
-      routerLink="/"
-      >piBee</a
+    <nav
+      class="navbar navbar-expand-sm navbar-dark"
+      style="text-align: center; padding: 0px;"
     >
+      <p></p>
+      <a
+        class="navbar-brand"
+        style="color: white; font-size: 25px;"
+        routerLink="/"
+        ><img src="../assets/media/logos/footerImage.png" alt="" />PiBee</a
+      >
+      <p></p>
+    </nav>
 
     <div class="row mt-2">
       <p [routerLink]="['/']" routerLinkActive="router-link-active">
-        About piBee
+        About PiBee
       </p>
       <p *ngIf="!(loggedInUser$ | async)" class="ml-4">
         Have an account?
@@ -23,6 +27,9 @@
         [routerLink]="['/login']"
       >
         Sign In
+      </p>
+      <p *ngIf="loggedInUser$ | async" class="ml-2" [routerLink]="['/logout']">
+        Sign out
       </p>
     </div>
 
@@ -35,5 +42,9 @@
         >Ankit Mishra.</a
       >
     </p>
+    <!-- <div class="footer-copyright text-center py-3">
+      © 2020 Copyright:
+      <a href="https://mdbootstrap.com/"> MDBootstrap.com</a>
+    </div> -->
   </div>
 </footer>

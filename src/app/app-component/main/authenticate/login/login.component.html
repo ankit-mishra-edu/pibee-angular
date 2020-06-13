@@ -1,11 +1,13 @@
 <form [formGroup]="signInForm">
   <div class="form-group mt-5 mb-5">
-    <h2>Log In</h2>
+    <h2>Sign In</h2>
 
     <div class="form-group mt-3">
       <label class="control-label required">Username</label>
       <input
         type="text"
+        autofocus
+        autocomplete="username"
         class="form-control"
         formControlName="username"
         [ngClass]="{

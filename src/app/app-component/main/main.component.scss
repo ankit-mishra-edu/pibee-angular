@@ -1,4 +1,4 @@
-main {
+.site-content {
   padding: 10px 0px 0px 0px;
   margin: 48px 3% 0px 3%;
   input {
@@ -7,10 +7,9 @@ main {
   }
 }
 
-// input {
-//   max-width: 230px;
-//   font-size: 30px;
-// }
+.site-content {
+  flex: 1;
+}
 
 .article-container {
   width: 100%;
