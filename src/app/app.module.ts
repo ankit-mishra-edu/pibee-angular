@@ -14,11 +14,11 @@ import { EditProfileComponent } from './app-component/main/authenticate/profile/
 import { ViewProfileComponent } from './app-component/main/authenticate/profile/view-profile/view-profile.component';
 import { EditDetailsComponent } from './app-component/main/authenticate/edit-details/edit-details.component';
 import { ChangePasswordComponent } from './app-component/main/authenticate/change-password/change-password.component';
-import { NavbarComponent } from './app-component/navbar/navbar.component';
 import { MainComponent } from './app-component/main/main.component';
 import { FooterComponent } from './app-component/footer/footer.component';
 import { SidebarComponent } from './app-component/main/sidebar/sidebar.component';
-import { SearchComponent } from './app-component/main/search/search.component';
+import { NavbarComponent } from './app-component/header/navbar/navbar.component';
+import { SearchComponent } from './app-component/header/search/search.component';
 
 @NgModule({
   declarations: [

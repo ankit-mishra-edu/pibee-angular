@@ -1,0 +1,44 @@
+i .fa {
+  font-size: 20px;
+}
+
+.site-header {
+  .navbar {
+    padding: 0%;
+    background-color: #08192b;
+
+    #navbarToggle {
+      .navbar-nav {
+        .nav-item {
+          margin: 0;
+          height: 100%;
+          cursor: pointer;
+          padding: 0px 4px 0px 4px;
+
+          p {
+            margin-bottom: 0px;
+          }
+        }
+
+        .nav-item :hover {
+          color: white;
+        }
+
+        .dropdown .dropdown-menu a {
+          background-color: white;
+        }
+
+        .dropdown .dropdown-menu a:hover {
+          background-color: #0366d6;
+          background-image: none;
+        }
+
+        .dropdown .dropdown-menu > button:hover {
+          cursor: pointer;
+          background-color: #0366d6;
+          background-image: none;
+        }
+      }
+    }
+  }
+}
