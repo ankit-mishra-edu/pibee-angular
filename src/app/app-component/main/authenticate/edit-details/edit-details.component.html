@@ -1,37 +1,51 @@
 <ng-template [ngIf]="!isUserConfirmed" [ngIfElse]="confirmed">
-  <form #confirmUserForm="ngForm">
-    <h3 class="mt-4 mb-5">Confirm password for {{ loginFormData.username }}</h3>
-
+  <form [formGroup]="confirmUserForm">
     <div class="form-group">
+      <h3 class="mt-4 mb-5">
+        Confirm password for {{ value_c("username").value }}
+      </h3>
       <div class="form-group">
-        <label class="font-weight-bold">Username :</label>
+        <label class="control-label">Username</label>
         <input
-          type="username"
+          type="text"
           class="form-control"
-          name="username"
-          #username="ngModel"
-          [(ngModel)]="loginFormData.username"
+          formControlName="username"
           readonly
         />
       </div>
 
       <div class="form-group">
-        <label class="font-weight-bold">Password :</label>
-        <input
-          type="password"
-          class="form-control"
-          name="password"
-          #password="ngModel"
-          [(ngModel)]="loginFormData.password"
-          required
-        />
+        <label class="control-label required">Password</label>
+        <div class="row" style="margin: 0px;">
+          <input
+            autofocus
+            type="password"
+            class="form-control"
+            formControlName="password"
+            [ngClass]="{
+              'is-invalid': isInValid(value_c('password')),
+              'is-valid': isValid(value_c('password'))
+            }"
+          />
+          <div
+            *ngIf="
+              value_c('password').touched &&
+              value_c('password').errors?.required
+            "
+            class="alert alert-danger alert-icon"
+          >
+            <small style="margin-left: 20px;"
+              >{{ "Password is Mandatory" }}.</small
+            >
+          </div>
+        </div>
       </div>
 
       <button
         (click)="confirmUser()"
         type="submit"
-        class="btn btn-primary"
-        [disabled]="!confirmUserForm.form.valid"
+        class="btn"
+        [disabled]="confirmUserForm.invalid"
       >
         Confirm
       </button>
@@ -40,65 +54,128 @@
 </ng-template>
 
 <ng-template #confirmed>
-  <form #changeUserDetailsForm="ngForm">
+  <form [formGroup]="editDetailsForm">
     <div class="form-group">
       <h3>Edit Details</h3>
       <div class="form-group">
-        <label class="font-weight-bold">Username :</label>
-        <input
-          type="text"
-          autofocus
-          class="form-control"
-          name="userName"
-          #username="ngModel"
-          [(ngModel)]="editDetailFormData.username"
-          maxlength="150"
-          required
-        />
+        <label class="control-label required">Username</label>
+        <div class="row" style="margin: 0px;">
+          <input
+            type="text"
+            class="form-control input-sm"
+            formControlName="username"
+            [ngClass]="{
+              'is-invalid': isInValid(value_e('username')),
+              'is-valid': isValid(value_e('username'))
+            }"
+          />
+          <div
+            *ngIf="
+              isInValid(value_e('username')) &&
+              !value_e('username').errors?.required
+            "
+            class="alert alert-danger alert-icon"
+          >
+            <small
+              *ngIf="value_e('username').errors?.alreadyTakenError"
+              style="margin-left: 20px;"
+              >{{ "Username is already Taken" }}.</small
+            >
+          </div>
+          <div
+            *ngIf="
+              value_e('username').touched &&
+              value_e('username').errors?.required
+            "
+            class="alert alert-danger alert-icon"
+          >
+            <small style="margin-left: 20px;"
+              >{{ "Username is Mandatory" }}.</small
+            >
+          </div>
+        </div>
+        <small
+          *ngIf="
+            value_e('username').dirty && value_e('username').errors?.required
+          "
+          style="color: grey;"
+        >
+          {{ "*Username need atleast 3 characters." }}
+        </small>
+        <small
+          *ngIf="
+            value_e('username').dirty && value_e('username').errors?.minlength
+          "
+          style="color: grey;"
+          >{{ "*Username need" }}
+          {{
+            value_e("username").errors?.minlength.requiredLength -
+              value_e("username").errors?.minlength.actualLength
+          }}
+          {{ "more characters." }}</small
+        >
       </div>
 
       <div class="form-group">
-        <label class="font-weight-bold">First Name :</label>
-        <input
-          type="text"
-          class="form-control"
-          name="firstName"
-          #firstname="ngModel"
-          [(ngModel)]="editDetailFormData.first_name"
-        />
+        <label class="control-label">First Name</label>
+        <input type="text" class="form-control" formControlName="first_name" />
       </div>
 
       <div class="form-group">
-        <label class="font-weight-bold">Last Name :</label>
-        <input
-          type="text"
-          class="form-control"
-          name="lastName"
-          #lastname="ngModel"
-          [(ngModel)]="editDetailFormData.last_name"
-        />
+        <label class="control-label">Last Name</label>
+        <input type="text" class="form-control" formControlName="last_name" />
       </div>
 
       <div class="form-group">
-        <label class="font-weight-bold">Email :</label>
-        <input
-          type="email"
-          class="form-control"
-          pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
-          name="Email"
-          #email="ngModel"
-          [(ngModel)]="editDetailFormData.email"
-          required
-        />
+        <label class="control-label required">Email</label>
+        <div class="row" style="margin: 0px;">
+          <input
+            type="email"
+            class="form-control"
+            formControlName="email"
+            [ngClass]="{
+              'is-valid': isValid(value_e('email')),
+              'is-invalid': isInValid(value_e('email'))
+            }"
+          />
+
+          <div
+            *ngIf="
+              isInValid(value_e('email')) && !value_e('email').errors?.required
+            "
+            class="alert alert-danger alert-icon"
+          >
+            <small
+              *ngIf="value_e('email').errors?.alreadyTakenError"
+              style="margin-left: 20px;"
+              >{{ "Email is already Taken" }}.</small
+            >
+            <small
+              *ngIf="value_e('email').errors?.pattern"
+              style="margin-left: 20px;"
+              >{{ "Enter email in valid format." }}</small
+            >
+          </div>
+          <div
+            *ngIf="
+              value_e('email').touched && value_e('email').errors?.required
+            "
+            class="alert alert-danger alert-icon"
+          >
+            <small style="margin-left: 20px;"
+              >{{ "Email is Mandatory" }}.</small
+            >
+          </div>
+        </div>
       </div>
 
       <button
         (click)="changeUserDetails()"
         type="submit"
-        class="btn btn-primary"
-        [disabled]="!changeUserDetailsForm.form.valid"
+        class="btn"
+        [disabled]="editDetailsForm.invalid"
       >
-        Change
+        Edit Details
       </button>
     </div>
   </form>

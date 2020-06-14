@@ -7,15 +7,17 @@
       <div class="row" style="margin: 0px;">
         <input
           type="text"
-          class="form-control input-sm"
+          class="form-control"
           formControlName="username"
           [ngClass]="{
-            'is-invalid': isInValid(signUpForm, 'username'),
-            'is-valid': isValid(signUpForm, 'username')
+            'is-invalid': isInValid(value('username')),
+            'is-valid': isValid(value('username'))
           }"
         />
         <div
-          *ngIf="value('username').dirty || value('username').touched"
+          *ngIf="
+            isInValid(value('username')) && !value('username').errors?.required
+          "
           class="alert alert-danger alert-icon"
         >
           <small
@@ -23,25 +25,34 @@
             style="margin-left: 20px;"
             >{{ "Username is already Taken" }}.</small
           >
-
-          <small
-            *ngIf="value('username').errors?.minlength"
-            style="margin-left: 20px;"
-            >Username need
-            {{
-              value("username").errors?.minlength.requiredLength -
-                value("username").errors?.minlength.actualLength
-            }}
-            more characters.</small
-          >
-
-          <small
-            *ngIf="value('username').errors?.required"
-            style="margin-left: 20px;"
+        </div>
+        <div
+          *ngIf="
+            value('username').touched && value('username').errors?.required
+          "
+          class="alert alert-danger alert-icon"
+        >
+          <small style="margin-left: 20px;"
             >{{ "Username is Mandatory" }}.</small
           >
         </div>
       </div>
+      <small
+        *ngIf="!value('username').dirty || value('username').errors?.required"
+        style="color: grey;"
+      >
+        {{ "*Username need atleast 3 characters." }}
+      </small>
+      <small
+        *ngIf="value('username').errors?.minlength && value('username').dirty"
+        style="color: grey;"
+        >{{ "*Username need" }}
+        {{
+          value("username").errors?.minlength.requiredLength -
+            value("username").errors?.minlength.actualLength
+        }}
+        {{ "more characters." }}</small
+      >
     </div>
 
     <div class="form-group">
@@ -62,32 +73,31 @@
           class="form-control"
           formControlName="email"
           [ngClass]="{
-            'is-valid': isValid(signUpForm, 'email'),
-            'is-invalid': isInValid(signUpForm, 'email')
+            'is-valid': isValid(value('email')),
+            'is-invalid': isInValid(value('email'))
           }"
         />
 
         <div
-          *ngIf="value('email').dirty || signUpForm.get('email').touched"
+          *ngIf="isInValid(value('email')) && !value('email').errors?.required"
           class="alert alert-danger alert-icon"
         >
           <small
             *ngIf="value('email').errors?.alreadyTakenError"
             style="margin-left: 20px;"
-            >{{ "Username is already Taken" }}.</small
+            >{{ "Email is already Taken" }}.</small
           >
-
-          <small
-            *ngIf="value('email').errors?.required"
-            style="margin-left: 20px;"
-            >{{ "Email is Mandatory." }}</small
-          >
-
           <small
             *ngIf="value('email').errors?.pattern"
             style="margin-left: 20px;"
             >{{ "Enter email in valid format." }}</small
           >
+        </div>
+        <div
+          *ngIf="value('email').touched && value('email').errors?.required"
+          class="alert alert-danger alert-icon"
+        >
+          <small style="margin-left: 20px;">{{ "Email is Mandatory" }}.</small>
         </div>
       </div>
     </div>
@@ -100,25 +110,30 @@
           class="form-control"
           formControlName="password"
           [ngClass]="{
-            'is-valid': isValid(signUpForm, 'password'),
-            'is-invalid': isInValid(signUpForm, 'password')
+            'is-valid': isValid(value('password')),
+            'is-invalid': isInValid(value('password'))
           }"
         />
-
         <div
-          *ngIf="value('password').dirty || value('password').touched"
+          *ngIf="
+            isInValid(value('password')) && !value('password').errors?.required
+          "
           class="alert alert-danger alert-icon"
         >
-          <small
-            *ngIf="value('password').errors?.required"
-            style="margin-left: 20px;"
-            >{{ "Password is Mandatory." }}</small
-          >
-
           <small
             *ngIf="value('password').errors?.pattern"
             style="margin-left: 20px;"
             >{{ "Enter password in valid format." }}</small
+          >
+        </div>
+        <div
+          *ngIf="
+            value('password').touched && value('password').errors?.required
+          "
+          class="alert alert-danger alert-icon"
+        >
+          <small style="margin-left: 20px;"
+            >{{ "Password is Mandatory" }}.</small
           >
         </div>
       </div>
@@ -126,24 +141,48 @@
         *ngIf="value('password').errors?.required || value('password').dirty"
         style="color: grey;"
       >
-        <div *ngIf="!value('password').dirty">
-          {{
-            "*Need 8 more characters including a number,an Uppercase letter."
-          }}
-        </div>
-        <div *ngIf="value('password').dirty && value('password').errors">
+        <ng-template #initialText>
+          <span *ngIf="!isValid(value('password'))">{{
+            "*Need 8 characters including a number,an Uppercase and lowercase letter."
+          }}</span>
+        </ng-template>
+        <div
+          *ngIf="
+            value('password').dirty &&
+              value('password').errors &&
+              !value('password').errors?.required;
+            else initialText
+          "
+        >
           *Need
           <span *ngIf="value('password').errors?.minlength">
             {{
               value("password").errors?.minlength.requiredLength -
                 value("password").errors?.minlength.actualLength
             }}
+            <span
+              *ngIf="
+                value('password').errors?.minlength.requiredLength -
+                  value('password').errors?.minlength.actualLength >
+                1
+              "
+              >{{ "characters, " }}</span
+            >
+            <span
+              *ngIf="
+                value('password').errors?.minlength.requiredLength -
+                  value('password').errors?.minlength.actualLength <=
+                1
+              "
+              >{{ "character, " }}</span
+            >
           </span>
-          {{ "more characters including" }}
-          <span *ngIf="value('password').errors?.hasNumber">a number</span>
-          <span *ngIf="value('password').errors?.hasCapitalCase"
-            >,an Uppercase</span
-          >
+          <span *ngIf="value('password').errors?.hasNumber">{{
+            "a number, "
+          }}</span>
+          <span *ngIf="value('password').errors?.hasCapitalCase">{{
+            "an Uppercase "
+          }}</span>
           <span *ngIf="value('password').errors?.hasSmallCase"
             >{{ "and lowercase" }}
           </span>

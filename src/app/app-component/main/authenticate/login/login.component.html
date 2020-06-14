@@ -4,31 +4,55 @@
 
     <div class="form-group mt-3">
       <label class="control-label required">Username</label>
-      <input
-        type="text"
-        autofocus
-        autocomplete="username"
-        class="form-control"
-        formControlName="username"
-        [ngClass]="{
-          'is-invalid': isInValid(signInForm, 'username'),
-          'is-valid': isValid(signInForm, 'username')
-        }"
-      />
+      <div class="row" style="margin: 0px;">
+        <input
+          type="text"
+          autofocus
+          autocomplete="username"
+          class="form-control"
+          formControlName="username"
+          [ngClass]="{
+            'is-invalid': isInValid(value('username')),
+            'is-valid': isValid(value('username'))
+          }"
+        />
+        <div
+          *ngIf="
+            value('username').touched && value('username').errors?.required
+          "
+          class="alert alert-danger alert-icon"
+        >
+          <small style="margin-left: 20px;"
+            >{{ "Username is Mandatory" }}.</small
+          >
+        </div>
+      </div>
     </div>
 
     <div class="form-group">
       <label class="control-label required">Password</label>
-      <input
-        required
-        type="password"
-        class="form-control"
-        formControlName="password"
-        [ngClass]="{
-          'is-invalid': isInValid(signInForm, 'password'),
-          'is-valid': isValid(signInForm, 'password')
-        }"
-      />
+      <div class="row" style="margin: 0px;">
+        <input
+          required
+          type="password"
+          class="form-control"
+          formControlName="password"
+          [ngClass]="{
+            'is-invalid': isInValid(value('password')),
+            'is-valid': isValid(value('password'))
+          }"
+        />
+        <div
+          *ngIf="
+            value('password').touched && value('password').errors?.required
+          "
+          class="alert alert-danger alert-icon"
+        >
+          <small style="margin-left: 20px;"
+            >{{ "Password is Mandatory" }}.</small
+          >
+        </div>
+      </div>
     </div>
 
     <button

@@ -24,7 +24,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
 
   changePasswordForm = new FormBuilder().group({
     id: [this.loggedInUser.id],
-    oldPassword: [''],
+    oldPassword: ['', [Validators.required]],
     password: [
       '',
       [

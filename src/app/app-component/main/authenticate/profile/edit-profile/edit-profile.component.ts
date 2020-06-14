@@ -5,6 +5,8 @@ import { IProfile } from 'src/app/app-interface/Profile';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/app-service/auth-service/auth.service';
 import { DataService } from 'src/app/app-service/data-service/data.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { isValid, isInValid } from 'src/app/app-validators/custom.validator';
 
 @Component({
   selector: 'app-edit-profile',
@@ -12,16 +14,22 @@ import { DataService } from 'src/app/app-service/data-service/data.service';
   styleUrls: ['./edit-profile.component.scss'],
 })
 export class EditProfileComponent implements OnInit, OnDestroy {
+  isValid = isValid;
+  isInValid = isInValid;
   subscriptions = new SubSink();
   loggedInUser: IUser = this._data.loggedInUser;
-  profileFormData: IProfile = {
-    user: this.loggedInUser.id,
-    bio: '',
-    location: '',
-    birth_date: '',
-    email_confirmed: '',
-    image: '',
-  };
+  profileForm = new FormBuilder().group({
+    user: [this.loggedInUser.id],
+    bio: ['', [Validators.maxLength(150)]],
+    location: ['', [Validators.maxLength(150)]],
+    birth_date: ['', [Validators.required]],
+    email_confirmed: [''],
+    image: [''],
+  });
+
+  value(controlName: string) {
+    return this.profileForm.get(controlName);
+  }
 
   constructor(
     private _auth: AuthService,
@@ -35,12 +43,12 @@ export class EditProfileComponent implements OnInit, OnDestroy {
 
   getUserProfile() {
     this.subscriptions.sink = this._data
-      .GetUserProfileById(this.profileFormData.user)
+      .GetUserProfileById(this.profileForm.get('user').value)
       .subscribe(
         (getUserProfileResponse) => {
           console.log(getUserProfileResponse);
-          this.profileFormData = getUserProfileResponse;
-          delete this.profileFormData.image;
+          delete getUserProfileResponse.image;
+          this.profileForm.patchValue(getUserProfileResponse);
         },
 
         (getUserProfileError) => {
@@ -54,8 +62,9 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   }
 
   editProfile() {
+    this.profileForm.removeControl('image');
     this.subscriptions.sink = this._auth
-      .EditProfile(this.profileFormData)
+      .EditProfile(this.profileForm.value)
       .subscribe(
         (editProfileResponse) => {
           console.log(editProfileResponse);

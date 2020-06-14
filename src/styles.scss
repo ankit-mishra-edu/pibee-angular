@@ -1,33 +1,3 @@
-.ng-valid[required],
-.ng-valid.required {
-  border-left: 5px solid #42a948;
-}
-
-.ng-invalid:not(form) {
-  content: "!";
-  border-left: 5px solid #a94442;
-}
-
-label {
-  font-size: 17px;
-  font-weight: bold;
-}
-
-.is-valid {
-  border-left: 5px solid #42a948; /* green */
-}
-
-.is-invalid {
-  border-left: 5px solid #a94442; /* red */
-}
-
-.control-label.required:after {
-  content: "*";
-  font-size: 17px;
-  margin-left: 5px;
-  font-weight: bold;
-}
-
 .right {
   text-align: right;
 }
@@ -36,18 +6,8 @@ label {
   text-align: left;
 }
 
-.btn-primary {
-  transition: 0.3s;
-  color: rgb(255, 255, 255) !important;
-  background-color: rgb(134, 38, 195) !important;
-  border-width: initial !important;
-  border-style: none !important;
-  border-color: initial !important;
-  border-image: initial !important;
-}
-
 .btn {
-  transition: 0.3s;
+  transition: 0.1s;
   color: rgb(255, 255, 255) !important;
   background-color: rgb(134, 38, 195);
   border-width: initial !important;
@@ -60,12 +20,6 @@ label {
   background-color: rgb(241, 108, 81);
   color: white;
 }
-
-/* input [type="text"],
-input [type="password"] {
-  min-width: 230px;
-  max-width: 40%;
-} */
 
 .alert-danger {
   color: red;
@@ -82,4 +36,34 @@ input [type="password"] {
 
 form {
   margin: 0 0 0 48px;
+
+  .is-valid {
+    border-left: 5px solid #42a948; /* green */
+  }
+
+  .is-invalid {
+    border-left: 5px solid #a94442; /* red */
+  }
+  input {
+    min-width: 230px;
+    max-width: 40%;
+  }
+
+  textarea {
+    min-width: 230px;
+    max-width: 40%;
+  }
+
+  .control-label {
+    font-size: 17px;
+    font-weight: bold;
+  }
+
+  .control-label.required:after {
+    content: "*";
+    color: red;
+    font-size: 17px;
+    margin-left: 5px;
+    font-weight: bold;
+  }
 }

@@ -22,6 +22,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     email: 'amishm766@gmail.com',
   });
 
+  value(controlName: string) {
+    return this.signInForm.get(controlName);
+  }
+
   constructor(
     private _auth: AuthService,
     private _data: DataService,

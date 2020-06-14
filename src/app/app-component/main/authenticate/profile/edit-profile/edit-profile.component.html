@@ -1,68 +1,68 @@
-<form class="form-group ml-5" #profileForm="ngForm">
-  <h2>Edit Profile</h2>
+<form class="form-group" [formGroup]="profileForm">
   <div class="form-group">
-    <label class="font-weight-bold">Bio :</label>
-    <textarea
-      class="form-control"
-      rows="2"
-      cols="60"
-      name="bio"
-      #bio="ngModel"
-      [(ngModel)]="profileFormData.bio"
-    ></textarea>
-  </div>
+    <h2>Edit Profile</h2>
+    <div class="form-group">
+      <label class="control-label">Bio</label>
+      <textarea
+        class="form-control"
+        rows="2"
+        cols="60"
+        formControlName="bio"
+      ></textarea>
+    </div>
 
-  <div class="form-group">
-    <label class="font-weight-bold">Location :</label>
-    <input
-      class="form-control"
-      type="text"
-      name="location"
-      #location="ngModel"
-      [(ngModel)]="profileFormData.location"
-    />
-  </div>
+    <div class="form-group">
+      <label class="control-label">Location</label>
+      <input class="form-control" type="text" formControlName="location" />
+    </div>
 
-  <div class="form-group">
-    <label class="font-weight-bold">Birth date :</label>
-    <input
-      class="form-control"
-      type="date"
-      name="birth_date"
-      #birth_date="ngModel"
-      [(ngModel)]="profileFormData.birth_date"
-      required
-    />
-  </div>
+    <div class="form-group">
+      <label class="control-label required">Birth date</label>
+      <div class="row" style="margin: 0px;">
+        <input
+          class="form-control"
+          type="date"
+          formControlName="birth_date"
+          [ngClass]="{
+            'is-invalid': isInValid(value('birth_date')),
+            'is-valid': isValid(value('birth_date'))
+          }"
+        />
+        <div
+          *ngIf="
+            value('birth_date').touched && value('birth_date').errors?.required
+          "
+          class="alert alert-danger alert-icon"
+        >
+          <small style="margin-left: 20px;"
+            >{{ "Birth date is Mandatory" }}.</small
+          >
+        </div>
+      </div>
+    </div>
 
-  <div class="form-group">
-    <label class="font-weight-bold">Profile photo :</label>
-    <br />
-    <input
-      class="form-control-file"
-      type="file"
-      name="image"
-      #image="ngModel"
-      (ngModel)="(profileFormData.image)"
-    />
-  </div>
+    <div class="form-group">
+      <label class="control-label">Profile photo</label>
+      <br />
+      <input class="form-control-file" type="file" formControlName="image" />
+    </div>
 
-  <div class="form-group">
-    <label class="font-weight-bold">Email confirmed : </label>
-    <input
-      type="checkbox"
-      name="email_confirmed"
-      #email_confirmed="ngModel"
-      [(ngModel)]="profileFormData.email_confirmed"
-    />
-  </div>
+    <div class="form-group">
+      <label class="control-label">Email confirmed</label>
+      <input
+        class="form-check-input"
+        type="checkbox"
+        formControlName="email_confirmed"
+      />
+    </div>
 
-  <button
-    (click)="editProfile()"
-    type="submit"
-    class="btn btn-primary"
-    [disabled]="!profileForm.form.valid"
-  >
-    Save profile
-  </button>
+    <button
+      (click)="editProfile()"
+      type="submit"
+      class="btn"
+      [disabled]="profileForm.invalid"
+    >
+      Save profile
+    </button>
+  </div>
 </form>

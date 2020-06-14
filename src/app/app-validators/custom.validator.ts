@@ -1,10 +1,5 @@
-import {
-  AbstractControl,
-  ValidationErrors,
-  ValidatorFn,
-  FormGroup,
-} from '@angular/forms';
 import { of } from 'rxjs';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export function validateNotTaken(control: AbstractControl, toBeSearched) {
   let validationStatus: boolean = false;
@@ -41,13 +36,10 @@ export function patternValidator(
   };
 }
 
-export function isInValid(form, controlName: string) {
-  return (
-    form.get(controlName).invalid &&
-    (form.get(controlName).touched || form.get(controlName).dirty)
-  );
+export function isInValid(control: AbstractControl) {
+  return control.invalid && control.touched && control.dirty;
 }
 
-export function isValid(form, controlName: string) {
-  return form.get(controlName).valid && form.get(controlName).dirty;
+export function isValid(control: AbstractControl) {
+  return control.valid && (control.touched || control.dirty);
 }

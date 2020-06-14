@@ -24,6 +24,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   subscriptions = new SubSink();
 
   signUpForm = new FormBuilder().group({
+    id: [''],
     username: [
       '',
       [Validators.required, Validators.minLength(3), Validators.maxLength(150)],
