@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './app-component/main/home/home.component';
-import { LoginComponent } from './app-component/main/authenticate/login/login.component';
-import { ChatappComponent } from './app-component/main/chatapp/chatapp.component';
-import { RegisterComponent } from './app-component/main/authenticate/register/register.component';
-import { LogoutComponent } from './app-component/main/authenticate/logout/logout.component';
-import { EditProfileComponent } from './app-component/main/authenticate/profile/edit-profile/edit-profile.component';
-import { ViewProfileComponent } from './app-component/main/authenticate/profile/view-profile/view-profile.component';
-import { EditDetailsComponent } from './app-component/main/authenticate/edit-details/edit-details.component';
-import { ChangePasswordComponent } from './app-component/main/authenticate/change-password/change-password.component';
+import { HomeComponent } from './app-component/main/content/home/home.component';
+import { LoginComponent } from './app-component/main/content/authenticate/login/login.component';
+import { RegisterComponent } from './app-component/main/content/authenticate/register/register.component';
+import { LogoutComponent } from './app-component/main/content/authenticate/logout/logout.component';
+import { ChatappComponent } from './app-component/main/content/chatapp/chatapp.component';
+import { EditProfileComponent } from './app-component/main/content/authenticate/profile/edit-profile/edit-profile.component';
+import { ViewProfileComponent } from './app-component/main/content/authenticate/profile/view-profile/view-profile.component';
+import { EditDetailsComponent } from './app-component/main/content/authenticate/edit-details/edit-details.component';
+import { ChangePasswordComponent } from './app-component/main/content/authenticate/change-password/change-password.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
