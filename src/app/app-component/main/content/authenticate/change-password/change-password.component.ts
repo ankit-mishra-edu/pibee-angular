@@ -55,7 +55,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
   confirmUser() {
     let loginFormData = {
       username: this.loggedInUser.username,
-      password: this.value('oldPassword'),
+      password: this.value('oldPassword').value,
       email: 'amishm7@gmail.com',
     };
     this.subscriptions.sink = this._auth.LogIn(loginFormData).subscribe(
@@ -66,7 +66,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
 
       (logInError) => {
         console.log(logInError);
-        alert(logInError.error.error);
+        alert(logInError.error);
       },
 
       () => {
