@@ -13,7 +13,7 @@ import { IToken } from 'src/app/app-interface/Token';
   providedIn: 'root',
 })
 export class AuthService {
-  baseUrl: string = 'https://pibeedjango.herokuapp.com/api/';
+  baseUrl: string = 'https:/pibeedjango.herokuapp.com/api/';
 
   constructor(private _http: HttpClient) {}
 

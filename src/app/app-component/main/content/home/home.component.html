@@ -55,8 +55,7 @@
 </div>
 
 <div *ngIf="loggedInUser$ | async">
-  <h5>Welcome : {{ (loggedInUser$ | async).username }}</h5>
-  <h4>Search in the search box to see users</h4>
+  <h4>Search in the search box to see users and their profile</h4>
   <div *ngIf="allUsersArray">
     <div style="margin: 0px 5px 0px 5px;">
       <table class="table table-sm table-dark table-hover">
@@ -68,7 +67,13 @@
         </thead>
         <tbody>
           <tr *ngFor="let user of matchingUsersArray | async">
-            <td>{{ user.username }}</td>
+            <td>
+              <a
+                [routerLink]="['view-profile', user.id]"
+                style="color: white;"
+                >{{ user.username }}</a
+              >
+            </td>
             <td>{{ user.email }}</td>
           </tr>
         </tbody>

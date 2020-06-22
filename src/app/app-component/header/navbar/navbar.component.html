@@ -195,7 +195,10 @@
             data-toggle="collapse"
             data-target=".navbar-collapse.show"
           >
-            <p [routerLink]="['/view-profile']" class="nav-link">
+            <p
+              [routerLink]="['/view-profile', loggedInUser.id]"
+              class="nav-link"
+            >
               {{ "Hi " }}{{ loggedInUser.username }}
             </p>
           </li>

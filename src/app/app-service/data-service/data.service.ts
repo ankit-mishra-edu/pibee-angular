@@ -10,15 +10,27 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 })
 export class DataService {
   loggedInUser: IUser;
-  allUsersArray: IUser[];
-  userProfile: IProfile;
-  allUsersProfileArray: IProfile[];
-  baseUrl: string = 'https://pibeedjango.herokuapp.com/api/';
+  baseUrl: string = 'https:/pibeedjango.herokuapp.com/api/';
 
   public searchQueryChangeSubject$ = new Subject<string>();
   private _loggedInUserSubject$ = new BehaviorSubject<IUser>(null);
+  public userProfileSubject$ = new BehaviorSubject<IProfile>(null);
+  public allUsersSubject$ = new BehaviorSubject<IUser[]>(null);
+  public allUsersProfileSubject$ = new BehaviorSubject<IProfile[]>(null);
 
   loggedInUser$ = this._loggedInUserSubject$
+    .asObservable()
+    .pipe(distinctUntilChanged());
+
+  allUsersArray$ = this.allUsersSubject$
+    .asObservable()
+    .pipe(distinctUntilChanged());
+
+  userProfile$ = this.userProfileSubject$
+    .asObservable()
+    .pipe(distinctUntilChanged());
+
+  allUsersProfile$ = this.allUsersProfileSubject$
     .asObservable()
     .pipe(distinctUntilChanged());
 
@@ -51,14 +63,13 @@ export class DataService {
       .pipe(distinctUntilChanged());
   }
 
-  GetUser(id): Observable<IUser> {
+  GetUserById(id): Observable<IUser> {
     return this._http
       .get<IUser>(this.baseUrl + 'user/' + <number>id)
       .pipe(catchError(this.errorHandler));
   }
 
   GetAllUsers(): Observable<IUser[]> {
-    console.log('Called GetAllUsers() in service');
     return this._http
       .get<IUser[]>(this.baseUrl + 'user/')
       .pipe(catchError(this.errorHandler));
@@ -74,13 +85,6 @@ export class DataService {
     return this._http
       .get<IProfile[]>(this.baseUrl + 'user_profile/')
       .pipe(catchError(this.errorHandler));
-  }
-
-  isFieldValid(form, field: string) {
-    return (
-      form.get(field).invalid &&
-      (form.get(field).touched || form.get(field).dirty)
-    );
   }
 
   errorHandler(error: HttpErrorResponse) {

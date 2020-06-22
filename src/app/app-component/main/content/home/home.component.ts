@@ -29,30 +29,19 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.loggedInUser$ = this._data.loggedInUser$;
     if (this._data.loggedInUser) {
-      this.getAllUsers();
+      this.setAllUsers();
     }
   }
 
-  getAllUsers() {
-    this.subscriptions.sink = this._data.GetAllUsers().subscribe(
+  setAllUsers() {
+    this.subscriptions.sink = this._data.allUsersArray$.subscribe(
       (getAllUsersResponse) => {
-        console.log(getAllUsersResponse);
         this.allUsersArray = getAllUsersResponse;
-      },
-
-      (getAllUsersError) => {
-        console.log(getAllUsersError);
-      },
-
-      () => {
-        console.log('All Users fetched successfully');
       }
     );
   }
 
   matchingUsersArray = this._data.searchQueryChangeSubject$.pipe(
-    switchMap((partial) =>
-      this._data.suggestNames(this._data.allUsersArray, partial)
-    )
+    switchMap((partial) => this._data.suggestNames(this.allUsersArray, partial))
   );
 }

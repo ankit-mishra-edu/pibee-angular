@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'logout', component: LogoutComponent },
   { path: 'chatapp', component: ChatappComponent },
   { path: 'edit-profile', component: EditProfileComponent },
-  { path: 'view-profile', component: ViewProfileComponent },
+  { path: 'view-profile/:id', component: ViewProfileComponent },
   { path: 'edit-details', component: EditDetailsComponent },
   { path: 'change-password', component: ChangePasswordComponent },
 ];

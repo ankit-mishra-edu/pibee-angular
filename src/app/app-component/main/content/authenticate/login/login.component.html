@@ -1,9 +1,9 @@
 <form [formGroup]="signInForm">
   <div class="form-group mt-5 mb-5">
-    <h2>Sign In</h2>
+    <h2 class="form-heading">Sign In</h2>
 
     <div class="form-group mt-3">
-      <label class="control-label required">Username</label>
+      <label class="form-label required">Username</label>
       <div class="row" style="margin: 0px;">
         <input
           type="text"
@@ -16,21 +16,21 @@
             'is-valid': isValid(value('username'))
           }"
         />
-        <div
+
+        <small
           *ngIf="
             value('username').touched && value('username').errors?.required
           "
           class="alert alert-danger alert-icon"
+          ><span style="margin-left: 20px;">{{
+            "Username is Mandatory."
+          }}</span></small
         >
-          <small style="margin-left: 20px;"
-            >{{ "Username is Mandatory" }}.</small
-          >
-        </div>
       </div>
     </div>
 
     <div class="form-group">
-      <label class="control-label required">Password</label>
+      <label class="form-label required">Password</label>
       <div class="row" style="margin: 0px;">
         <input
           required
@@ -42,16 +42,16 @@
             'is-valid': isValid(value('password'))
           }"
         />
-        <div
+
+        <small
           *ngIf="
             value('password').touched && value('password').errors?.required
           "
           class="alert alert-danger alert-icon"
+          ><span style="margin-left: 20px;">{{
+            "Password is Mandatory."
+          }}</span></small
         >
-          <small style="margin-left: 20px;"
-            >{{ "Password is Mandatory" }}.</small
-          >
-        </div>
       </div>
     </div>
 
@@ -60,6 +60,10 @@
       (click)="signIn()"
       class="btn"
       [disabled]="signInForm.invalid"
+      [ngClass]="{
+        'form-valid': !signInForm.invalid,
+        'form-invalid': signInForm.invalid
+      }"
     >
       Sign In
     </button>

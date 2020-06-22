@@ -16,7 +16,15 @@ export class AppComponent {
 
   ngOnInit(): void {
     this.getLoggedInUser();
-    if (this._data.loggedInUser) this.getUserProfileById();
+    if (this._data.loggedInUser) {
+      timer(1, 20000)
+        .pipe(
+          switchMap((_) =>
+            of(this.getUserProfileById(this._data.loggedInUser.id))
+          )
+        )
+        .subscribe();
+    }
 
     timer(1, 20000)
       .pipe(switchMap((_) => of(this.getAllUsers())))
@@ -31,7 +39,7 @@ export class AppComponent {
     this.subscriptions.sink = this._data.GetLoggedInUser().subscribe(
       (loggedInUserResponse) => {
         this._data.loggedInUser = loggedInUserResponse;
-        console.log(this._data.allUsersArray);
+        // console.log(this._data.allUsersArray);
       },
 
       (loggedInUserError) => {
@@ -44,29 +52,28 @@ export class AppComponent {
     );
   }
 
-  getUserProfileById() {
-    this.subscriptions.sink = this._data
-      .GetUserProfileById(this._data.loggedInUser.id)
-      .subscribe(
-        (getUserProfileResponse) => {
-          this._data.userProfile = getUserProfileResponse;
-        },
+  getUserProfileById(id: number) {
+    this.subscriptions.sink = this._data.GetUserProfileById(id).subscribe(
+      (getUserProfileResponse) => {
+        this._data.userProfileSubject$.next(getUserProfileResponse);
+      },
 
-        (getUserProfileError) => {
-          console.log(getUserProfileError);
-        },
+      (getUserProfileError) => {
+        console.log(getUserProfileError);
+      },
 
-        () => {
-          console.log('GetUserProfileById() service called successfully');
-        }
-      );
+      () => {
+        console.log('GetUserProfileById() service called successfully');
+      }
+    );
   }
 
   getAllUsers() {
     this.subscriptions.sink = this._data.GetAllUsers().subscribe(
       (getAllUsersResponse) => {
-        this._data.allUsersArray = getAllUsersResponse;
-        console.log(this._data.allUsersArray);
+        // this._data.allUsersArray = getAllUsersResponse;
+        this._data.allUsersSubject$.next(getAllUsersResponse);
+        // console.log(this._data.allUsersArray);
       },
 
       (getAllUsersError) => {
@@ -82,7 +89,8 @@ export class AppComponent {
   getAllUsersProfiles() {
     this.subscriptions.sink = this._data.GetAllUsersProfiles().subscribe(
       (getAllUsersProfilesResponse) => {
-        this._data.allUsersProfileArray = getAllUsersProfilesResponse;
+        this._data.allUsersProfileSubject$.next(getAllUsersProfilesResponse);
+        // this._data.allUsersProfileArray = getAllUsersProfilesResponse;
       },
 
       (getAllUsersProfilesError) => {

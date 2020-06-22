@@ -11,6 +11,7 @@ import {
   isValid,
   isInValid,
 } from 'src/app/app-validators/custom.validator';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
@@ -18,9 +19,9 @@ import {
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit, OnDestroy {
-  usersArray: IUser[];
   isValid = isValid;
   isInValid = isInValid;
+  allUsersArray: IUser[];
   subscriptions = new SubSink();
 
   signUpForm = new FormBuilder().group({
@@ -68,22 +69,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.getAllUsers();
+    this.setAllUsers();
   }
 
-  getAllUsers() {
-    this.subscriptions.sink = this._data.GetAllUsers().subscribe(
+  setAllUsers() {
+    this.subscriptions.sink = this._data.allUsersArray$.subscribe(
       (getAllUsersResponse) => {
         console.log(getAllUsersResponse);
-        this.usersArray = getAllUsersResponse;
-      },
-
-      (getAllUsersError) => {
-        console.log(getAllUsersError);
-      },
-
-      () => {
-        console.log('All Users fetched successfully');
+        this.allUsersArray = getAllUsersResponse;
       }
     );
   }
@@ -103,18 +96,19 @@ export class RegisterComponent implements OnInit, OnDestroy {
           alert(signUpError.error);
         },
         () => {
-          console.log('Sign up Successful');
+          console.log('Sign up service called Successfully');
           this._route.navigate(['login']);
         }
       );
   }
+
   validateNotTaken(control: AbstractControl) {
     let validationStatus: boolean = false;
     const controlName = Object.keys(control.parent.controls).find(
       (key) => control.parent.controls[key] === control
     );
-    if (this._data.allUsersArray) {
-      for (let user of this._data.allUsersArray) {
+    if (this.allUsersArray) {
+      for (let user of this.allUsersArray) {
         if (user[controlName] == control.value) {
           validationStatus = true;
           break;

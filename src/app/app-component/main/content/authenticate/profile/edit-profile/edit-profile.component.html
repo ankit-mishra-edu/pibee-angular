@@ -1,8 +1,8 @@
 <form class="form-group" [formGroup]="profileForm">
   <div class="form-group">
-    <h2>Edit Profile</h2>
+    <h3 class="form-heading">Edit Profile</h3>
     <div class="form-group">
-      <label class="control-label">Bio</label>
+      <label class="form-label">Bio</label>
       <textarea
         class="form-control"
         rows="2"
@@ -12,55 +12,64 @@
     </div>
 
     <div class="form-group">
-      <label class="control-label">Location</label>
-      <input class="form-control" type="text" formControlName="location" />
-    </div>
-
-    <div class="form-group">
-      <label class="control-label required">Birth date</label>
+      <label class="form-label">Birth date</label>
       <div class="row" style="margin: 0px;">
-        <input
-          class="form-control"
-          type="date"
-          formControlName="birth_date"
-          [ngClass]="{
-            'is-invalid': isInValid(value('birth_date')),
-            'is-valid': isValid(value('birth_date'))
-          }"
-        />
-        <div
-          *ngIf="
-            value('birth_date').touched && value('birth_date').errors?.required
-          "
-          class="alert alert-danger alert-icon"
-        >
-          <small style="margin-left: 20px;"
-            >{{ "Birth date is Mandatory" }}.</small
-          >
-        </div>
+        <input class="form-control" type="date" formControlName="birth_date" />
       </div>
     </div>
 
-    <div class="form-group">
-      <label class="control-label">Profile photo</label>
-      <br />
-      <input class="form-control-file" type="file" formControlName="image" />
+    <div class="form-group" formGroupName="address">
+      <h4>Address</h4>
+
+      <div class="form-group">
+        <label class="form-label">Street</label>
+        <input class="form-control" type="text" formControlName="street" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">City</label>
+        <input class="form-control" type="text" formControlName="city" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">State</label>
+        <input class="form-control" type="text" formControlName="state" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Zip Code</label>
+        <input class="form-control" type="number" formControlName="zip_code" />
+      </div>
     </div>
 
-    <div class="form-group">
-      <label class="control-label">Email confirmed</label>
+    <div class="form-group form-check form-switch">
       <input
         class="form-check-input"
         type="checkbox"
         formControlName="email_confirmed"
       />
+      <label class="form-check-label form-label">Email confirmed</label>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Profile photo</label>
+      <br />
+      <input
+        class="form-control form-control-file"
+        type="file"
+        formControlName="image"
+      />
     </div>
 
     <button
       (click)="editProfile()"
-      type="submit"
+      type="button"
       class="btn"
       [disabled]="profileForm.invalid"
+      [ngClass]="{
+        'form-valid': !profileForm.invalid,
+        'form-invalid': profileForm.invalid
+      }"
     >
       Save profile
     </button>

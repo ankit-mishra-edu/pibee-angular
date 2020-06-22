@@ -21,6 +21,7 @@ import { of } from 'rxjs';
 export class EditDetailsComponent implements OnInit, OnDestroy {
   isValid = isValid;
   isInValid = isInValid;
+  allUsersArray: IUser[];
   subscriptions = new SubSink();
   isUserConfirmed: boolean = false;
   loggedInUser: IUser = this._data.loggedInUser;
@@ -66,7 +67,9 @@ export class EditDetailsComponent implements OnInit, OnDestroy {
     private _route: Router
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.setAllUsers();
+  }
 
   confirmUser() {
     this.subscriptions.sink = this._auth
@@ -110,13 +113,22 @@ export class EditDetailsComponent implements OnInit, OnDestroy {
       );
   }
 
+  setAllUsers() {
+    this.subscriptions.sink = this._data.allUsersArray$.subscribe(
+      (getAllUsersResponse) => {
+        console.log(getAllUsersResponse);
+        this.allUsersArray = getAllUsersResponse;
+      }
+    );
+  }
+
   validateNotTaken(control: AbstractControl) {
     let validationStatus: boolean = false;
     const controlName = Object.keys(control.parent.controls).find(
       (key) => control.parent.controls[key] === control
     );
-    if (this._data.allUsersArray) {
-      for (let user of this._data.allUsersArray) {
+    if (this.allUsersArray) {
+      for (let user of this.allUsersArray) {
         if (
           user[controlName] == control.value &&
           user[controlName] != this.loggedInUser[controlName]

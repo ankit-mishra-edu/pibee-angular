@@ -7,6 +7,8 @@ import { AuthService } from 'src/app/app-service/auth-service/auth.service';
 import { DataService } from 'src/app/app-service/data-service/data.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { isValid, isInValid } from 'src/app/app-validators/custom.validator';
+import { timer, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit-profile',
@@ -17,14 +19,19 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   isValid = isValid;
   isInValid = isInValid;
   subscriptions = new SubSink();
-  loggedInUser: IUser = this._data.loggedInUser;
   profileForm = new FormBuilder().group({
-    user: [this.loggedInUser.id],
+    user: [this._data.loggedInUser.id],
     bio: ['', [Validators.maxLength(150)]],
-    location: ['', [Validators.maxLength(150)]],
-    birth_date: ['', [Validators.required]],
-    email_confirmed: [''],
-    image: [''],
+    address: new FormBuilder().group({
+      user: [this._data.loggedInUser],
+      city: [''],
+      state: [''],
+      street: [''],
+      zip_code: [''],
+    }),
+    birth_date: [null],
+    email_confirmed: [false],
+    image: [null],
   });
 
   value(controlName: string) {
@@ -38,31 +45,22 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.getUserProfile();
+    this.setUserProfile();
   }
 
-  getUserProfile() {
-    this.subscriptions.sink = this._data
-      .GetUserProfileById(this.profileForm.get('user').value)
-      .subscribe(
-        (getUserProfileResponse) => {
-          console.log(getUserProfileResponse);
-          delete getUserProfileResponse.image;
-          this.profileForm.patchValue(getUserProfileResponse);
-        },
-
-        (getUserProfileError) => {
-          console.log(getUserProfileError);
-        },
-
-        () => {
-          console.log('Fetched profile data Successfully');
-        }
-      );
+  setUserProfile() {
+    this.subscriptions.sink = this._data.userProfile$.subscribe(
+      (profileResponse) => {
+        console.log(profileResponse);
+        profileResponse ? delete profileResponse.image : {};
+        this.profileForm.patchValue(profileResponse ? profileResponse : {});
+      }
+    );
   }
 
   editProfile() {
     this.profileForm.removeControl('image');
+    console.log(this.profileForm.value);
     this.subscriptions.sink = this._auth
       .EditProfile(this.profileForm.value)
       .subscribe(
