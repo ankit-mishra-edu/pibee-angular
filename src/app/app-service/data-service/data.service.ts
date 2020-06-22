@@ -10,7 +10,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 })
 export class DataService {
   loggedInUser: IUser;
-  baseUrl: string = 'https:/pibeedjango.herokuapp.com/api/';
+  baseUrl: string = 'https://pibeedjango.herokuapp.com/api/';
 
   public searchQueryChangeSubject$ = new Subject<string>();
   private _loggedInUserSubject$ = new BehaviorSubject<IUser>(null);

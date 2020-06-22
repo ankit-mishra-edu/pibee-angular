@@ -11,7 +11,7 @@
 
     <a
       class="navbar-brand mt-2"
-      style="color: white; font-weight: 700;"
+      style="color: white; font-weight: 500;"
       routerLink="/"
       >PiBee</a
     >
@@ -35,6 +35,20 @@
       <ul class="navbar-nav nav-pills ml-auto" style="text-align: center;">
         <!-- If the user is Authenticated -->
         <ng-template [ngIf]="isLoggedIn()" [ngIfElse]="loggedOut">
+          <!-- Display Username -->
+          <li
+            class="nav-item"
+            data-toggle="collapse"
+            data-target=".navbar-collapse.show"
+          >
+            <a
+              class="nav-link username"
+              [routerLink]="['/view-profile', loggedInUser.id]"
+            >
+              {{ "Hi " }}{{ loggedInUser.username }}
+            </a>
+          </li>
+
           <!-- Navigation link for Chat -->
           <li
             class="nav-item"
@@ -132,13 +146,13 @@
                 <i class="fa fa-edit mr-2"></i>Chnage Password
               </a>
 
-              <button
+              <a
                 class="dropdown-item"
                 (click)="deactivateUser()"
                 routerLink="/"
               >
                 <i class="fa fa-times mr-2"></i>Deactivate Account
-              </button>
+              </a>
             </div>
           </li>
 
@@ -154,14 +168,32 @@
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
+              style="padding: 3px 0px;"
             >
-              <i class="fa fa-user-circle-o"></i>
+              <!-- <i class="fa fa-user-circle-o"></i> -->
+              <img
+                *ngIf="userProfile$ | async"
+                height="35px"
+                width="35px"
+                class="rounded-circle"
+                [src]="(userProfile$ | async).image"
+              />
+              <div
+                *ngIf="!(userProfile$ | async)"
+                class="spinner-grow spinner-grow-sm"
+                role="status"
+              >
+                <span class="sr-only">Loading...</span>
+              </div>
             </a>
             <div
               class="dropdown-menu dropdown-menu-right"
               aria-labelledby="userProfileToggle"
             >
-              <a class="dropdown-item" routerLink="view-profile">
+              <a
+                class="dropdown-item"
+                [routerLink]="['/view-profile', loggedInUser.id]"
+              >
                 <div class="row text-center">
                   <div class="col-md-1">
                     <i class="fa fa-user mt-3"></i>
@@ -187,20 +219,6 @@
                 <i class="fa fa-sign-out mr-2" aria-hidden="true"></i>Logout
               </a>
             </div>
-          </li>
-
-          <!-- Display Username -->
-          <li
-            class="nav-item"
-            data-toggle="collapse"
-            data-target=".navbar-collapse.show"
-          >
-            <p
-              [routerLink]="['/view-profile', loggedInUser.id]"
-              class="nav-link"
-            >
-              {{ "Hi " }}{{ loggedInUser.username }}
-            </p>
           </li>
         </ng-template>
 

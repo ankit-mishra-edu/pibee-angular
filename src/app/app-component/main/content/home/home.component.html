@@ -68,10 +68,16 @@
         <tbody>
           <tr *ngFor="let user of matchingUsersArray | async">
             <td>
-              <a
-                [routerLink]="['view-profile', user.id]"
-                style="color: white;"
-                >{{ user.username }}</a
+              <a [routerLink]="['view-profile', user.id]" style="color: white;"
+                ><img
+                  height="30px"
+                  width="30px"
+                  class="rounded-circle"
+                  [src]="
+                    (userProfile$ | async) ? (userProfile$ | async).image : null
+                  "
+                />
+                {{ " " }}{{ user.username }}</a
               >
             </td>
             <td>{{ user.email }}</td>

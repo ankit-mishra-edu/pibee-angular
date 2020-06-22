@@ -15,6 +15,7 @@ export class NavbarComponent implements OnInit {
   title = 'piBee';
   loggedInUser: IUser;
   loggedInUser$: Observable<IUser>;
+  userProfile$ = this._data.userProfile$;
   loggedInUserChange$ = new Subject<IUser>();
   subscriptions = new SubSink();
 
@@ -26,6 +27,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoggedIn();
+    this.userProfile$ = this._data.userProfile$;
   }
 
   isLoggedIn() {
@@ -38,10 +40,8 @@ export class NavbarComponent implements OnInit {
 
   deactivateUser() {
     let deactivateFormData = {
-      user: {
-        username: this.loggedInUser.username,
-        is_active: false,
-      },
+      id: this.loggedInUser.id,
+      is_active: false,
     };
     this._route.navigate(['logout']);
     this.subscriptions.sink = this._auth

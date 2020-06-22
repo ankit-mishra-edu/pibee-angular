@@ -14,6 +14,7 @@ import { DataService } from 'src/app/app-service/data-service/data.service';
 })
 export class HomeComponent implements OnInit {
   loggedInUser$: Observable<IUser>;
+  userProfile$ = this._data.userProfile$;
   subscriptions = new SubSink();
   numberArray = [1, 2, 3];
 

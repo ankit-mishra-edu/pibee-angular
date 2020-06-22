@@ -18,6 +18,14 @@ i .fa {
           p {
             margin-bottom: 0px;
           }
+
+          .username {
+            padding: 5px;
+            margin: 2px 0px;
+            border-radius: 20px;
+            display: inline-block;
+            border: 2px solid white;
+          }
         }
 
         .nav-item :hover {
@@ -29,12 +37,6 @@ i .fa {
         }
 
         .dropdown .dropdown-menu a:hover {
-          background-color: #0366d6;
-          background-image: none;
-        }
-
-        .dropdown .dropdown-menu > button:hover {
-          cursor: pointer;
           background-color: #0366d6;
           background-image: none;
         }
