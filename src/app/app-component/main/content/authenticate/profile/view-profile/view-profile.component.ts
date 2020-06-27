@@ -46,6 +46,7 @@ export class ViewProfileComponent implements OnInit, OnDestroy {
       (userProfileResponse) => {
         console.log(userProfileResponse);
         this.userProfile = userProfileResponse;
+        this._data.userProfileSubject$.unsubscribe();
       }
     );
   }

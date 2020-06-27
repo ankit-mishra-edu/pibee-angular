@@ -27,12 +27,13 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoggedIn();
-    this.userProfile$ = this._data.userProfile$;
   }
 
   isLoggedIn() {
     if (sessionStorage.length > 0) {
       this.loggedInUser = this._data.loggedInUser;
+
+      this.userProfile$ = this._data.userProfile$;
       return true;
     }
     return false;
