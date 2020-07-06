@@ -14,7 +14,6 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ViewProfileComponent implements OnInit, OnDestroy {
   userId: number;
-  userProfile: IProfile;
   loggedInUser: IUser = this._data.loggedInUser;
   subscriptions = new SubSink();
   userProfile$ = this._data.userProfile$;
@@ -29,25 +28,13 @@ export class ViewProfileComponent implements OnInit, OnDestroy {
     this._activatedRoute.params.subscribe(
       (params) => (this.userId = params.id)
     );
-    if (this.userId != this.loggedInUser.id) {
+    if (this.userId != this.loggedInUser?.id) {
       this._data
         .GetUserProfileById(this.userId)
         .subscribe((userProfileResponse) => {
-          console.log(userProfileResponse);
-          this.userProfile = userProfileResponse;
+          this._data.userProfileSubject$.next(userProfileResponse);
         });
-    } else {
-      this.setUserProfile();
     }
-  }
-
-  setUserProfile() {
-    this.subscriptions.sink = this._data.userProfileSubject$.subscribe(
-      (userProfileResponse) => {
-        console.log(userProfileResponse);
-        this.userProfile = userProfileResponse;
-      }
-    );
   }
 
   ngOnDestroy() {

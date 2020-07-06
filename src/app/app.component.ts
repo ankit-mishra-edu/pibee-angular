@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { IUser } from './app-interface/User';
 import { DataService } from './app-service/data-service/data.service';
-import { timer, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { timer } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { SubSink } from 'subsink';
 
 @Component({
@@ -15,31 +14,33 @@ export class AppComponent {
   constructor(private _data: DataService) {}
 
   ngOnInit(): void {
-    this.getLoggedInUser();
-    if (this._data.loggedInUser) {
-      timer(1, 20000)
-        .pipe(
-          switchMap((_) =>
-            of(this.getUserProfileById(this._data.loggedInUser.id))
-          )
-        )
-        .subscribe();
-    }
+    timer(0, 20000)
+      .pipe(
+        tap((_) => {
+          if (!this._data.loggedInUser) {
+            this.getLoggedInUser();
+          }
+          if (this._data.loggedInUser) {
+            this.getUserProfileById(this._data.loggedInUser.id);
+          }
+        })
+      )
+      .subscribe(console.log);
 
-    timer(1, 20000)
-      .pipe(switchMap((_) => of(this.getAllUsers())))
-      .subscribe();
+    timer(0, 20000)
+      .pipe(tap((_) => this.getAllUsers()))
+      .subscribe(console.log);
 
-    timer(1, 20000)
-      .pipe(switchMap((_) => of(this.getAllUsersProfiles())))
-      .subscribe();
+    timer(0, 20000)
+      .pipe(tap((_) => this.getAllUsersProfiles()))
+      .subscribe(console.log);
   }
 
   getLoggedInUser() {
     this.subscriptions.sink = this._data.GetLoggedInUser().subscribe(
       (loggedInUserResponse) => {
         this._data.loggedInUser = loggedInUserResponse;
-        // console.log(this._data.allUsersArray);
+        console.log(this._data.loggedInUser);
       },
 
       (loggedInUserError) => {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { IUser } from 'src/app/app-interface/User';
 import { IProfile } from 'src/app/app-interface/Profile';
 import { BehaviorSubject, Observable, of, throwError, Subject } from 'rxjs';
-import { distinctUntilChanged, catchError, delay } from 'rxjs/operators';
+import { distinctUntilChanged, catchError, share } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
@@ -42,11 +42,19 @@ export class DataService {
     }
   }
 
-  suggestNames(allUsersArray: IUser[], partial: string): Observable<IUser[]> {
-    let usernamesArray: IUser[] = [];
-    allUsersArray.forEach((user) => {
-      if (user.username.toLowerCase().includes(partial.toLowerCase())) {
-        usernamesArray.push(user);
+  suggestNames(
+    allUsersProfile: IProfile[],
+    partial: string
+  ): Observable<IProfile[]> {
+    let usernamesArray: IProfile[] = [];
+    console.log(partial);
+    allUsersProfile?.forEach((userProfile) => {
+      if (
+        userProfile.address.user.username
+          .toLowerCase()
+          .includes(partial.toLowerCase())
+      ) {
+        usernamesArray.push(userProfile);
       }
     });
     console.log(usernamesArray);
@@ -78,7 +86,7 @@ export class DataService {
   GetUserProfileById(id): Observable<IProfile> {
     return this._http
       .get<IProfile>(this.baseUrl + 'user_profile/' + <number>id)
-      .pipe(catchError(this.errorHandler));
+      .pipe(catchError(this.errorHandler), share());
   }
 
   GetAllUsersProfiles(): Observable<IProfile[]> {

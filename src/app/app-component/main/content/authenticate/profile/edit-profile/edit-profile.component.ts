@@ -66,6 +66,7 @@ export class EditProfileComponent implements OnInit, OnDestroy {
       .subscribe(
         (editProfileResponse) => {
           console.log(editProfileResponse);
+          this._data.userProfileSubject$.next(editProfileResponse);
           this._router.navigate(['/']);
         },
         (editProfileError) => {

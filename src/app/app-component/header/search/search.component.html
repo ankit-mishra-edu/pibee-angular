@@ -6,9 +6,23 @@
       placeholder="Search User"
       aria-label="Search"
       name="search"
+      list="brow"
       #search
       [ngModel]="_data.searchQueryChangeSubject$ | async"
       (ngModelChange)="_data.searchQueryChangeSubject$.next($event)"
     />
+
+    <!-- <datalist id="brow">
+      <option
+        *ngFor="let userProfile of matchingUsersArray$ | async"
+        [value]=""
+      >
+        <a
+          [routerLink]="['view-profile', userProfile.address?.user.id]"
+          style="color: white;"
+          >{{ userProfile.address?.user.username }}</a
+        ></option
+      >
+    </datalist> -->
   </div>
 </form>

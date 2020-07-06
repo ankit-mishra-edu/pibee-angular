@@ -42,10 +42,11 @@
             data-target=".navbar-collapse.show"
           >
             <a
+              *ngIf="loggedInUser"
               class="nav-link username"
-              [routerLink]="['/view-profile', loggedInUser.id]"
+              [routerLink]="['/view-profile', loggedInUser?.id]"
             >
-              {{ "Hi " }}{{ loggedInUser.username }}
+              {{ "Hi " }}{{ loggedInUser?.username }}
             </a>
           </li>
 
@@ -191,8 +192,9 @@
               aria-labelledby="userProfileToggle"
             >
               <a
+                *ngIf="loggedInUser"
                 class="dropdown-item"
-                [routerLink]="['/view-profile', loggedInUser.id]"
+                [routerLink]="['/view-profile', loggedInUser?.id]"
               >
                 <div class="row text-center">
                   <div class="col-md-1">
