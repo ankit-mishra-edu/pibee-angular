@@ -1,8 +1,21 @@
 <header class="site-header">
   <div class="row">
     <div class="col-md-12 primary-nav">
-      <nav class="navbar navbar-header navbar-expand-md navbar-light bg-white">
-        <a class="navbar-brand ml-3" routerLink="/">PiBee</a>
+      <nav class="navbar navbar-header navbar-expand-sm navbar-light bg-white">
+        <a class="navbar-brand" routerLink="/">PiBee</a>
+
+        <div class="ml-auto">
+          <ul class="navbar-nav">
+            <!-- Navigation Link for Search Bar -->
+            <li
+              class="nav-item searchBox"
+              data-toggle="collapse"
+              data-target="collapse.show"
+            >
+              <app-search></app-search>
+            </li>
+          </ul>
+        </div>
 
         <button
           class="navbar-toggler"
@@ -20,18 +33,7 @@
           class="navbar-collapse primary-collapse collapse justify-content-right"
           id="primaryNavbarToggle"
         >
-          <ul class="navbar-nav">
-            <!-- Navigation Link for Search Bar -->
-            <li
-              class="nav-item searchBox"
-              data-toggle="collapse"
-              data-target="collapse.show"
-            >
-              <app-search></app-search>
-            </li>
-          </ul>
-
-          <ul class="navbar-nav">
+          <ul class="navbar-nav ml-auto">
             <!-- Display Username -->
             <li
               class="nav-item welcome-note"
@@ -115,6 +117,33 @@
                 </a>
               </li>
 
+              <!-- Dropdown for Notification -->
+              <li
+                class="nav-item dropdown"
+                data-toggle="collapse"
+                data-target=".navbar-collapse.show"
+              >
+                <a
+                  class="nav-link"
+                  id="notificationToggle"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <span>Notifications <i class="fa fa-bell"></i></span>
+                </a>
+                <div
+                  class="dropdown-menu dropdown-menu-right"
+                  aria-labelledby="notificationToggle"
+                >
+                  <span class="dropdown-item text-light bg-dark"
+                    >Notifications</span
+                  >
+                  <a class="dropdown-item" routerLink="/">Notification 1</a>
+                  <a class="dropdown-item" routerLink="/">Notification 1</a>
+                </div>
+              </li>
+
               <!-- Dropdown for Messages -->
               <li
                 class="nav-item dropdown"
@@ -141,33 +170,6 @@
                   >
                   <a class="dropdown-item" routerLink="/">Message 1</a>
                   <a class="dropdown-item" routerLink="/">Message 1</a>
-                </div>
-              </li>
-
-              <!-- Dropdown for Notification -->
-              <li
-                class="nav-item dropdown"
-                data-toggle="collapse"
-                data-target=".navbar-collapse.show"
-              >
-                <a
-                  class="nav-link"
-                  id="notificationToggle"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <span>Notifications <i class="fa fa-bell"></i></span>
-                </a>
-                <div
-                  class="dropdown-menu dropdown-menu-right"
-                  aria-labelledby="notificationToggle"
-                >
-                  <span class="dropdown-item text-light bg-dark"
-                    >Notifications</span
-                  >
-                  <a class="dropdown-item" routerLink="/">Notification 1</a>
-                  <a class="dropdown-item" routerLink="/">Notification 1</a>
                 </div>
               </li>
 

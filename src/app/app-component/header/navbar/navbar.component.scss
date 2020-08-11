@@ -16,8 +16,13 @@ i .fa {
       .navbar-brand {
         color: #764abc;
         font-weight: 500;
+        margin: 0px 8px 0px 5px;
         font-size: xx-large;
         vertical-align: middle;
+      }
+
+      .navbar-toggler {
+        padding: 2px 6px;
       }
 
       #primaryNavbarToggle {
@@ -73,6 +78,10 @@ i .fa {
       // background-color: #08192b;
       // background-image: linear-gradient(to right, #764abc, rgb(134, 38, 195));
       background-color: #003542 !important;
+
+      .navbar-toggler {
+        padding: 6px 8px;
+      }
 
       #secondaryNavbarToggle {
         .navbar-nav {
