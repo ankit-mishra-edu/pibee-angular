@@ -40,6 +40,7 @@ form {
   .form-control {
     min-width: 230px;
     max-width: 40%;
+    border: 1px solid #8626c3;
   }
 
   textarea {
@@ -75,10 +76,12 @@ form {
   }
 
   .form-valid {
-    background-color: rgb(134, 38, 195);
+    background-color: #28a745;
+    // background-color: rgb(134, 38, 195);
   }
 
   .form-invalid {
-    background-color: rgb(241, 108, 81);
+    // background-color: rgb(241, 108, 81);
+    background-color: rgb(134, 38, 195);
   }
 }

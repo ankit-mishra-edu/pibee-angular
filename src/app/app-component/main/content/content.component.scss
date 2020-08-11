@@ -1,8 +1,12 @@
 .site-content {
   padding: 10px 0px 0px 0px;
-  margin: 48px 2% 0px 2%;
+  margin: 0px 2% 0px 2%;
   // background-color: #aee4e8;
   background-color: #eee;
+
+  .router-content {
+    overflow-y: auto;
+  }
 
   .article-container {
     // width: 100%;
