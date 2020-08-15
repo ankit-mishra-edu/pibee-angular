@@ -26,7 +26,7 @@ export class ViewProfileComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._activatedRoute.params.subscribe(
-      (params) => (this.userId = params.id)
+      (params) => (this.userId = params?.id)
     );
     if (this.userId != this.loggedInUser?.id) {
       this._data

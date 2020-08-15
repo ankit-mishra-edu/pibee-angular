@@ -1,50 +1,44 @@
-<footer class="site-footer">
-  <div class="container-fluid footer-container">
-    <nav
-      class="navbar navbar-expand-sm navbar-dark"
-      style="text-align: center; padding: 0px;"
+<div class="container-fluid site-footer">
+  <nav
+    class="navbar navbar-expand-sm navbar-dark"
+    style="text-align: center; padding: 0px;"
+  >
+    <p></p>
+    <a
+      class="navbar-brand"
+      style="color: white; font-size: 25px;"
+      routerLink="/"
+      ><img src="../assets/media/logos/footerImage.png" alt="" />PiBee</a
     >
-      <p></p>
-      <a
-        class="navbar-brand"
-        style="color: white; font-size: 25px;"
-        routerLink="/"
-        ><img src="../assets/media/logos/footerImage.png" alt="" />PiBee</a
-      >
-      <p></p>
-    </nav>
+    <p></p>
+  </nav>
 
-    <div class="row mt-2">
-      <p [routerLink]="['/']" routerLinkActive="router-link-active">
-        About PiBee
-      </p>
-      <p *ngIf="!(loggedInUser$ | async)" class="ml-4">
-        Have an account?
-      </p>
-      <p
-        *ngIf="!(loggedInUser$ | async)"
-        class="ml-2"
-        [routerLink]="['/login']"
-      >
-        Sign In
-      </p>
-      <p *ngIf="loggedInUser$ | async" class="ml-2" [routerLink]="['/logout']">
-        Sign out
-      </p>
-    </div>
-
-    <p
-      class="text-center"
-      style="margin-bottom: 0px; color: white; text-align: center;"
-    >
-      Coded with <span style="color: red;">&hearts;</span> by
-      <a href="https://github.com/amishm766" style="color: #0366d6;"
-        >Ankit Mishra.</a
-      >
+  <div class="row mt-2">
+    <p [routerLink]="['/']" routerLinkActive="router-link-active">
+      About PiBee
     </p>
-    <!-- <div class="footer-copyright text-center py-3">
+    <p *ngIf="!(loggedInUser$ | async)" class="ml-4">
+      Have an account?
+    </p>
+    <p *ngIf="!(loggedInUser$ | async)" class="ml-2" [routerLink]="['/login']">
+      Sign In
+    </p>
+    <p *ngIf="loggedInUser$ | async" class="ml-2" [routerLink]="['/logout']">
+      Sign out
+    </p>
+  </div>
+
+  <!-- <p
+    class="text-center"
+    style="margin-bottom: 0px; color: white; text-align: center;"
+  >
+    Coded with <span style="color: red;">&hearts;</span> by
+    <a href="https://github.com/amishm766" style="color: #0366d6;"
+      >Ankit Mishra.</a
+    >
+  </p> -->
+  <!-- <div class="footer-copyright text-center py-3">
       © 2020 Copyright:
       <a href="https://mdbootstrap.com/"> MDBootstrap.com</a>
     </div> -->
-  </div>
-</footer>
+</div>

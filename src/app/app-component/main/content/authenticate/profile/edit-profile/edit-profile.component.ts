@@ -7,8 +7,7 @@ import { AuthService } from 'src/app/app-service/auth-service/auth.service';
 import { DataService } from 'src/app/app-service/data-service/data.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { isValid, isInValid } from 'src/app/app-validators/custom.validator';
-import { timer, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-edit-profile',
@@ -41,7 +40,8 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   constructor(
     private _auth: AuthService,
     private _data: DataService,
-    private _router: Router
+    private _router: Router,
+    private _notificationsService: NotificationsService
   ) {}
 
   ngOnInit(): void {
@@ -67,7 +67,12 @@ export class EditProfileComponent implements OnInit, OnDestroy {
         (editProfileResponse) => {
           console.log(editProfileResponse);
           this._data.userProfileSubject$.next(editProfileResponse);
-          this._router.navigate(['/']);
+          // this.notify('Profile', 'Updated successfully...');
+          this._router.navigate([
+            'home/',
+            'Profile',
+            'Updated successfully...',
+          ]);
         },
         (editProfileError) => {
           console.log(editProfileError);
@@ -76,6 +81,17 @@ export class EditProfileComponent implements OnInit, OnDestroy {
           console.log('Edit profile Service called Successfully');
         }
       );
+  }
+
+  notify(title: string, message: string) {
+    console.log(
+      this._notificationsService.success(title, message, {
+        timeOut: 3000,
+        showProgressBar: true,
+        pauseOnHover: true,
+        clickToClose: true,
+      })
+    );
   }
 
   ngOnDestroy() {

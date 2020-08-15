@@ -12,8 +12,11 @@ i .fa {
 
     .navbar {
       padding: 0%;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
 
       .navbar-brand {
+        grid-column: 1/2;
         color: #764abc;
         font-weight: 500;
         margin: 0px 8px 0px 5px;
@@ -21,11 +24,18 @@ i .fa {
         vertical-align: middle;
       }
 
+      .searchBox {
+        width: 100%;
+        grid-column: 2/3;
+        place-items: center;
+      }
+
       .navbar-toggler {
         padding: 2px 6px;
       }
 
       #primaryNavbarToggle {
+        grid-column: 3/4;
         .navbar-nav {
           .nav-item {
             margin: 0;
