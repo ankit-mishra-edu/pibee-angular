@@ -19,9 +19,6 @@ import { EditProfileComponent } from './app-component/main/content/authenticate/
 import { ViewProfileComponent } from './app-component/main/content/authenticate/profile/view-profile/view-profile.component';
 import { EditDetailsComponent } from './app-component/main/content/authenticate/edit-details/edit-details.component';
 import { ChangePasswordComponent } from './app-component/main/content/authenticate/change-password/change-password.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SimpleNotificationsModule } from 'node_modules/angular2-notifications';
-import { NotificationsService } from 'angular2-notifications';
 
 @NgModule({
   declarations: [
@@ -48,8 +45,6 @@ import { NotificationsService } from 'angular2-notifications';
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    SimpleNotificationsModule.forRoot(),
-    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

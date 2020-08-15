@@ -12,10 +12,6 @@ import { ChangePasswordComponent } from './app-component/main/content/authentica
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  {
-    path: 'home/:notificationMessage/:notificationTitle',
-    component: HomeComponent,
-  },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'logout', component: LogoutComponent },
