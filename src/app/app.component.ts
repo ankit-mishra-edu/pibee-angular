@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { DataService } from './app-service/data-service/data.service';
 import { timer } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { SubSink } from 'subsink';
+import { DataService } from 'src/app/services/data-service/data.service';
 
 @Component({
   selector: 'app-root',
