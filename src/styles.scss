@@ -1,0 +1,91 @@
+.right {
+  text-align: right;
+}
+
+.left {
+  text-align: left;
+}
+
+.btn {
+  transition: 0.1s;
+  color: rgb(255, 255, 255) !important;
+  background-color: rgb(134, 38, 195);
+  border-width: initial !important;
+  border-style: none !important;
+  border-color: initial !important;
+  border-image: initial !important;
+}
+
+// .btn:hover {
+//   background-color: rgb(241, 108, 81);
+//   color: white;
+// }
+
+.alert-danger {
+  color: red;
+  margin-left: 10px;
+  padding: 0px;
+  max-inline-size: 50%;
+}
+
+.alert-icon {
+  background-position: -4px;
+  background-size: 1.5rem;
+  background-repeat: no-repeat;
+  background-image: url(assets/media/dangerImage.webp);
+}
+
+form {
+  margin: 0 0 0 48px;
+
+  .form-group {
+    padding-block-end: 16px;
+  }
+
+  .form-control {
+    inline-size: max(240px, 55%);
+    border: 1px solid #8626c3;
+  }
+
+  textarea {
+    min-width: 240px;
+    max-width: 55%;
+  }
+
+  .form-heading {
+    color: #428bca;
+    font-weight: 400;
+  }
+
+  .form-label {
+    font-size: 17px;
+    font-weight: bold;
+    color: #05858f;
+  }
+
+  .form-label.required:after {
+    content: "*";
+    color: red;
+    font-size: 17px;
+    margin-left: 5px;
+    font-weight: bold;
+  }
+
+  .is-valid {
+    border-left: 5px solid #42a948;
+  }
+
+  .is-invalid {
+    border-left: 5px solid #a94442;
+  }
+
+  .form-valid {
+    background-color: #28a745;
+    // background-color: rgb(134, 38, 195);
+  }
+
+  .form-invalid {
+    // background-color: rgb(241, 108, 81);
+    background-color: rgb(134, 38, 195);
+  }
+}

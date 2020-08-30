@@ -1,0 +1,28 @@
+.site-container {
+  display: grid;
+  max-width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  grid-template-rows: auto 1fr auto;
+
+  .site-content {
+    height: 100%;
+    margin: 0px 2% 0px 2%;
+    background-color: #eee;
+    padding: 10px 0px 0px 0px;
+
+    .left-sidebar {
+      padding: 0px;
+    }
+
+    .router-content {
+      padding: 0px;
+      overflow-y: auto;
+    }
+
+    .right-sidebar {
+      padding: 0px;
+      margin-bottom: auto;
+    }
+  }
+}
