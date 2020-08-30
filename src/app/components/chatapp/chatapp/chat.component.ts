@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from 'src/app/services/chat-service/chat.service';
 import { IMessage } from 'src/app/interfaces/Message';
+import { DataService } from 'src/app/services/data-service/data.service';
+import { Observable } from 'rxjs';
+import { IUser } from 'src/app/interfaces/User';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-chat',
@@ -8,6 +12,9 @@ import { IMessage } from 'src/app/interfaces/Message';
   styleUrls: ['./chat.component.scss'],
 })
 export class ChatComponent implements OnInit {
+  loggedInUser: IUser;
+  subscriptions = new SubSink();
+
   socketRef: WebSocket;
   path: string = 'wss://pibeedjango.herokuapp.com/ws/chat/ankit/';
 
@@ -21,10 +28,11 @@ export class ChatComponent implements OnInit {
     content: '',
   };
 
-  constructor(private _chat: ChatService) {}
+  constructor(private _chat: ChatService, private _data: DataService) {}
 
   ngOnInit(): void {
-    this.message.sender = localStorage.getItem('username');
+    this.setLoggedInUser();
+    this.message.sender = this.loggedInUser?.username;
     this.connect();
   }
 
@@ -43,9 +51,7 @@ export class ChatComponent implements OnInit {
       console.log(receiverdMessageArray);
       let alignment: string = 'left';
       for (let i = 0; i < receiverdMessageArray.length; i++) {
-        if (
-          receiverdMessageArray[i].sender == localStorage.getItem('username')
-        ) {
+        if (receiverdMessageArray[i].sender == this.loggedInUser?.username) {
           alignment = 'right';
           receiverdMessageArray[i].sender = 'You';
         } else {
@@ -77,8 +83,16 @@ export class ChatComponent implements OnInit {
   getMessage() {
     this._chat.getMessage(
       this.socketRef,
-      localStorage.getItem('username'),
+      this.loggedInUser?.username,
       'amishm766'
+    );
+  }
+
+  setLoggedInUser() {
+    this.subscriptions.sink = this._data.loggedInUser$.subscribe(
+      (getLoggedInUserResponse) => {
+        this.loggedInUser = getLoggedInUserResponse;
+      }
     );
   }
 }
