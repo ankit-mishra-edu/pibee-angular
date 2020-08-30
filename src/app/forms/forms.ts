@@ -9,18 +9,12 @@ import { SubSink } from 'subsink';
 import { IUser } from '../interfaces/User';
 import { OnInit, OnDestroy } from '@angular/core';
 
-export class SignUp implements OnInit, OnDestroy {
+export class SignUp {
   subscriptions = new SubSink();
   allUsersArray: IUser[];
 
-  constructor(private _data: DataService, private _auth: AuthService) {}
-
-  ngOnInit(): void {
+  constructor(private _data: DataService, private _auth: AuthService) {
     this.setAllUsers();
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.unsubscribe();
   }
 
   setAllUsers() {
