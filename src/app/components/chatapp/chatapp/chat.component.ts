@@ -9,7 +9,7 @@ import { IMessage } from 'src/app/interfaces/Message';
 })
 export class ChatComponent implements OnInit {
   socketRef: WebSocket;
-  path: string = 'ws://127.0.0.1:8000/ws/chat/ankit/';
+  path: string = 'wss://pibeedjango.herokuapp.com/ws/chat/ankit/';
 
   display = {
     messageArray: [],
