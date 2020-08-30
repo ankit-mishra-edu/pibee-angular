@@ -109,22 +109,42 @@ i .fa {
             a {
               color: rgb(255, 255, 255, 1);
             }
+
+            .nav-link {
+              display: inline-flex;
+              gap: 0.5rem;
+              place-items: center;
+              justify-content: space-between;
+            }
           }
 
           .nav-item :hover {
             color: rgb(255, 255, 255, 0.5);
           }
 
-          .dropdown .dropdown-menu a {
-            color: black;
-            background-color: white;
+          .dropdown {
+            .dropdown-menu a {
+              color: black;
+              background-color: white;
+            }
+
+            .dropdown-menu a:hover {
+              color: white;
+              background-image: none;
+              background-color: #0366d6;
+            }
           }
 
-          .dropdown .dropdown-menu a:hover {
-            color: white;
-            background-image: none;
-            background-color: #0366d6;
-          }
+          // .dropdown .dropdown-menu a {
+          //   color: black;
+          //   background-color: white;
+          // }
+
+          // .dropdown .dropdown-menu a:hover {
+          //   color: white;
+          //   background-image: none;
+          //   background-color: #0366d6;
+          // }
         }
       }
     }

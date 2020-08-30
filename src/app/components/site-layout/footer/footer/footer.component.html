@@ -14,18 +14,24 @@
   </nav>
 
   <div class="row mt-2">
-    <p [routerLink]="['/']" routerLinkActive="router-link-active">
-      About PiBee
-    </p>
-    <p *ngIf="!(loggedInUser$ | async)" class="ml-4">
-      Have an account?
-    </p>
-    <p *ngIf="!(loggedInUser$ | async)" class="ml-2" [routerLink]="['/login']">
-      Sign In
-    </p>
-    <p *ngIf="loggedInUser$ | async" class="ml-2" [routerLink]="['/logout']">
-      Sign out
-    </p>
+    <ul class="navbar-nav">
+      <li [routerLink]="['/']" routerLinkActive="router-link-active">
+        About PiBee
+      </li>
+      <li *ngIf="!(loggedInUser$ | async)" class="ml-4">
+        Have an account?
+      </li>
+      <li
+        *ngIf="!(loggedInUser$ | async)"
+        class="ml-2"
+        [routerLink]="['/login']"
+      >
+        Sign In
+      </li>
+      <li *ngIf="loggedInUser$ | async" class="ml-2" [routerLink]="['/logout']">
+        Sign out
+      </li>
+    </ul>
   </div>
 
   <!-- <p

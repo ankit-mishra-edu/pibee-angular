@@ -1,7 +1,7 @@
 <div class="site-header">
-  <div class="row">
+  <div class="container-md row">
     <div class="col-md-12 primary-nav">
-      <nav class="navbar navbar-header navbar-expand-sm navbar-light bg-white">
+      <nav class="navbar navbar-header navbar-expand-md navbar-light bg-white">
         <a class="navbar-brand" routerLink="/">PiBee</a>
 
         <div class="mr-auto searchBox">
@@ -45,7 +45,8 @@
                 class="nav-link username"
                 [routerLink]="['/view-profile', loggedInUser?.id]"
               >
-                <span>{{ "Welcome " + loggedInUser?.username }}</span>
+                <span>{{ "Welcome " }}</span>
+                <span>{{ loggedInUser?.username }}</span>
               </a>
             </li>
 
@@ -81,7 +82,7 @@
   <div class="row">
     <div class="col-md-12 secondary-nav">
       <nav
-        class="navbar navbar-inverse navbar-expand-sm navbar-dark sticky-top"
+        class="navbar navbar-inverse navbar-expand-md navbar-dark sticky-top"
       >
         <p></p>
 
@@ -108,12 +109,11 @@
               <li
                 class="nav-item"
                 data-toggle="collapse"
-                data-target=".navbar-collapse.show"
+                data-target="navbar-collapse.show"
               >
                 <a class="nav-link" routerLink="chatapp/">
-                  <span
-                    >Chat <i class="fa fa-comments-o" aria-hidden="true"></i
-                  ></span>
+                  <span>Chat</span>
+                  <i class="fa fa-comments-o" aria-hidden="true"></i>
                 </a>
               </li>
 
@@ -121,16 +121,17 @@
               <li
                 class="nav-item dropdown"
                 data-toggle="collapse"
-                data-target=".navbar-collapse.show"
+                data-target="navbar-collapse.show"
               >
                 <a
                   class="nav-link"
                   id="notificationToggle"
                   data-toggle="dropdown"
                   aria-haspopup="true"
-                  aria-expanded="false"
+                  aria-expanded="true"
                 >
-                  <span>Notifications <i class="fa fa-bell"></i></span>
+                  <span>Notifications</span>
+                  <i class="fa fa-bell"></i>
                 </a>
                 <div
                   class="dropdown-menu dropdown-menu-right"
@@ -148,7 +149,7 @@
               <li
                 class="nav-item dropdown"
                 data-toggle="collapse"
-                data-target=".navbar-collapse.show"
+                data-target="navbar-collapse.show"
               >
                 <a
                   class="nav-link"
@@ -157,9 +158,8 @@
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  <span
-                    >Messages <i class="fa fa-envelope" aria-hidden="true"></i
-                  ></span>
+                  <span>Messages</span>
+                  <i class="fa fa-envelope" aria-hidden="true"></i>
                 </a>
                 <div
                   class="dropdown-menu dropdown-menu-right"
@@ -177,7 +177,7 @@
               <li
                 class="nav-item dropdown"
                 data-toggle="collapse"
-                data-target=".navbar-collapse.show"
+                data-target="navbar-collapse.show"
               >
                 <!-- Settings symbol for settings dropdown -->
                 <a
@@ -187,7 +187,8 @@
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  <span>Settings <i class="fa fa-cog"></i></span>
+                  <span>Settings</span>
+                  <i class="fa fa-cog" aria-hidden="true"></i>
                 </a>
 
                 <!-- Settings Dropdown -->
@@ -221,7 +222,7 @@
               <li
                 class="nav-item dropdown"
                 data-toggle="collapse"
-                data-target=".navbar-collapse.show"
+                data-target="navbar-collapse.show"
               >
                 <a
                   class="nav-link"
@@ -230,7 +231,8 @@
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  <span>Profile <i class="fa fa-user-circle-o"></i></span>
+                  <span>Profile</span>
+                  <i class="fa fa-user-circle-o"></i>
                 </a>
                 <div
                   class="dropdown-menu dropdown-menu-right"
@@ -246,7 +248,7 @@
                         <i class="fa fa-user mt-3"></i>
                       </div>
 
-                      <div class="col-md-5" style="margin-left: -6px;">
+                      <div class="col-md-5" style="margin-left: -6px">
                         Signed in as
                         <br />
                         <span class="font-weight-bold">{{
@@ -272,7 +274,7 @@
               <li
                 class="nav-item dropdown"
                 data-toggle="collapse"
-                data-target=".navbar-collapse.show"
+                data-target="navbar-collapse.show"
               >
                 <!-- Settings symbol for settings dropdown -->
                 <a
@@ -316,7 +318,7 @@
               <li
                 class="nav-item dropdown"
                 data-toggle="collapse"
-                data-target=".navbar-collapse.show"
+                data-target="navbar-collapse.show"
               >
                 <p class="nav-link" routerLink="login/">
                   <span
@@ -330,7 +332,7 @@
               <li
                 class="nav-item dropdown"
                 data-toggle="collapse"
-                data-target=".navbar-collapse.show"
+                data-target="navbar-collapse.show"
               >
                 <p class="nav-link" routerLink="register/">
                   <span>Register</span>

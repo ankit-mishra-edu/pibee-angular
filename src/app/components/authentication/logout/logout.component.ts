@@ -47,7 +47,7 @@ export class LogoutComponent implements OnInit, OnDestroy {
           this._notificationService.setNotification(
             'error',
             'Logout',
-            'Logged out successfully'
+            'Logged out successfully...'
           );
           this._router.navigate(['']);
           // alert(logOutError);

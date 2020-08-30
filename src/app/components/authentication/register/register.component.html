@@ -3,40 +3,33 @@
     <h4 class="form-heading">Register</h4>
 
     <div class="form-group">
-      <label class="form-label required">Username</label>
-      <div class="row" style="margin: 0px;">
-        <input
-          type="text"
-          class="form-control"
-          formControlName="username"
-          [ngClass]="{
-            'is-invalid': isInValid(value('username')),
-            'is-valid': isValid(value('username'))
-          }"
-        />
+      <label for="username" class="form-label required">Username</label>
+      <input
+        type="text"
+        id="username"
+        class="form-control"
+        formControlName="username"
+        [ngClass]="{
+          'is-invalid': isInValid(value('username')),
+          'is-valid': isValid(value('username'))
+        }"
+      />
 
-        <div class="valid-feedback">
-          Username is available.
-        </div>
-
-        <small
-          *ngIf="value('username').errors?.alreadyTakenError"
-          class="alert alert-danger alert-icon"
-          ><span style="margin-left: 20px;">{{
-            "Username is already Taken."
-          }}</span></small
-        >
-
-        <small
-          *ngIf="
-            value('username').touched && value('username').errors?.required
-          "
-          class="alert alert-danger alert-icon"
-          ><span style="margin-left: 20px;">{{
-            "Username is Mandatory."
-          }}</span></small
-        >
+      <div class="valid-feedback">
+        Username is available.
       </div>
+
+      <small
+        *ngIf="value('username').errors?.alreadyTakenError"
+        class="invalid-feedback"
+        >{{ "Username is already Taken." }}</small
+      >
+
+      <small
+        *ngIf="value('username').touched && value('username').errors?.required"
+        class="invalid-feedback"
+        >{{ "Username is Mandatory." }}</small
+      >
       <small
         *ngIf="!value('username').dirty || value('username').errors?.required"
         style="color: grey;"
@@ -56,93 +49,89 @@
     </div>
 
     <div class="form-group">
-      <label class="form-label">First Name</label>
-      <input type="text" class="form-control" formControlName="first_name" />
+      <label for="first_name" class="form-label">First Name</label>
+      <input
+        type="text"
+        id="first_name"
+        class="form-control"
+        formControlName="first_name"
+      />
     </div>
 
     <div class="form-group">
-      <label class="form-label">Last Name</label>
-      <input type="text" class="form-control" formControlName="last_name" />
+      <label for="last_name" class="form-label">Last Name</label>
+      <input
+        type="text"
+        id="last_name"
+        class="form-control"
+        formControlName="last_name"
+      />
     </div>
 
     <div class="form-group">
-      <label class="form-label required">Email</label>
-      <div class="row" style="margin: 0px;">
-        <input
-          type="email"
-          class="form-control"
-          formControlName="email"
-          [ngClass]="{
-            'is-valid': isValid(value('email')),
-            'is-invalid': isInValid(value('email'))
-          }"
-        />
+      <label for="email" class="form-label required">Email</label>
+      <input
+        id="email"
+        type="email"
+        class="form-control"
+        formControlName="email"
+        [ngClass]="{
+          'is-valid': isValid(value('email')),
+          'is-invalid': isInValid(value('email'))
+        }"
+      />
 
-        <div class="valid-feedback">
-          Email is available.
-        </div>
-
-        <small
-          *ngIf="value('email').errors?.alreadyTakenError"
-          class="alert alert-danger alert-icon"
-          ><span style="margin-left: 20px;">{{
-            "Email is already Taken."
-          }}</span></small
-        >
-
-        <small
-          *ngIf="isInValid(value('email')) && value('email').errors?.pattern"
-          class="alert alert-danger alert-icon"
-          ><span style="margin-left: 20px;">{{
-            "Enter email in valid format."
-          }}</span></small
-        >
-
-        <small
-          *ngIf="value('email').touched && value('email').errors?.required"
-          class="alert alert-danger alert-icon"
-          ><span style="margin-left: 20px;">{{
-            "Email is Mandatory."
-          }}</span></small
-        >
+      <div class="valid-feedback">
+        Email is available.
       </div>
+
+      <small
+        *ngIf="value('email').errors?.alreadyTakenError"
+        class="invalid-feedback"
+        >{{ "Email is already Taken." }}</small
+      >
+
+      <small
+        *ngIf="isInValid(value('email')) && value('email').errors?.pattern"
+        class="invalid-feedback"
+        >{{ "Enter email in valid format." }}</small
+      >
+
+      <small
+        *ngIf="value('email').touched && value('email').errors?.required"
+        class="invalid-feedback"
+        >{{ "Email is Mandatory." }}</small
+      >
     </div>
 
     <div class="form-group">
-      <label class="form-label required">Password</label>
-      <div class="row" style="margin: 0px;">
-        <input
-          type="password"
-          class="form-control"
-          formControlName="password"
-          [ngClass]="{
-            'is-valid': isValid(value('password')),
-            'is-invalid': isInValid(value('password'))
-          }"
-        />
+      <label for="password" class="form-label required">Password</label>
+      <input
+        id="password"
+        type="password"
+        class="form-control"
+        formControlName="password"
+        [ngClass]="{
+          'is-valid': isValid(value('password')),
+          'is-invalid': isInValid(value('password'))
+        }"
+      />
 
-        <div class="valid-feedback">
-          Password is in Valid format.
-        </div>
-
-        <small
-          *ngIf="value('password').touched && value('password').errors?.pattern"
-          class="alert alert-danger alert-icon"
-          ><span style="margin-left: 20px;">{{
-            "Enter password in valid format."
-          }}</span></small
-        >
-
-        <small
-          *ngIf="
-            value('password').touched && value('password').errors?.required
-          "
-          class="alert alert-danger alert-icon"
-          ><span style="margin-left: 20px;">{{
-            "Password is Mandatory."
-          }}</span></small
-        >
+      <div class="valid-feedback">
+        Password is in Valid format.
       </div>
+
+      <small
+        *ngIf="value('password').touched && value('password').errors?.pattern"
+        class="invalid-feedback"
+        >{{ "Enter password in valid format." }}</small
+      >
+
+      <small
+        *ngIf="value('password').touched && value('password').errors?.required"
+        class="invalid-feedback"
+        >{{ "Password is Mandatory." }}</small
+      >
       <small
         *ngIf="value('password').errors?.required || value('password').dirty"
         style="color: grey;"

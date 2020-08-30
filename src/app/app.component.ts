@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { timer } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, share } from 'rxjs/operators';
 import { SubSink } from 'subsink';
 import { DataService } from 'src/app/services/data-service/data.service';
 
@@ -28,19 +28,21 @@ export class AppComponent {
       .subscribe(console.log);
 
     timer(0, 20000)
-      .pipe(tap((_) => this.getAllUsers()))
-      .subscribe(console.log);
+      .pipe(
+        share(),
+        tap((_) => this.getAllUsers())
+      )
+      .subscribe();
 
     timer(0, 20000)
       .pipe(tap((_) => this.getAllUsersProfiles()))
-      .subscribe(console.log);
+      .subscribe();
   }
 
   getLoggedInUser() {
     this.subscriptions.sink = this._data.GetLoggedInUser().subscribe(
       (loggedInUserResponse) => {
         this._data.loggedInUser = loggedInUserResponse;
-        console.log(this._data.loggedInUser);
       },
 
       (loggedInUserError) => {

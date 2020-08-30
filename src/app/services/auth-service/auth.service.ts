@@ -13,25 +13,25 @@ import { IToken } from 'src/app/interfaces/Token';
   providedIn: 'root',
 })
 export class AuthService {
-  baseUrl: string = 'https://pibeedjango.herokuapp.com/api/';
+  BASE_URL: string = 'https://pibeedjango.herokuapp.com/api/';
 
   constructor(private _http: HttpClient) {}
 
   Register(userData): Observable<IToken> {
     return this._http
-      .post<IToken>(this.baseUrl + 'register/', userData)
+      .post<IToken>(this.BASE_URL + 'register/', userData)
       .pipe(catchError(this.errorHandler));
   }
 
   EditUserDetails(userData): Observable<IToken> {
     return this._http
-      .patch<IToken>(this.baseUrl + 'register/', userData)
+      .patch<IToken>(this.BASE_URL + 'register/', userData)
       .pipe(catchError(this.errorHandler));
   }
 
   LogIn(loginData): Observable<IToken> {
     return this._http
-      .post<IToken>(this.baseUrl + 'login/', loginData)
+      .post<IToken>(this.BASE_URL + 'login/', loginData)
       .pipe(catchError(this.errorHandler));
   }
 
@@ -44,13 +44,13 @@ export class AuthService {
       }),
     };
     return this._http
-      .post<boolean>(this.baseUrl + 'logout/', '', httpOptions)
+      .post<boolean>(this.BASE_URL + 'logout/', '', httpOptions)
       .pipe(catchError(this.errorHandler));
   }
 
   EditProfile(profileData): Observable<IProfile> {
     return this._http
-      .patch<IProfile>(this.baseUrl + 'profile/', profileData)
+      .patch<IProfile>(this.BASE_URL + 'profile/', profileData)
       .pipe(catchError(this.errorHandler));
   }
 

@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
 import { IUser } from 'src/app/interfaces/User';
 import { IProfile } from 'src/app/interfaces/Profile';
-import { BehaviorSubject, Observable, of, throwError, Subject } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  of,
+  throwError,
+  Subject,
+  ReplaySubject,
+} from 'rxjs';
 import { distinctUntilChanged, catchError, share } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
@@ -20,19 +27,35 @@ export class DataService {
 
   loggedInUser$ = this._loggedInUserSubject$
     .asObservable()
-    .pipe(distinctUntilChanged());
+    .pipe(
+      distinctUntilChanged(
+        (prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)
+      )
+    );
 
   allUsersArray$ = this.allUsersSubject$
     .asObservable()
-    .pipe(distinctUntilChanged());
+    .pipe(
+      distinctUntilChanged(
+        (prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)
+      )
+    );
 
   userProfile$ = this.userProfileSubject$
     .asObservable()
-    .pipe(distinctUntilChanged());
+    .pipe(
+      distinctUntilChanged(
+        (prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)
+      )
+    );
 
   allUsersProfile$ = this.allUsersProfileSubject$
     .asObservable()
-    .pipe(distinctUntilChanged());
+    .pipe(
+      distinctUntilChanged(
+        (prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)
+      )
+    );
 
   constructor(private _http: HttpClient) {
     if (sessionStorage.length > 0) {
@@ -80,7 +103,7 @@ export class DataService {
   GetAllUsers(): Observable<IUser[]> {
     return this._http
       .get<IUser[]>(this.baseUrl + 'user/')
-      .pipe(catchError(this.errorHandler));
+      .pipe(share(), catchError(this.errorHandler));
   }
 
   GetUserProfileById(id): Observable<IProfile> {

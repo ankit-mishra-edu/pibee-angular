@@ -13,6 +13,8 @@ import {
 } from 'src/app/validators/custom.validator';
 import { NotificationService } from 'src/app/services/notification-service/notification.service';
 
+import { SignUp } from '../../../forms/forms';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -24,39 +26,40 @@ export class RegisterComponent implements OnInit, OnDestroy {
   allUsersArray: IUser[];
   subscriptions = new SubSink();
 
-  signUpForm = new FormBuilder().group({
-    id: [''],
-    username: [
-      '',
-      [Validators.required, Validators.minLength(3), Validators.maxLength(150)],
-      this.validateNotTaken.bind(this),
-    ],
-    first_name: [''],
-    last_name: [''],
-    email: [
-      '',
-      [
-        Validators.required,
-        Validators.pattern(
-          '^([a-zA-Z0-9_.-]+)@([a-zA-Z0-9_.-]+)\\.([a-zA-Z]{2,5})$'
-        ),
-      ],
-      this.validateNotTaken.bind(this),
-    ],
-    password: [
-      '',
-      [
-        Validators.required,
-        Validators.minLength(8),
-        Validators.pattern(
-          '(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=[^0-9]*[0-9]).{8,}'
-        ),
-        patternValidator(/\d/, { hasNumber: true }),
-        patternValidator(/[A-Z]/, { hasCapitalCase: true }),
-        patternValidator(/[a-z]/, { hasSmallCase: true }),
-      ],
-    ],
-  });
+  // signUpForm = new FormBuilder().group({
+  //   id: [''],
+  //   username: [
+  //     '',
+  //     [Validators.required, Validators.minLength(3), Validators.maxLength(150)],
+  //     this.validateNotTaken.bind(this),
+  //   ],
+  //   first_name: [''],
+  //   last_name: [''],
+  //   email: [
+  //     '',
+  //     [
+  //       Validators.required,
+  //       Validators.pattern(
+  //         '^([a-zA-Z0-9_.-]+)@([a-zA-Z0-9_.-]+)\\.([a-zA-Z]{2,5})$'
+  //       ),
+  //     ],
+  //     this.validateNotTaken.bind(this),
+  //   ],
+  //   password: [
+  //     '',
+  //     [
+  //       Validators.required,
+  //       Validators.minLength(8),
+  //       Validators.pattern(
+  //         '(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=[^0-9]*[0-9]).{8,}'
+  //       ),
+  //       patternValidator(/\d/, { hasNumber: true }),
+  //       patternValidator(/[A-Z]/, { hasCapitalCase: true }),
+  //       patternValidator(/[a-z]/, { hasSmallCase: true }),
+  //     ],
+  //   ],
+  // });
+  signUpForm = SignUp.SignUpForm(this.allUsersArray);
 
   value(controlName: string) {
     return this.signUpForm.get(controlName);
@@ -78,6 +81,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
       (getAllUsersResponse) => {
         console.log(getAllUsersResponse);
         this.allUsersArray = getAllUsersResponse;
+
+        this.signUpForm = SignUp.SignUpForm(this.allUsersArray);
       }
     );
   }

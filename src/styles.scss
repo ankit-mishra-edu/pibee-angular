@@ -25,6 +25,7 @@
   color: red;
   margin-left: 10px;
   padding: 0px;
+  max-inline-size: 50%;
 }
 
 .alert-icon {
@@ -37,15 +38,18 @@
 form {
   margin: 0 0 0 48px;
 
+  .form-group {
+    padding-block-end: 16px;
+  }
+
   .form-control {
-    min-width: 230px;
-    max-width: 40%;
+    inline-size: max(240px, 55%);
     border: 1px solid #8626c3;
   }
 
   textarea {
-    min-width: 230px;
-    max-width: 40%;
+    min-width: 240px;
+    max-width: 55%;
   }
 
   .form-heading {
