@@ -13,7 +13,7 @@ i .fa {
     .navbar {
       padding: 0%;
       display: grid;
-      grid-template-columns: auto 1fr auto;
+      grid-template-columns: auto 1fr;
 
       .navbar-brand {
         grid-column: 1/2;
@@ -25,43 +25,9 @@ i .fa {
       }
 
       .searchBox {
-        width: 100%;
-        grid-column: 2/3;
+        inline-size: 100%;
+        grid-column: 2/4;
         place-items: center;
-      }
-
-      .navbar-toggler {
-        padding: 2px 6px;
-      }
-
-      #primaryNavbarToggle {
-        grid-column: 3/4;
-        .navbar-nav {
-          .nav-item {
-            margin: 0;
-            height: 100%;
-            cursor: pointer;
-            padding: 10px 5px;
-
-            .username {
-              margin: 2px 0px;
-              border-radius: 20px;
-              vertical-align: middle;
-              padding: 5px 15px 5px 15px;
-              border: 2px solid #08192b;
-              display: inline-block !important;
-            }
-          }
-
-          .welcome-note {
-            white-space: nowrap;
-            display: inline-block !important;
-          }
-
-          .profile-image {
-            display: inline-block !important;
-          }
-        }
       }
     }
   }
@@ -75,10 +41,6 @@ i .fa {
       justify-content: center !important;
     }
 
-    .justify-content-right {
-      justify-content: right !important;
-    }
-
     .sticky-top {
       position: -webkit-sticky;
       position: sticky;
@@ -86,8 +48,7 @@ i .fa {
 
     .navbar {
       padding: 0%;
-      // background-color: #08192b;
-      // background-image: linear-gradient(to right, #764abc, rgb(134, 38, 195));
+      min-block-size: 50px;
       background-color: #003542 !important;
 
       .navbar-toggler {
@@ -134,17 +95,6 @@ i .fa {
               background-color: #0366d6;
             }
           }
-
-          // .dropdown .dropdown-menu a {
-          //   color: black;
-          //   background-color: white;
-          // }
-
-          // .dropdown .dropdown-menu a:hover {
-          //   color: white;
-          //   background-image: none;
-          //   background-color: #0366d6;
-          // }
         }
       }
     }

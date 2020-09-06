@@ -1,61 +1,74 @@
-<form [formGroup]="signInForm">
-  <div class="form-group mt-5 mb-5">
-    <h2 class="form-heading">Sign In</h2>
+<div class="login container-md">
+  <div class="row">
+    <div class="form-wrapper col-md-8 col-sm-12">
+      <form [formGroup]="signInForm">
+        <div class="form-group mt-5 mb-5">
+          <h2 class="form-heading">Sign In</h2>
 
-    <div class="form-group mt-3">
-      <label for="username" class="form-label required">Username</label>
-      <input
-        autofocus
-        type="text"
-        id="username"
-        class="form-control"
-        autocomplete="username"
-        formControlName="username"
-        [ngClass]="{
-          'is-invalid': isInValid(value('username')),
-          'is-valid': isValid(value('username'))
-        }"
-      />
+          <div class="form-group mt-3">
+            <label for="username" class="form-label required">Username</label>
+            <input
+              autofocus
+              type="text"
+              id="username"
+              class="form-control"
+              autocomplete="username"
+              formControlName="username"
+              [ngClass]="{
+                'is-invalid': isInValid(value('username')),
+                'is-valid': isValid(value('username'))
+              }"
+            />
 
-      <small
-        *ngIf="value('username').touched && value('username').errors?.required"
-        class="invalid-feedback"
-        >{{ "Username is Mandatory." }}</small
-      >
+            <small
+              *ngIf="
+                value('username').touched && value('username').errors?.required
+              "
+              class="invalid-feedback"
+              >{{ "Username is Mandatory." }}</small
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="password" class="form-label required">Password</label>
+            <input
+              required
+              id="password"
+              type="password"
+              class="form-control"
+              formControlName="password"
+              [ngClass]="{
+                'is-invalid': isInValid(value('password')),
+                'is-valid': isValid(value('password'))
+              }"
+            />
+
+            <small
+              *ngIf="
+                value('password').touched && value('password').errors?.required
+              "
+              class="invalid-feedback"
+              >{{ "Password is Mandatory." }}</small
+            >
+          </div>
+
+          <button
+            type="submit"
+            (click)="signIn()"
+            class="btn"
+            [disabled]="signInForm.invalid"
+            [ngClass]="{
+              'form-valid': !signInForm.invalid,
+              'form-invalid': signInForm.invalid
+            }"
+          >
+            Sign In
+          </button>
+        </div>
+      </form>
     </div>
-
-    <div class="form-group">
-      <label for="password" class="form-label required">Password</label>
-      <input
-        required
-        id="password"
-        type="password"
-        class="form-control"
-        formControlName="password"
-        [ngClass]="{
-          'is-invalid': isInValid(value('password')),
-          'is-valid': isValid(value('password'))
-        }"
-      />
-
-      <small
-        *ngIf="value('password').touched && value('password').errors?.required"
-        class="invalid-feedback"
-        >{{ "Password is Mandatory." }}</small
-      >
+    <div class="right-sidebar col-md-4 col-sm-12">
+      <app-sidebar></app-sidebar>
     </div>
-
-    <button
-      type="submit"
-      (click)="signIn()"
-      class="btn"
-      [disabled]="signInForm.invalid"
-      [ngClass]="{
-        'form-valid': !signInForm.invalid,
-        'form-invalid': signInForm.invalid
-      }"
-    >
-      Sign In
-    </button>
   </div>
-</form>
+</div>
