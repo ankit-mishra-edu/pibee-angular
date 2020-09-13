@@ -2,19 +2,7 @@
   <div class="primary-nav">
     <nav class="navbar navbar-header navbar-expand-md navbar-light bg-white">
       <a class="navbar-brand" routerLink="/">PiBee</a>
-
-      <div class="mr-auto searchBox">
-        <ul class="navbar-nav">
-          <!-- Navigation Link for Search Bar -->
-          <li
-            class="nav-item"
-            data-toggle="collapse"
-            data-target="collapse.show"
-          >
-            <app-search></app-search>
-          </li>
-        </ul>
-      </div>
+      <app-search style="width: 100%"></app-search>
     </nav>
   </div>
 
@@ -122,7 +110,7 @@
                 aria-expanded="false"
               >
                 <span>Settings</span>
-                <i class="fa fa-cog" aria-hidden="true"></i>
+                <i class="fa fa-gears" aria-hidden="true"></i>
               </a>
 
               <!-- Settings Dropdown -->

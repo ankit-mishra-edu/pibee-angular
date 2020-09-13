@@ -25,6 +25,7 @@ i .fa {
       }
 
       .searchBox {
+        display: inline-flex;
         inline-size: 100%;
         grid-column: 2/4;
         place-items: center;

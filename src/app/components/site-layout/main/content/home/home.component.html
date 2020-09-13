@@ -2,7 +2,7 @@
   id="carouselExampleFade"
   class="carousel slide"
   data-ride="carousel"
-  style="margin: 0px 0px 0px 10px;"
+  style="margin: 0px 0px 0px 10px"
 >
   <ol class="carousel-indicators">
     <li
@@ -15,7 +15,7 @@
     </div>
   </ol>
   <div class="carousel-inner">
-    <div class="carousel-item active" style="height: 300px;">
+    <div class="carousel-item active" style="height: 300px">
       <img
         src="../../../../assets/media/logos/card.jpg"
         class="d-block w-100"
@@ -25,7 +25,7 @@
     <div
       *ngFor="let number of numberArray"
       class="carousel-item"
-      style="height: 300px;"
+      style="height: 300px"
     >
       <img
         src="../../../../assets/media/logos/card.jpg"
@@ -55,9 +55,9 @@
 </div>
 
 <div *ngIf="loggedInUser$ | async">
-  <h4>Search in the search box to see users and their profile</h4>
   <div *ngIf="allUsersProfile">
-    <div style="margin: 0px 5px 0px 5px;">
+    <h4>Use search box to filter users to see their profile</h4>
+    <div style="margin: 0px 5px 0px 5px">
       <table class="table table-sm table-dark table-hover">
         <thead>
           <tr>
@@ -70,7 +70,7 @@
             <td>
               <a
                 [routerLink]="['view-profile', userProfile.address?.user.id]"
-                style="color: white;"
+                style="color: white"
                 ><img
                   height="30px"
                   width="30px"

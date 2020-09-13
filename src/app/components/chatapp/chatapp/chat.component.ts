@@ -5,6 +5,8 @@ import { DataService } from 'src/app/services/data-service/data.service';
 import { Observable } from 'rxjs';
 import { IUser } from 'src/app/interfaces/User';
 import { SubSink } from 'subsink';
+import { IProfile } from 'src/app/interfaces/Profile';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-chat',
@@ -14,9 +16,11 @@ import { SubSink } from 'subsink';
 export class ChatComponent implements OnInit {
   loggedInUser: IUser;
   subscriptions = new SubSink();
+  isReceiverNull: boolean = true;
 
   socketRef: WebSocket;
-  path: string = 'wss://pibeedjango.herokuapp.com/ws/chat/ankit/';
+  path: string = 'wss://pibeedjango.herokuapp.com/ws/chat/';
+  // path: string = 'ws://localhost:8000/ws/chat/';
 
   display = {
     messageArray: [],
@@ -24,16 +28,20 @@ export class ChatComponent implements OnInit {
 
   message: IMessage = {
     sender: '',
-    receiver: 'amishm766',
+    receiver: '',
     content: '',
   };
+
+  loggedInUser$: Observable<IUser>;
+  allUsersProfile: IProfile[];
 
   constructor(private _chat: ChatService, private _data: DataService) {}
 
   ngOnInit(): void {
+    this.loggedInUser$ = this._data.loggedInUser$;
     this.setLoggedInUser();
+    this.setAllUsersProfiles();
     this.message.sender = this.loggedInUser?.username;
-    this.connect();
   }
 
   connect() {
@@ -47,7 +55,8 @@ export class ChatComponent implements OnInit {
     this.socketRef.onmessage = (e) => {
       console.log(e);
       const data = JSON.parse(e.data);
-      let receiverdMessageArray = data[data.command];
+      console.log(data);
+      let receiverdMessageArray = data['messages'];
       console.log(receiverdMessageArray);
       let alignment: string = 'left';
       for (let i = 0; i < receiverdMessageArray.length; i++) {
@@ -84,7 +93,7 @@ export class ChatComponent implements OnInit {
     this._chat.getMessage(
       this.socketRef,
       this.loggedInUser?.username,
-      'amishm766'
+      this.message.receiver
     );
   }
 
@@ -95,4 +104,27 @@ export class ChatComponent implements OnInit {
       }
     );
   }
+
+  setIsReceiverNull(receiver: IUser) {
+    this.message.receiver = receiver.username;
+    this.path += this.message.sender + '/' + this.message.receiver + '/';
+    console.log(this.path);
+    this.connect();
+    this.isReceiverNull = false;
+  }
+
+  setAllUsersProfiles() {
+    this.subscriptions.sink = this._data.allUsersProfile$.subscribe(
+      (getAllUsersProfileResponse) => {
+        console.log(getAllUsersProfileResponse);
+        this.allUsersProfile = getAllUsersProfileResponse;
+      }
+    );
+  }
+
+  matchingUsersArray$ = this._data.searchQueryChangeSubject$.pipe(
+    switchMap((partial) =>
+      this._data.suggestNames(this.allUsersProfile, partial)
+    )
+  );
 }

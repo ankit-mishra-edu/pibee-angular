@@ -11,6 +11,7 @@ import {
 } from 'rxjs';
 import { distinctUntilChanged, catchError, share } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { IMessage } from 'src/app/interfaces/Message';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +25,7 @@ export class DataService {
   public userProfileSubject$ = new BehaviorSubject<IProfile>(null);
   public allUsersSubject$ = new BehaviorSubject<IUser[]>(null);
   public allUsersProfileSubject$ = new BehaviorSubject<IProfile[]>(null);
+  public messageSubject$ = new BehaviorSubject<IMessage[]>(null);
 
   loggedInUser$ = this._loggedInUserSubject$
     .asObservable()
@@ -50,6 +52,14 @@ export class DataService {
     );
 
   allUsersProfile$ = this.allUsersProfileSubject$
+    .asObservable()
+    .pipe(
+      distinctUntilChanged(
+        (prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)
+      )
+  );
+  
+  message$ = this.messageSubject$
     .asObservable()
     .pipe(
       distinctUntilChanged(

@@ -1,4 +1,4 @@
-<form class="form-inline" style="margin-left: 0px;">
+<form class="form-inline">
   <div class="input-group input-group-sm">
     <input
       class="form-control-navbar"
@@ -10,7 +10,7 @@
       #search
       [ngModel]="_data.searchQueryChangeSubject$ | async"
       (ngModelChange)="_data.searchQueryChangeSubject$.next($event)"
-      style="outline: none; padding: 0px 15px;"
+      style="outline: none; padding: 0px 15px"
     />
 
     <!-- <datalist id="brow">
