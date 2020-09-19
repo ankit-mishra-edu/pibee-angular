@@ -6,12 +6,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ContentComponent } from './components/site-layout/main/content/content.component';
-import { FooterComponent } from './components/site-layout/footer/footer/footer.component';
-import { SidebarComponent } from './components/site-layout/main/right-sidebar/sidebar/sidebar.component';
+
+//  All Site Layout related Component
 import { NavbarComponent } from './components/site-layout/header/navbar/navbar.component';
-import { SearchComponent } from './components/shared/search/search.component';
 import { HomeComponent } from './components/site-layout/main/content/home/home.component';
+import { FooterComponent } from './components/site-layout/footer/footer/footer.component';
+
+//  All Authentication related Component
 import { LoginComponent } from './components/authentication/login/login.component';
 import { RegisterComponent } from './components/authentication/register/register.component';
 import { ChatComponent } from './components/chatapp/chatapp/chat.component';
@@ -20,11 +21,16 @@ import { EditProfileComponent } from './components/authentication/profile/edit-p
 import { ViewProfileComponent } from './components/authentication/profile/view-profile/view-profile.component';
 import { EditDetailsComponent } from './components/authentication/edit-details/edit-details.component';
 import { ChangePasswordComponent } from './components/authentication/change-password/change-password.component';
-import { NotificationComponent } from './components/shared/notification/notification.component';
+
+// All Shared Components
+import { SidebarComponent } from './components/site-layout/main/right-sidebar/sidebar/sidebar.component';
+import { SearchComponent } from './components/shared/search/search.component';
+
+// All Posts Related Component
 import { PostComponent } from './components/posts/post/post.component';
-import { SpeechComponent } from './components/shared/speech/speech.component';
 import { ViewPostComponent } from './components/posts/view-post/view-post.component';
 import { EditPostComponent } from './components/posts/edit-post/edit-post.component';
+
 import { SimpleNotificationsModule } from 'angular2-notifications';
 
 @NgModule({
@@ -40,13 +46,10 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
     ViewProfileComponent,
     EditDetailsComponent,
     ChangePasswordComponent,
-    ContentComponent,
     FooterComponent,
     SidebarComponent,
     SearchComponent,
-    NotificationComponent,
     PostComponent,
-    SpeechComponent,
     ViewPostComponent,
     EditPostComponent,
   ],

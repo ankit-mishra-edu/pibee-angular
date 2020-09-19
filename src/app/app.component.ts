@@ -14,6 +14,7 @@ export class AppComponent {
   constructor(private _data: DataService) {}
 
   ngOnInit(): void {
+    this.getLoggedInUser();
     timer(0, 20000)
       .pipe(
         tap((_) => {

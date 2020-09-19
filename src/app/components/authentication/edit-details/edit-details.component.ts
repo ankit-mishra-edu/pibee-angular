@@ -20,15 +20,16 @@ export class EditDetailsComponent implements OnInit, OnDestroy {
   subscriptions = new SubSink();
   isUserConfirmed: boolean = false;
   loggedInUser: IUser = this._data.loggedInUser;
+  loggedInUser$ = this._data.loggedInUser$;
 
   confirmUserForm = new FormBuilder().group({
-    username: [this.loggedInUser.username],
+    username: [this.loggedInUser?.username],
     password: ['', [Validators.required]],
     email: 'amishm766@gmail.com',
   });
 
   editDetailsForm = new FormBuilder().group({
-    id: [this.loggedInUser.id],
+    id: [this.loggedInUser?.id],
     username: [
       '',
       [Validators.required, Validators.minLength(3), Validators.maxLength(150)],
@@ -67,6 +68,7 @@ export class EditDetailsComponent implements OnInit, OnDestroy {
   }
 
   confirmUser() {
+    this.value_c('username').setValue(this.loggedInUser.username);
     this.subscriptions.sink = this._auth
       .LogIn(this.confirmUserForm.value)
       .subscribe(

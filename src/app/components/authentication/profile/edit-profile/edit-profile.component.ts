@@ -16,7 +16,7 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   isInValid = isInValid;
   subscriptions = new SubSink();
   profileForm = new FormBuilder().group({
-    user: [this._data.loggedInUser.id],
+    user: [this._data.loggedInUser?.id],
     bio: ['', [Validators.maxLength(150)]],
     address: new FormBuilder().group({
       user: [this._data.loggedInUser],

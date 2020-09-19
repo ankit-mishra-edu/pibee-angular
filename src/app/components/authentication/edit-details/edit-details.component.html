@@ -1,193 +1,203 @@
 <div class="edit-details container-md">
   <div class="row">
-    <div class="form-wrapper col-md-8 col-sm-12">
+    <div class="col-md-8 col-sm-12">
       <ng-template [ngIf]="!isUserConfirmed" [ngIfElse]="confirmed">
-        <form [formGroup]="confirmUserForm">
-          <div class="form-group">
-            <h3 class="form-heading mt-4 mb-5">
-              Confirm password for {{ value_c("username").value }}
-            </h3>
-            <div class="form-group">
-              <label for="username" class="form-label">Username</label>
-              <input
-                type="text"
-                id="username"
-                class="form-control"
-                formControlName="username"
-                readonly
-              />
-            </div>
-
-            <div class="form-group">
-              <label for="password" class="form-label required">Password</label>
-              <input
-                autofocus
-                id="password"
-                type="password"
-                class="form-control"
-                formControlName="password"
-                [ngClass]="{
-                  'is-invalid': isInValid(value_c('password')),
-                  'is-valid': isValid(value_c('password'))
-                }"
-              />
-
-              <small
-                *ngIf="
-                  value_c('password').touched &&
-                  value_c('password').errors?.required
-                "
-                class="invalid-feedback"
-                >{{ "Password is Mandatory." }}</small
-              >
-            </div>
-
-            <button
-              (click)="confirmUser()"
-              type="submit"
-              class="btn"
-              [disabled]="confirmUserForm.invalid"
-              [ngClass]="{
-                'form-valid': !confirmUserForm.invalid,
-                'form-invalid': confirmUserForm.invalid
-              }"
-            >
-              Confirm
-            </button>
+        <div class="lockscreen-wrapper">
+          <div class="lockscreen-logo">
+            <p>Confirm Password</p>
           </div>
-        </form>
+          <div class="lockscreen-name">
+            {{ (loggedInUser$ | async)?.username }}
+          </div>
+
+          <div class="lockscreen-item">
+            <div class="lockscreen-image">
+              <img
+                src="../../../../assets/media/logos/default.jpg"
+                alt="User Image"
+              />
+            </div>
+
+            <form [formGroup]="confirmUserForm" class="lockscreen-credentials">
+              <div class="input-group">
+                <input
+                  autofocus
+                  id="password"
+                  type="password"
+                  class="form-control highlight"
+                  formControlName="password"
+                  [ngClass]="{
+                    'is-invalid': isInValid(value_c('password')),
+                    'is-valid': isValid(value_c('password'))
+                  }"
+                />
+
+                <small
+                  *ngIf="
+                    value_c('password').touched &&
+                    value_c('password').errors?.required
+                  "
+                  class="invalid-feedback"
+                  >{{ "Password is Mandatory." }}</small
+                >
+
+                <div class="input-group-btn">
+                  <button
+                    (click)="confirmUser()"
+                    type="submit"
+                    class="btn"
+                    [disabled]="confirmUserForm.invalid"
+                  >
+                    <i
+                      class="fa fa-arrow-right text-muted"
+                      [ngClass]="{
+                        'form-valid': !confirmUserForm.invalid,
+                        'form-invalid': confirmUserForm.invalid
+                      }"
+                    ></i>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
       </ng-template>
 
       <ng-template #confirmed>
-        <form [formGroup]="editDetailsForm">
-          <div class="form-group">
-            <h3 class="form-heading mb-3">Edit Details</h3>
+        <div class="form-wrapper">
+          <form [formGroup]="editDetailsForm">
             <div class="form-group">
-              <label for="username" class="form-label required">Username</label>
-              <input
-                type="text"
-                id="username"
-                class="form-control input-sm"
-                formControlName="username"
+              <h3 class="form-heading mb-3">Edit Details</h3>
+              <div class="form-group">
+                <label for="username" class="form-label required"
+                  >Username</label
+                >
+                <input
+                  type="text"
+                  id="username"
+                  class="form-control highlight"
+                  formControlName="username"
+                  [ngClass]="{
+                    'is-invalid': isInValid(value_e('username')),
+                    'is-valid': isValid(value_e('username'))
+                  }"
+                />
+
+                <div class="valid-feedback">Username is available.</div>
+
+                <small
+                  *ngIf="value_e('username').errors?.alreadyTakenError"
+                  class="invalid-feedback"
+                  >{{ "Username is already Taken." }}</small
+                >
+
+                <small
+                  *ngIf="
+                    value_e('username').touched &&
+                    value_e('username').errors?.required
+                  "
+                  class="invalid-feedback"
+                  >{{ "Username is Mandatory." }}</small
+                >
+                <small
+                  *ngIf="
+                    value_e('username').dirty &&
+                    value_e('username').errors?.required
+                  "
+                  style="color: grey"
+                >
+                  {{ "*Username need atleast 3 characters." }}
+                </small>
+                <small
+                  *ngIf="
+                    value_e('username').dirty &&
+                    value_e('username').errors?.minlength
+                  "
+                  style="color: grey"
+                  >{{ "*Username need" }}
+                  {{
+                    value_e("username").errors?.minlength.requiredLength -
+                      value_e("username").errors?.minlength.actualLength
+                  }}
+                  {{ "more characters." }}</small
+                >
+              </div>
+
+              <div class="form-group">
+                <label for="first_name" class="form-label">First Name</label>
+                <input
+                  type="text"
+                  id="first_name"
+                  class="form-control highlight"
+                  formControlName="first_name"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="last_name" class="form-label">Last Name</label>
+                <input
+                  type="text"
+                  id="last_name"
+                  class="form-control highlight"
+                  formControlName="last_name"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="email" class="form-label required">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  class="form-control highlight"
+                  formControlName="email"
+                  [ngClass]="{
+                    'is-valid': isValid(value_e('email')),
+                    'is-invalid': isInValid(value_e('email'))
+                  }"
+                />
+
+                <div class="valid-feedback">Email is avaliable.</div>
+
+                <small
+                  *ngIf="value_e('email').errors?.alreadyTakenError"
+                  class="invalid-feedback"
+                  >{{ "Email is already Taken." }}</small
+                >
+
+                <small
+                  *ngIf="
+                    isInValid(value_e('email')) &&
+                    value_e('email').errors?.pattern
+                  "
+                  class="invalid-feedback"
+                  >{{ "Enter email in valid format." }}</small
+                >
+
+                <small
+                  *ngIf="
+                    value_e('email').touched &&
+                    value_e('email').errors?.required
+                  "
+                  class="invalid-feedback"
+                  >{{ "Email is Mandatory." }}</small
+                >
+              </div>
+
+              <button
+                (click)="changeUserDetails()"
+                type="submit"
+                class="btn btn-highlight"
+                [disabled]="editDetailsForm.invalid"
                 [ngClass]="{
-                  'is-invalid': isInValid(value_e('username')),
-                  'is-valid': isValid(value_e('username'))
+                  'form-valid': !editDetailsForm.invalid,
+                  'form-invalid': editDetailsForm.invalid
                 }"
-              />
-
-              <div class="valid-feedback">Username is available.</div>
-
-              <small
-                *ngIf="value_e('username').errors?.alreadyTakenError"
-                class="invalid-feedback"
-                >{{ "Username is already Taken." }}</small
               >
-
-              <small
-                *ngIf="
-                  value_e('username').touched &&
-                  value_e('username').errors?.required
-                "
-                class="invalid-feedback"
-                >{{ "Username is Mandatory." }}</small
-              >
-              <small
-                *ngIf="
-                  value_e('username').dirty &&
-                  value_e('username').errors?.required
-                "
-                style="color: grey"
-              >
-                {{ "*Username need atleast 3 characters." }}
-              </small>
-              <small
-                *ngIf="
-                  value_e('username').dirty &&
-                  value_e('username').errors?.minlength
-                "
-                style="color: grey"
-                >{{ "*Username need" }}
-                {{
-                  value_e("username").errors?.minlength.requiredLength -
-                    value_e("username").errors?.minlength.actualLength
-                }}
-                {{ "more characters." }}</small
-              >
+                Edit Details
+              </button>
             </div>
-
-            <div class="form-group">
-              <label for="first_name" class="form-label">First Name</label>
-              <input
-                type="text"
-                id="first_name"
-                class="form-control"
-                formControlName="first_name"
-              />
-            </div>
-
-            <div class="form-group">
-              <label for="last_name" class="form-label">Last Name</label>
-              <input
-                type="text"
-                id="last_name"
-                class="form-control"
-                formControlName="last_name"
-              />
-            </div>
-
-            <div class="form-group">
-              <label for="email" class="form-label required">Email</label>
-              <input
-                type="email"
-                id="email"
-                class="form-control"
-                formControlName="email"
-                [ngClass]="{
-                  'is-valid': isValid(value_e('email')),
-                  'is-invalid': isInValid(value_e('email'))
-                }"
-              />
-
-              <div class="valid-feedback">Email is avaliable.</div>
-
-              <small
-                *ngIf="value_e('email').errors?.alreadyTakenError"
-                class="invalid-feedback"
-                >{{ "Email is already Taken." }}</small
-              >
-
-              <small
-                *ngIf="
-                  isInValid(value_e('email')) &&
-                  value_e('email').errors?.pattern
-                "
-                class="invalid-feedback"
-                >{{ "Enter email in valid format." }}</small
-              >
-
-              <small
-                *ngIf="
-                  value_e('email').touched && value_e('email').errors?.required
-                "
-                class="invalid-feedback"
-                >{{ "Email is Mandatory." }}</small
-              >
-            </div>
-
-            <button
-              (click)="changeUserDetails()"
-              type="submit"
-              class="btn"
-              [disabled]="editDetailsForm.invalid"
-              [ngClass]="{
-                'form-valid': !editDetailsForm.invalid,
-                'form-invalid': editDetailsForm.invalid
-              }"
-            >
-              Edit Details
-            </button>
-          </div>
-        </form>
+          </form>
+        </div>
       </ng-template>
     </div>
     <div class="right-sidebar col-md-4 col-sm-12">
