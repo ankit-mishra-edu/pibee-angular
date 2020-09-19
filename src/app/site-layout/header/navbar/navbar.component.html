@@ -1,0 +1,280 @@
+<div class="site-header">
+  <div class="primary-nav">
+    <nav class="navbar navbar-header navbar-expand-md navbar-light bg-white">
+      <a class="navbar-brand" routerLink="/">PiBee</a>
+      <app-search-box style="width: 100%"></app-search-box>
+    </nav>
+  </div>
+
+  <div class="secondary-nav">
+    <nav class="navbar navbar-inverse navbar-expand-md navbar-dark sticky-top">
+      <p></p>
+
+      <button
+        class="navbar-toggler mr-1"
+        type="button"
+        data-toggle="collapse"
+        data-target="#secondaryNavbarToggle"
+        aria-controls="secondaryNavbarToggle"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div
+        class="navbar-collapse collapse justify-content-center"
+        id="secondaryNavbarToggle"
+      >
+        <ul class="navbar-nav">
+          <!-- If the user is Authenticated -->
+          <ng-template [ngIf]="isLoggedIn()" [ngIfElse]="loggedOut">
+            <!-- Navigation link for Chat -->
+            <li
+              class="nav-item"
+              data-toggle="collapse"
+              data-target="navbar-collapse.show"
+            >
+              <a class="nav-link" [routerLink]="['chat/chatapp']">
+                <span>Chat</span>
+                <i class="fa fa-comments-o" aria-hidden="true"></i>
+              </a>
+            </li>
+
+            <!-- Dropdown for Notification -->
+            <li
+              class="nav-item dropdown"
+              data-toggle="collapse"
+              data-target="navbar-collapse.show"
+            >
+              <a
+                class="nav-link"
+                id="notificationToggle"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="true"
+              >
+                <span>Notifications</span>
+                <i class="fa fa-bell"></i>
+              </a>
+              <ul
+                class="dropdown-menu dropdown-menu-right"
+                aria-labelledby="notificationToggle"
+              >
+                <span class="dropdown-item text-light bg-dark"
+                  >Notifications</span
+                >
+                <a class="dropdown-item" [routerLink]="['/']">Notification 1</a>
+                <a class="dropdown-item" [routerLink]="['/']">Notification 1</a>
+              </ul>
+            </li>
+
+            <!-- Dropdown for Messages -->
+            <li
+              class="nav-item dropdown"
+              data-toggle="collapse"
+              data-target="navbar-collapse.show"
+            >
+              <a
+                class="nav-link"
+                id="messageToggle"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <span>Messages</span>
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+              </a>
+              <ul
+                class="dropdown-menu dropdown-menu-right"
+                aria-labelledby="messageToggle"
+              >
+                <span class="dropdown-header text-light bg-dark">Messages</span>
+                <a class="dropdown-item" [routerLink]="['/']">Message 1</a>
+                <a class="dropdown-item" [routerLink]="['/']">Message 1</a>
+              </ul>
+            </li>
+
+            <!-- Dropdown for Settings -->
+            <li
+              class="nav-item dropdown"
+              data-toggle="collapse"
+              data-target="navbar-collapse.show"
+            >
+              <!-- Settings symbol for settings dropdown -->
+              <a
+                class="nav-link"
+                id="settingsToggle"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <span>Settings</span>
+                <i class="fa fa-gears" aria-hidden="true"></i>
+              </a>
+
+              <!-- Settings Dropdown -->
+              <ul
+                class="dropdown-menu dropdown-menu-right"
+                aria-labelledby="settingsToggle"
+              >
+                <span class="dropdown-item text-light bg-dark">Settings</span>
+
+                <!-- Link for Editing User Details -->
+                <a class="dropdown-item" [routerLink]="['user/edit-details']">
+                  <i class="fa fa-edit mr-2"></i>Edit Details
+                </a>
+
+                <!-- Link for Changing User Password -->
+                <a
+                  class="dropdown-item"
+                  [routerLink]="['user/change-password']"
+                >
+                  <i class="fa fa-edit mr-2"></i>Change Password
+                </a>
+
+                <a
+                  class="dropdown-item"
+                  (click)="deactivateUser()"
+                  [routerLink]="['/']"
+                >
+                  <i class="fa fa-times mr-2"></i>Deactivate Account
+                </a>
+              </ul>
+            </li>
+
+            <!-- Dropdown for User Profile -->
+            <li
+              class="nav-item dropdown"
+              data-toggle="collapse"
+              data-target="navbar-collapse.show"
+            >
+              <a
+                class="nav-link"
+                id="userProfileToggle"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <span>Profile</span>
+                <i class="fa fa-user-circle-o"></i>
+              </a>
+              <ul
+                class="dropdown-menu dropdown-menu-right"
+                aria-labelledby="userProfileToggle"
+              >
+                <a
+                  *ngIf="loggedInUser"
+                  class="dropdown-item"
+                  style="background-color: #003542 !important; color: white"
+                  [routerLink]="['user/view-profile', loggedInUser?.id]"
+                >
+                  <li class="text-center">
+                    <img
+                      src="{{ (userProfile$ | async)?.image }}"
+                      class="img-circle"
+                      alt="User Image"
+                      style="
+                        padding: 3px;
+                        margin: 0 auto;
+                        block-size: 70px;
+                        inline-size: 70px;
+                        border: 3px solid #d2d6de;
+                      "
+                    />
+
+                    <p>
+                      {{ "Signed in as " }}
+                      <strong>{{ loggedInUser.username }}</strong>
+                      <br />
+                      <small>{{ "Member since Nov. 2012" }}</small>
+                    </p>
+                  </li>
+                </a>
+
+                <div class="dropdown-divider"></div>
+
+                <a class="dropdown-item" [routerLink]="['user/edit-profile']">
+                  <span class="fa fa-edit mr-2"></span>Edit Profile
+                </a>
+
+                <a class="dropdown-item" [routerLink]="['auth/logout']">
+                  <i class="fa fa-sign-out mr-2" aria-hidden="true"></i>Logout
+                </a>
+              </ul>
+            </li>
+
+            <!-- Dropdown for Admin -->
+            <li
+              class="nav-item dropdown"
+              data-toggle="collapse"
+              data-target="navbar-collapse.show"
+            >
+              <!-- Settings symbol for settings dropdown -->
+              <a
+                class="nav-link"
+                id="adminToggle"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Admin
+              </a>
+
+              <!-- Admin Dropdown -->
+              <ul
+                class="dropdown-menu dropdown-menu-right"
+                aria-labelledby="settingsToggle"
+              >
+                <span class="dropdown-item text-light bg-dark"
+                  >Admin Panel</span
+                >
+
+                <!-- Link for Admin Site -->
+                <a
+                  class="dropdown-item"
+                  href="https://pibeedjango.herokuapp.com/admin"
+                >
+                  <i class="fa fa-dashboard mr-2"></i>Dashboard
+                </a>
+
+                <!-- Link for Github -->
+                <a class="dropdown-item" href="https://github.com/amishm766">
+                  <i class="fa fa-github mr-2"></i>Github
+                </a>
+              </ul>
+            </li>
+          </ng-template>
+
+          <!-- If the user is not Authenticated or Logged Out -->
+          <ng-template #loggedOut>
+            <!-- Navigation Link to Login -->
+            <li
+              class="nav-item dropdown"
+              data-toggle="collapse"
+              data-target="navbar-collapse.show"
+            >
+              <a class="nav-link" [routerLink]="['auth/login']">
+                <span
+                  ><i class="fa fa-sign-in mr-2" aria-hidden="true"></i
+                  >Login</span
+                >
+              </a>
+            </li>
+
+            <!-- Navigation Link to Register -->
+            <li
+              class="nav-item dropdown"
+              data-toggle="collapse"
+              data-target="navbar-collapse.show"
+            >
+              <a class="nav-link" [routerLink]="['auth/register']">
+                <span>Register</span>
+              </a>
+            </li>
+          </ng-template>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</div>

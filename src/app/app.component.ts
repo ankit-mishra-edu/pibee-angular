@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { timer } from 'rxjs';
 import { tap, share } from 'rxjs/operators';
 import { SubSink } from 'subsink';
-import { DataService } from 'src/app/services/data-service/data.service';
+import { DataService } from './services/data.service';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +22,7 @@ export class AppComponent {
             this.getLoggedInUser();
           }
           if (this._data.loggedInUser) {
-            this.getUserProfileById(this._data.loggedInUser.id);
+            this.getUserProfileById(this._data.loggedInUser?.id);
           }
         })
       )
