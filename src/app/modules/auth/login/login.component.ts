@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   private _changeLoggedInUser(loggedInUser: IUser) {
-    this._data.ChangeLoggedInUser$(loggedInUser);
+    this._data.setLoggedInUser$(loggedInUser);
   }
 
   ngOnDestroy() {

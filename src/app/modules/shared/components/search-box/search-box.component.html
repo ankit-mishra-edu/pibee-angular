@@ -8,22 +8,9 @@
       name="search"
       list="brow"
       #search
-      [ngModel]="_data.searchQueryChangeSubject$ | async"
-      (ngModelChange)="_data.searchQueryChangeSubject$.next($event)"
+      [ngModel]="getSearchBoxQuery$() | async"
+      (ngModelChange)="setSearchBoxQuery$($event)"
       style="outline: none; padding: 0px 15px"
     />
-
-    <!-- <datalist id="brow">
-        <option
-          *ngFor="let userProfile of matchingUsersArray$ | async"
-          [value]=""
-        >
-          <a
-            [routerLink]="['view-profile', userProfile.address?.user.id]"
-            style="color: white;"
-            >{{ userProfile.address?.user.username }}</a
-          ></option
-        >
-      </datalist> -->
   </div>
 </form>

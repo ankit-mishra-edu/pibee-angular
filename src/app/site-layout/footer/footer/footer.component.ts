@@ -15,6 +15,6 @@ export class FooterComponent implements OnInit {
   constructor(private _data: DataService) {}
 
   ngOnInit(): void {
-    this.loggedInUser$ = this._data.loggedInUser$;
+    this.loggedInUser$ = this._data.getLoggedInUser$();
   }
 }

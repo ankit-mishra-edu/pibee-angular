@@ -1,6 +1,6 @@
 import { SubSink } from 'subsink';
 import { switchMap } from 'rxjs/operators';
-import { Observable, Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { IUser } from '../../../../modules/shared/interfaces/User';
@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
   };
 
   loggedInUser$: Observable<IUser>;
-  userProfile$ = this._data.userProfile$;
+  userProfile$ = this._data.getUserProfile$();
   subscriptions = new SubSink();
   numberArray = [1, 2, 3];
 
@@ -35,26 +35,51 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loggedInUser$ = this._data.loggedInUser$;
+    this.loggedInUser$ = this._data.getLoggedInUser$();
 
     this.showNotification();
     this.setAllUsersProfiles();
   }
 
   setAllUsersProfiles() {
-    this.subscriptions.sink = this._data.allUsersProfile$.subscribe(
-      (getAllUsersProfileResponse) => {
+    this.subscriptions.sink = this._data
+      .getAllUserProfile$()
+      .subscribe((getAllUsersProfileResponse) => {
         console.log(getAllUsersProfileResponse);
         this.allUsersProfile = getAllUsersProfileResponse;
-      }
-    );
+      });
   }
 
-  matchingUsersArray$ = this._data.searchQueryChangeSubject$.pipe(
-    switchMap((partial) =>
-      this._data.suggestNames(this.allUsersProfile, partial)
-    )
-  );
+  matchingUsersArray$ = this._data
+    .getSearchBoxQuery$()
+    .pipe(
+      switchMap((keyword) =>
+        this._data.ProcessKeywords(
+          keyword,
+          this.allUsersProfile,
+          this.suggestUsers
+        )
+      )
+    );
+
+  suggestUsers(
+    partial: string,
+    allUsersProfile: IProfile[]
+  ): Observable<IProfile[]> {
+    let usernamesArray: IProfile[] = [];
+    console.log(partial);
+    allUsersProfile?.forEach((userProfile) => {
+      if (
+        userProfile.address.user.username
+          .toLowerCase()
+          .includes(partial.toLowerCase())
+      ) {
+        usernamesArray.push(userProfile);
+      }
+    });
+    console.log(usernamesArray);
+    return of(usernamesArray);
+  }
 
   getNotificationMessage() {
     this._notificationService.getNotificationMessage().subscribe((message) => {

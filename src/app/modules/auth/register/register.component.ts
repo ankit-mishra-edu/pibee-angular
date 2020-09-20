@@ -44,14 +44,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   setAllUsers() {
-    this.subscriptions.sink = this._data.allUsersArray$.subscribe(
-      (getAllUsersResponse) => {
+    this.subscriptions.sink = this._data
+      .getAllUsers$()
+      .subscribe((getAllUsersResponse) => {
         console.log(getAllUsersResponse);
         this.allUsersArray = getAllUsersResponse;
 
         this.signUpForm = SignUp.SignUpForm(this.allUsersArray);
-      }
-    );
+      });
   }
 
   signUp() {

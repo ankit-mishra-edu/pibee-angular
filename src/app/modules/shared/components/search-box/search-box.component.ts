@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { DataService } from '../../../../services/data.service';
 
 @Component({
@@ -7,7 +8,16 @@ import { DataService } from '../../../../services/data.service';
   styleUrls: ['./search-box.component.scss'],
 })
 export class SearchBoxComponent implements OnInit {
-  constructor(public _data: DataService) {}
+  constructor(private _data: DataService) {}
 
   ngOnInit(): void {}
+
+  getSearchBoxQuery$(): Observable<string> {
+    return this._data.getSearchBoxQuery$();
+  }
+
+  setSearchBoxQuery$(value) {
+    console.log(value);
+    this._data.setSearchBoxQuery$(value);
+  }
 }

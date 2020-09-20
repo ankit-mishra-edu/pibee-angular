@@ -23,7 +23,7 @@ export class EditDetailsComponent implements OnInit, OnDestroy {
   subscriptions = new SubSink();
   isUserConfirmed: boolean = false;
   loggedInUser: IUser = this._data.loggedInUser;
-  loggedInUser$ = this._data.loggedInUser$;
+  loggedInUser$ = this._data.getLoggedInUser$();
 
   confirmUserForm = new FormBuilder().group({
     username: [this.loggedInUser?.username],
@@ -114,12 +114,12 @@ export class EditDetailsComponent implements OnInit, OnDestroy {
   }
 
   setAllUsers() {
-    this.subscriptions.sink = this._data.allUsersArray$.subscribe(
-      (getAllUsersResponse) => {
+    this.subscriptions.sink = this._data
+      .getAllUsers$()
+      .subscribe((getAllUsersResponse) => {
         console.log(getAllUsersResponse);
         this.allUsersArray = getAllUsersResponse;
-      }
-    );
+      });
   }
 
   validateNotTaken(control: AbstractControl) {

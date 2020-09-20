@@ -48,13 +48,13 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   }
 
   setUserProfile() {
-    this.subscriptions.sink = this._data.userProfile$.subscribe(
-      (profileResponse) => {
+    this.subscriptions.sink = this._data
+      .getUserProfile$()
+      .subscribe((profileResponse) => {
         console.log(profileResponse);
         profileResponse ? delete profileResponse.image : {};
         this.profileForm.patchValue(profileResponse ? profileResponse : {});
-      }
-    );
+      });
   }
 
   editProfile() {
@@ -65,7 +65,7 @@ export class EditProfileComponent implements OnInit, OnDestroy {
       .subscribe(
         (editProfileResponse) => {
           console.log(editProfileResponse);
-          this._data.userProfileSubject$.next(editProfileResponse);
+          this._data.setUserProfile$(editProfileResponse);
           this._router.navigate(['']);
         },
         (editProfileError) => {

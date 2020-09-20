@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../../../services/chat.service';
 import { IMessage } from '../../../modules/shared/interfaces/Message';
 import { DataService } from '../../../services/data.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { IUser } from '../../../modules/shared/interfaces/User';
 import { SubSink } from 'subsink';
 import { IProfile } from '../../../modules/shared/interfaces/Profile';
@@ -38,7 +38,7 @@ export class ChatComponent implements OnInit {
   constructor(private _chat: ChatService, private _data: DataService) {}
 
   ngOnInit(): void {
-    this.loggedInUser$ = this._data.loggedInUser$;
+    this.loggedInUser$ = this._data.getLoggedInUser$();
     this.setLoggedInUser();
     this.setAllUsersProfiles();
     this.message.sender = this.loggedInUser?.username;
@@ -98,11 +98,11 @@ export class ChatComponent implements OnInit {
   }
 
   setLoggedInUser() {
-    this.subscriptions.sink = this._data.loggedInUser$.subscribe(
-      (getLoggedInUserResponse) => {
+    this.subscriptions.sink = this._data
+      .getLoggedInUser$()
+      .subscribe((getLoggedInUserResponse) => {
         this.loggedInUser = getLoggedInUserResponse;
-      }
-    );
+      });
   }
 
   setIsReceiverNull(receiver: IUser) {
@@ -114,17 +114,42 @@ export class ChatComponent implements OnInit {
   }
 
   setAllUsersProfiles() {
-    this.subscriptions.sink = this._data.allUsersProfile$.subscribe(
-      (getAllUsersProfileResponse) => {
+    this.subscriptions.sink = this._data
+      .getAllUserProfile$()
+      .subscribe((getAllUsersProfileResponse) => {
         console.log(getAllUsersProfileResponse);
         this.allUsersProfile = getAllUsersProfileResponse;
-      }
-    );
+      });
   }
 
-  matchingUsersArray$ = this._data.searchQueryChangeSubject$.pipe(
-    switchMap((partial) =>
-      this._data.suggestNames(this.allUsersProfile, partial)
-    )
-  );
+  matchingUsersArray$ = this._data
+    .getSearchBoxQuery$()
+    .pipe(
+      switchMap((keyword) =>
+        this._data.ProcessKeywords(
+          keyword,
+          this.allUsersProfile,
+          this.suggestUsers
+        )
+      )
+    );
+
+  suggestUsers(
+    partial: string,
+    allUsersProfile: IProfile[]
+  ): Observable<IProfile[]> {
+    let usernamesArray: IProfile[] = [];
+    console.log(partial);
+    allUsersProfile?.forEach((userProfile) => {
+      if (
+        userProfile.address.user.username
+          .toLowerCase()
+          .includes(partial.toLowerCase())
+      ) {
+        usernamesArray.push(userProfile);
+      }
+    });
+    console.log(usernamesArray);
+    return of(usernamesArray);
+  }
 }

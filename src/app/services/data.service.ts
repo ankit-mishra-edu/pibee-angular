@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import { IUser } from '../modules/shared/interfaces/User';
 import { IProfile } from '../modules/shared/interfaces/Profile';
+import { BehaviorSubject, Observable, of, throwError, Subject } from 'rxjs';
 import {
-  BehaviorSubject,
-  Observable,
-  of,
-  throwError,
-  Subject,
-  ReplaySubject,
-} from 'rxjs';
-import { distinctUntilChanged, catchError, share } from 'rxjs/operators';
+  distinctUntilChanged,
+  catchError,
+  share,
+  switchMap,
+} from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { IMessage } from '../modules/shared/interfaces/Message';
 
@@ -20,14 +18,11 @@ export class DataService {
   loggedInUser: IUser;
   baseUrl: string = 'https://pibeedjango.herokuapp.com/api/';
 
-  public searchQueryChangeSubject$ = new Subject<string>();
-  private _loggedInUserSubject$ = new BehaviorSubject<IUser>(null);
-  public userProfileSubject$ = new BehaviorSubject<IProfile>(null);
-  public allUsersSubject$ = new BehaviorSubject<IUser[]>(null);
-  public allUsersProfileSubject$ = new BehaviorSubject<IProfile[]>(null);
   public messageSubject$ = new BehaviorSubject<IMessage[]>(null);
 
-  loggedInUser$ = this._loggedInUserSubject$
+  // Subject for Search Box
+  private _searchBoxQuerySubject$ = new Subject<string>();
+  private _searchBoxQuery$ = this._searchBoxQuerySubject$
     .asObservable()
     .pipe(
       distinctUntilChanged(
@@ -35,7 +30,16 @@ export class DataService {
       )
     );
 
-  allUsersArray$ = this.allUsersSubject$
+  getSearchBoxQuery$(): Observable<string> {
+    return this._searchBoxQuery$;
+  }
+  setSearchBoxQuery$(value: string) {
+    this._searchBoxQuerySubject$.next(value);
+  }
+
+  // Subject for Logged In User
+  private _loggedInUserSubject$ = new BehaviorSubject<IUser>(null);
+  private _loggedInUser$ = this._loggedInUserSubject$
     .asObservable()
     .pipe(
       distinctUntilChanged(
@@ -43,7 +47,16 @@ export class DataService {
       )
     );
 
-  userProfile$ = this.userProfileSubject$
+  getLoggedInUser$(): Observable<IUser> {
+    return this._loggedInUser$;
+  }
+  setLoggedInUser$(value: IUser) {
+    this._loggedInUserSubject$.next(value);
+  }
+
+  // Subject for All Users
+  private _allUsersSubject$ = new BehaviorSubject<IUser[]>(null);
+  private _allUsersArray$ = this._allUsersSubject$
     .asObservable()
     .pipe(
       distinctUntilChanged(
@@ -51,13 +64,46 @@ export class DataService {
       )
     );
 
-  allUsersProfile$ = this.allUsersProfileSubject$
+  getAllUsers$(): Observable<IUser[]> {
+    return this._allUsersArray$;
+  }
+  setAllUsers$(value: IUser[]) {
+    this._allUsersSubject$.next(value);
+  }
+
+  //  Subject for User Profile
+  private _userProfileSubject$ = new BehaviorSubject<IProfile>(null);
+  private _userProfile$ = this._userProfileSubject$
     .asObservable()
     .pipe(
       distinctUntilChanged(
         (prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)
       )
     );
+
+  getUserProfile$(): Observable<IProfile> {
+    return this._userProfile$;
+  }
+  setUserProfile$(value: IProfile) {
+    this._userProfileSubject$.next(value);
+  }
+
+  //  Subject for All User's Profile
+  private _allUsersProfileSubject$ = new BehaviorSubject<IProfile[]>(null);
+  private _allUsersProfile$ = this._allUsersProfileSubject$
+    .asObservable()
+    .pipe(
+      distinctUntilChanged(
+        (prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)
+      )
+    );
+
+  getAllUserProfile$(): Observable<IProfile[]> {
+    return this._allUsersProfile$;
+  }
+  setAllUserProfile$(value: IProfile[]) {
+    this._allUsersProfileSubject$.next(value);
+  }
 
   message$ = this.messageSubject$
     .asObservable()
@@ -69,39 +115,14 @@ export class DataService {
 
   constructor(private _http: HttpClient) {
     if (sessionStorage.length > 0) {
-      this.ChangeLoggedInUser$(
+      this.setLoggedInUser$(
         <IUser>JSON.parse(sessionStorage.getItem('userToken')).user
       );
     }
   }
 
-  suggestNames(
-    allUsersProfile: IProfile[],
-    partial: string
-  ): Observable<IProfile[]> {
-    let usernamesArray: IProfile[] = [];
-    console.log(partial);
-    allUsersProfile?.forEach((userProfile) => {
-      if (
-        userProfile.address.user.username
-          .toLowerCase()
-          .includes(partial.toLowerCase())
-      ) {
-        usernamesArray.push(userProfile);
-      }
-    });
-    console.log(usernamesArray);
-    return of(usernamesArray);
-  }
-
-  ChangeLoggedInUser$(loggedInUser: IUser) {
-    this._loggedInUserSubject$.next(loggedInUser);
-  }
-
-  GetLoggedInUser(): Observable<IUser> {
-    return this._loggedInUserSubject$
-      .asObservable()
-      .pipe(distinctUntilChanged());
+  ProcessKeywords(keyword = null, data = null, processingMethod = null) {
+    return processingMethod(keyword, data);
   }
 
   GetUserById(id): Observable<IUser> {

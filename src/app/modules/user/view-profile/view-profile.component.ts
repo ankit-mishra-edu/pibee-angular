@@ -14,7 +14,7 @@ export class ViewProfileComponent implements OnInit, OnDestroy {
   userId: number;
   loggedInUser: IUser = this._data.loggedInUser;
   subscriptions = new SubSink();
-  userProfile$ = this._data.userProfile$;
+  userProfile$ = this._data.getUserProfile$();
   profileKeys;
 
   constructor(
@@ -30,7 +30,7 @@ export class ViewProfileComponent implements OnInit, OnDestroy {
       this._data
         .GetUserProfileById(this.userId)
         .subscribe((userProfileResponse) => {
-          this._data.userProfileSubject$.next(userProfileResponse);
+          this._data.setUserProfile$(userProfileResponse);
           this.profileKeys = Object.keys(userProfileResponse);
         });
     }

@@ -41,9 +41,10 @@ export class AppComponent {
   }
 
   getLoggedInUser() {
-    this.subscriptions.sink = this._data.GetLoggedInUser().subscribe(
+    this.subscriptions.sink = this._data.getLoggedInUser$().subscribe(
       (loggedInUserResponse) => {
         this._data.loggedInUser = loggedInUserResponse;
+        this._data.setLoggedInUser$(loggedInUserResponse);
       },
 
       (loggedInUserError) => {
@@ -59,7 +60,7 @@ export class AppComponent {
   getUserProfileById(id: number) {
     this.subscriptions.sink = this._data.GetUserProfileById(id).subscribe(
       (getUserProfileResponse) => {
-        this._data.userProfileSubject$.next(getUserProfileResponse);
+        this._data.setUserProfile$(getUserProfileResponse);
       },
 
       (getUserProfileError) => {
@@ -76,7 +77,7 @@ export class AppComponent {
     this.subscriptions.sink = this._data.GetAllUsers().subscribe(
       (getAllUsersResponse) => {
         // this._data.allUsersArray = getAllUsersResponse;
-        this._data.allUsersSubject$.next(getAllUsersResponse);
+        this._data.setAllUsers$(getAllUsersResponse);
         // console.log(this._data.allUsersArray);
       },
 
@@ -93,7 +94,7 @@ export class AppComponent {
   getAllUsersProfiles() {
     this.subscriptions.sink = this._data.GetAllUsersProfiles().subscribe(
       (getAllUsersProfilesResponse) => {
-        this._data.allUsersProfileSubject$.next(getAllUsersProfilesResponse);
+        this._data.setAllUserProfile$(getAllUsersProfilesResponse);
         // this._data.allUsersProfileArray = getAllUsersProfilesResponse;
       },
 

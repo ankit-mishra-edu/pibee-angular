@@ -14,7 +14,7 @@ import { DataService } from 'src/app/services/data.service';
 export class NavbarComponent implements OnInit {
   loggedInUser: IUser;
   loggedInUser$: Observable<IUser>;
-  userProfile$ = this._data.userProfile$;
+  userProfile$ = this._data.getUserProfile$();
   loggedInUserChange$ = new Subject<IUser>();
   subscriptions = new SubSink();
 
@@ -32,7 +32,7 @@ export class NavbarComponent implements OnInit {
     if (sessionStorage.length > 0) {
       this.loggedInUser = this._data.loggedInUser;
 
-      this.userProfile$ = this._data.userProfile$;
+      this.userProfile$ = this._data.getUserProfile$();
       return true;
     }
     return false;

@@ -17,12 +17,12 @@ export class SignUp {
   }
 
   setAllUsers() {
-    this.subscriptions.sink = this._data.allUsersArray$.subscribe(
-      (getAllUsersResponse) => {
+    this.subscriptions.sink = this._data
+      .getAllUsers$()
+      .subscribe((getAllUsersResponse) => {
         console.log(getAllUsersResponse);
         this.allUsersArray = getAllUsersResponse;
-      }
-    );
+      });
   }
 
   public static SignUpForm(allUsersArray) {
