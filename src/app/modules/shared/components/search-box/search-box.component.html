@@ -1,16 +1,25 @@
-<form class="form-inline">
-  <div class="input-group input-group-sm">
+<form class="form-group">
+  <div class="form-group input-group">
     <input
-      class="form-control-navbar"
       type="text"
-      placeholder="Search"
-      aria-label="Search"
-      name="search"
       list="brow"
+      name="search"
+      aria-label="Search"
+      placeholder="Search"
+      class="form-control"
+      aria-describedby="search-mic-btn"
       #search
       [ngModel]="getSearchBoxQuery$() | async"
       (ngModelChange)="setSearchBoxQuery$($event)"
-      style="outline: none; padding: 0px 15px"
     />
+
+    <button
+      class="btn"
+      type="button"
+      id="search-mic-btn"
+      (click)="setListenClicks$()"
+    >
+      <i class="fa fa-microphone" id="search-mic"></i>
+    </button>
   </div>
 </form>

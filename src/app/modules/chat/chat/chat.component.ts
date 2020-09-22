@@ -7,6 +7,7 @@ import { IUser } from '../../../modules/shared/interfaces/User';
 import { SubSink } from 'subsink';
 import { IProfile } from '../../../modules/shared/interfaces/Profile';
 import { switchMap } from 'rxjs/operators';
+import { SpeechService } from 'src/app/services/speech.service';
 
 @Component({
   selector: 'app-chat',
@@ -35,7 +36,11 @@ export class ChatComponent implements OnInit {
   loggedInUser$: Observable<IUser>;
   allUsersProfile: IProfile[];
 
-  constructor(private _chat: ChatService, private _data: DataService) {}
+  constructor(
+    private _data: DataService,
+    private _chat: ChatService,
+    private _speechService: SpeechService
+  ) {}
 
   ngOnInit(): void {
     this.loggedInUser$ = this._data.getLoggedInUser$();
@@ -84,9 +89,11 @@ export class ChatComponent implements OnInit {
     };
   }
 
-  createMessage() {
+  createMessage(message) {
+    this.message.content = message;
     this._chat.createMessage(this.socketRef, this.message);
     this.message.content = ''; // Refreshes the input element after the message is created
+    this.spokenKeyword$ = null;
   }
 
   getMessage() {
@@ -152,4 +159,15 @@ export class ChatComponent implements OnInit {
     console.log(usernamesArray);
     return of(usernamesArray);
   }
+
+  setListenClicks$() {
+    console.log('Button clicked....In SearchBox.ts');
+    this._speechService.setListenClicks$('1');
+  }
+
+  typedKeywords$ = this._data.getSearchBoxQuery$();
+
+  spokenKeyword$ = this._speechService
+    .getListenClicks$()
+    .pipe(switchMap(() => this._speechService.listen()));
 }

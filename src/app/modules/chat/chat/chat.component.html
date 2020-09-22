@@ -24,7 +24,7 @@
                   }}<i
                     class="fa fa-external-link"
                     [routerLink]="[
-                      '/view-profile',
+                      'user/view-profile',
                       userProfile.address?.user.id
                     ]"
                   ></i>
@@ -55,16 +55,18 @@
   <form #chatForm="ngForm" *ngIf="message.receiver">
     <div class="form-group mt-4">
       <div class="form-group chat-container">
-        <p
-          id="textMessage"
-          *ngFor="let messageObj of display.messageArray"
-          [ngClass]="messageObj.alignment"
-        >
-          {{ messageObj.message.sender }} : {{ messageObj.message.content }}
-        </p>
+        <div *ngFor="let messageObj of display.messageArray">
+          <div id="textMessage" [ngClass]="messageObj.alignment">
+            <label>{{ messageObj.message.sender + ":" }} </label>
+            <p>
+              {{ messageObj.message.content }}
+            </p>
+            <p style="margin: 0px">{{ messageObj.message.timestamp }}</p>
+          </div>
+        </div>
       </div>
 
-      <div class="form-group right">
+      <!-- <div class="form-group right">
         <textarea
           rows="1"
           name="inputContent"
@@ -72,17 +74,46 @@
           autofocus
           required
         ></textarea>
-      </div>
+      </div> -->
 
-      <div class="form-group right">
-        <button
-          (click)="createMessage()"
-          class="btn btn-primary"
-          type="submit"
-          [disabled]="!chatForm.form.valid"
-        >
-          Send
-        </button>
+      <div class="form-group right mb-3">
+        <div class="form-group input-group">
+          <!-- <textarea
+            rows="1"
+            name="inputContent"
+            [(ngModel)]="message.content"
+            autofocus
+            required
+          ></textarea> -->
+          <input
+            type="text"
+            list="brow"
+            name="search"
+            aria-label="Search"
+            placeholder="Search"
+            class="form-control"
+            aria-describedby="search-mic-btn"
+            #search
+            [ngModel]="spokenKeyword$ | async"
+          />
+
+          <button
+            class="btn btn-highlight"
+            type="button"
+            id="search-mic-btn"
+            (click)="setListenClicks$()"
+          >
+            <i class="fa fa-microphone"></i>
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="!chatForm.form.valid"
+            (click)="createMessage(search.value)"
+          >
+            Send
+          </button>
+        </div>
       </div>
     </div>
   </form>

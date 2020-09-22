@@ -1,12 +1,13 @@
 import { SubSink } from 'subsink';
 import { switchMap } from 'rxjs/operators';
-import { Observable, of, Subject } from 'rxjs';
+import { merge, Observable, of, Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { IUser } from '../../../../modules/shared/interfaces/User';
 import { DataService } from '../../../../services/data.service';
 import { IProfile } from '../../../../modules/shared/interfaces/Profile';
 import { NotificationService } from '../../../../services/notification.service';
+import { SpeechService } from 'src/app/services/speech.service';
 
 @Component({
   selector: 'app-home',
@@ -26,10 +27,12 @@ export class HomeComponent implements OnInit {
   numberArray = [1, 2, 3];
 
   allUsersProfile: IProfile[];
-  usernameChange = new Subject<string>();
+
+  typedKeywords$ = this._data.getSearchBoxQuery$();
 
   constructor(
     private _data: DataService,
+    private _speechService: SpeechService,
     private _activatedRoute: ActivatedRoute,
     private _notificationService: NotificationService
   ) {}
@@ -50,29 +53,33 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  matchingUsersArray$ = this._data
-    .getSearchBoxQuery$()
-    .pipe(
-      switchMap((keyword) =>
-        this._data.ProcessKeywords(
-          keyword,
-          this.allUsersProfile,
-          this.suggestUsers
-        )
+  spokenKeyword$ = this._speechService
+    .getListenClicks$()
+    .pipe(switchMap(() => this._speechService.listen()));
+
+  suggestedKeywords$ = merge(this.typedKeywords$, this.spokenKeyword$);
+
+  matchingUsersArray$ = this.suggestedKeywords$.pipe(
+    switchMap((keyword) =>
+      this._data.ProcessKeywords(
+        keyword,
+        this.allUsersProfile,
+        this.suggestUsers
       )
-    );
+    )
+  );
 
   suggestUsers(
-    partial: string,
+    keyword: string,
     allUsersProfile: IProfile[]
   ): Observable<IProfile[]> {
     let usernamesArray: IProfile[] = [];
-    console.log(partial);
+    console.log(keyword);
     allUsersProfile?.forEach((userProfile) => {
       if (
         userProfile.address.user.username
           .toLowerCase()
-          .includes(partial.toLowerCase())
+          .includes(keyword.toLowerCase())
       ) {
         usernamesArray.push(userProfile);
       }

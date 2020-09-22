@@ -2,7 +2,7 @@
   id="carouselExampleFade"
   class="carousel slide"
   data-ride="carousel"
-  style="margin: 0px 0px 0px 10px"
+  style="margin: 0px"
 >
   <ol class="carousel-indicators">
     <li
@@ -59,13 +59,13 @@
     <h4>Use search box to filter users to see their profile</h4>
     <div style="margin: 0px 5px 0px 5px">
       <table class="table table-sm table-dark table-hover">
-        <thead>
+        <!-- <thead>
           <tr>
             <th scope="col">Username</th>
             <th scope="col">Email</th>
           </tr>
-        </thead>
-        <tbody>
+        </thead> -->
+        <!-- <tbody>
           <tr *ngFor="let userProfile of matchingUsersArray$ | async">
             <td>
               <a
@@ -81,6 +81,34 @@
               >
             </td>
             <td>{{ userProfile.address?.user.email }}</td>
+          </tr>
+        </tbody> -->
+        <tbody>
+          <tr *ngFor="let userProfile of matchingUsersArray$ | async">
+            <td>
+              <img
+                height="30px"
+                width="30px"
+                class="rounded-circle img-circle"
+                [src]="userProfile?.image"
+              />
+            </td>
+            <td>
+              <a>{{ userProfile.address?.user.username }}</a>
+            </td>
+
+            <td>
+              <span style="display: inline-block"
+                >{{ "Profile "
+                }}<i
+                  class="fa fa-external-link"
+                  [routerLink]="[
+                    'user/view-profile',
+                    userProfile.address?.user.id
+                  ]"
+                ></i>
+              </span>
+            </td>
           </tr>
         </tbody>
       </table>

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { DataService } from '../../../../services/data.service';
+import { SpeechService } from '../../../../services/speech.service';
 
 @Component({
   selector: 'app-search-box',
@@ -8,7 +10,16 @@ import { DataService } from '../../../../services/data.service';
   styleUrls: ['./search-box.component.scss'],
 })
 export class SearchBoxComponent implements OnInit {
-  constructor(private _data: DataService) {}
+  listenClicks$ = new Subject<void>();
+
+  spokenKeyword$ = this.listenClicks$.pipe(
+    switchMap(() => this._speechService.listen())
+  );
+
+  constructor(
+    private _data: DataService,
+    private _speechService: SpeechService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -19,5 +30,14 @@ export class SearchBoxComponent implements OnInit {
   setSearchBoxQuery$(value) {
     console.log(value);
     this._data.setSearchBoxQuery$(value);
+  }
+
+  getListenClicks$(value) {
+    this._speechService.getListenClicks$();
+  }
+
+  setListenClicks$() {
+    console.log('Button clicked....In SearchBox.ts');
+    this._speechService.setListenClicks$('1');
   }
 }
