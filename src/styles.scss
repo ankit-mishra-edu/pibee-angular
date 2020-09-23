@@ -95,11 +95,13 @@
     }
 
     .form-valid {
+      border-radius: 3px 17px;
       background-color: #28a745;
       color: rgb(255, 255, 255) !important;
     }
 
     .form-invalid {
+      border-radius: 5px 15px;
       background-color: red;
       color: rgb(255, 255, 255) !important;
       // background-color: rgb(134, 38, 195);

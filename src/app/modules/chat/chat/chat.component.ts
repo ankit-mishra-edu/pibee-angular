@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../../../services/chat.service';
 import { IMessage } from '../../../modules/shared/interfaces/Message';
 import { DataService } from '../../../services/data.service';
-import { Observable, of } from 'rxjs';
+import { merge, Observable, of } from 'rxjs';
 import { IUser } from '../../../modules/shared/interfaces/User';
 import { SubSink } from 'subsink';
 import { IProfile } from '../../../modules/shared/interfaces/Profile';
@@ -91,10 +91,11 @@ export class ChatComponent implements OnInit {
 
   createMessage(message) {
     if (message != '') {
-      this.message.content = message;
+      this.message.content = message.value;
       this._chat.createMessage(this.socketRef, this.message);
+      message.value = '';
       this.message.content = ''; // Refreshes the input element after the message is created
-      this.spokenKeyword$ = null;
+      // this.spokenKeyword$ = new Observable<''>();
     }
   }
 
@@ -131,6 +132,8 @@ export class ChatComponent implements OnInit {
       });
   }
 
+  // For searching Users
+
   matchingUsersArray$ = this._data
     .getSearchBoxQuery$()
     .pipe(
@@ -162,6 +165,8 @@ export class ChatComponent implements OnInit {
     return of(usernamesArray);
   }
 
+  // For Sending Chats
+
   setListenClicks$() {
     console.log('Button clicked....In SearchBox.ts');
     this._speechService.setListenClicks$('1');
@@ -172,4 +177,6 @@ export class ChatComponent implements OnInit {
   spokenKeyword$ = this._speechService
     .getListenClicks$()
     .pipe(switchMap(() => this._speechService.listen()));
+
+  keywords$ = merge(this.typedKeywords$, this.spokenKeyword$);
 }

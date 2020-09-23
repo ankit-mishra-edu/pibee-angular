@@ -1,26 +1,26 @@
 .right {
-    text-align: right;
+  text-align: right;
 }
 
 .left {
-    text-align: left;
+  text-align: left;
 }
 
 .chat-container {
-    margin: 10px;
-    padding: 10px;
-    overflow: auto;
-    max-height: 500px;
-    border-radius: 7px;
-    background-color: lightblue;
-  }
+  margin: 10px;
+  padding: 10px;
+  overflow: auto;
+  height: 500px;
+  border-radius: 7px;
+  background-color: lightblue;
+}
 
-  #textMessage {
-    width : auto;
-    padding: 0.5em;
-    border-radius: 1em;
-    margin: 0.5em;
-    box-sizing : auto;
-    line-height: 1.1em;
-    background-color: white;
-  }
+#textMessage {
+  width: auto;
+  padding: 0.5em;
+  border-radius: 1em;
+  margin: 0.5em;
+  box-sizing: auto;
+  line-height: 1.1em;
+  background-color: white;
+}

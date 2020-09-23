@@ -1,8 +1,8 @@
 <ng-container *ngIf="isReceiverNull">
-  <div class="container-md" *ngIf="loggedInUser$ | async">
-    <h4>Use search box to filter Users to Chat or see their Profile</h4>
-    <div *ngIf="allUsersProfile" class="box box-primary">
-      <div class="box-body">
+  <div class="container-md box box-primary" *ngIf="loggedInUser$ | async">
+    <div class="box-body">
+      <div *ngIf="allUsersProfile">
+        <h4>Use search box to filter Users to Chat or see their Profile</h4>
         <table class="table table-sm table-dark table-hover">
           <tbody>
             <tr *ngFor="let userProfile of matchingUsersArray$ | async">
@@ -19,34 +19,46 @@
               </td>
 
               <td>
-                <span style="display: inline-block"
-                  >{{ "Profile "
-                  }}<i
-                    class="fa fa-external-link"
-                    [routerLink]="[
-                      'user/view-profile',
-                      userProfile.address?.user.id
-                    ]"
-                  ></i>
-                </span>
+                <button
+                  class="btn"
+                  type="button"
+                  style="
+                    color: white;
+                    cursor: pointer;
+                    border-radius: 5px 5px;
+                    display: inline-block;
+                  "
+                  [routerLink]="[
+                    '/user/view-profile',
+                    userProfile.address?.user.id
+                  ]"
+                >
+                  {{ "Profile " }}<i class="fa fa-external-link"></i>
+                </button>
               </td>
               <td>
-                <span style="display: inline-block"
-                  >{{ "Chat "
-                  }}<i
-                    class="fa fa-comments-o"
-                    (click)="setIsReceiverNull(userProfile.address?.user)"
-                  ></i>
-                </span>
+                <button
+                  class="btn"
+                  type="button"
+                  style="
+                    color: white;
+                    cursor: pointer;
+                    border-radius: 5px 5px;
+                    display: inline-block;
+                  "
+                  (click)="setIsReceiverNull(userProfile.address?.user)"
+                >
+                  {{ "Chat " }}<i class="fa fa-comments-o"></i>
+                </button>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-    </div>
 
-    <div *ngIf="!allUsersProfile">
-      <p>All profiles not loaded yet</p>
+      <div *ngIf="!allUsersProfile">
+        <p>All profiles not loaded yet</p>
+      </div>
     </div>
   </div>
 </ng-container>
@@ -76,12 +88,13 @@
             type="text"
             list="brow"
             name="search"
+            id="chat-input"
             aria-label="Search"
             placeholder="Search"
             class="form-control"
             aria-describedby="search-mic-btn"
             #search
-            [ngModel]="spokenKeyword$ | async"
+            [ngModel]="keywords$ | async"
           />
 
           <button
@@ -96,7 +109,7 @@
             type="submit"
             class="btn btn-primary"
             [disabled]="!chatForm.form.valid"
-            (click)="createMessage(search.value)"
+            (click)="createMessage(search)"
           >
             Send
           </button>

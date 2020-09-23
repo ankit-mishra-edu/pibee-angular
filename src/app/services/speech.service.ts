@@ -19,18 +19,20 @@ export class SpeechService {
     this._listenClicksSubject$.next(value);
   }
 
-  constructor() {}
+  speech: any;
+
+  constructor() {
+    const { webkitSpeechRecognition } = window as any;
+    this.speech = new webkitSpeechRecognition();
+  }
 
   listen(): Observable<string> {
     return new Observable<string>((observer) => {
       console.log('Listening....');
       // const speech = new webkitSpeechRecognition();
 
-      const { webkitSpeechRecognition } = window as any;
-      const speech = new webkitSpeechRecognition();
-
       console.log('Object Created');
-      console.log(speech);
+      console.log(this.speech);
 
       const resultHandler = (e: any) => {
         console.log(e);
@@ -44,14 +46,14 @@ export class SpeechService {
         observer.error(err);
       };
 
-      speech.addEventListener('result', resultHandler);
-      speech.addEventListener('error', errorHandler);
-      speech.start();
+      this.speech.addEventListener('result', resultHandler);
+      this.speech.addEventListener('error', errorHandler);
+      this.speech.start();
 
       return () => {
-        speech.removeEventListener('result', resultHandler);
-        speech.removeEventListener('error', errorHandler);
-        speech.abort();
+        this.speech.removeEventListener('result', resultHandler);
+        this.speech.removeEventListener('error', errorHandler);
+        this.speech.abort();
       };
     });
   }
