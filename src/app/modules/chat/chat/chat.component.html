@@ -51,40 +51,27 @@
   </div>
 </ng-container>
 
-<ng-container *ngIf="!isReceiverNull">
+<ng-container *ngIf="!isReceiverNull" class="form-wrapper">
   <form #chatForm="ngForm" *ngIf="message.receiver">
     <div class="form-group mt-4">
       <div class="form-group chat-container">
         <div *ngFor="let messageObj of display.messageArray">
           <div id="textMessage" [ngClass]="messageObj.alignment">
-            <label>{{ messageObj.message.sender + ":" }} </label>
-            <p>
+            <label style="color: #05858f"
+              >{{ messageObj.message.sender + ":" }}
+            </label>
+            <p style="text-align: left">
               {{ messageObj.message.content }}
             </p>
-            <p style="margin: 0px">{{ messageObj.message.timestamp }}</p>
+            <p style="text-align: left; margin: 0px">
+              {{ messageObj.message.timestamp }}
+            </p>
           </div>
         </div>
       </div>
 
-      <!-- <div class="form-group right">
-        <textarea
-          rows="1"
-          name="inputContent"
-          [(ngModel)]="message.content"
-          autofocus
-          required
-        ></textarea>
-      </div> -->
-
-      <div class="form-group right mb-3">
+      <div class="form-group right mb-3" style="margin: 0px 10px">
         <div class="form-group input-group">
-          <!-- <textarea
-            rows="1"
-            name="inputContent"
-            [(ngModel)]="message.content"
-            autofocus
-            required
-          ></textarea> -->
           <input
             type="text"
             list="brow"

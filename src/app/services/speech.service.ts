@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { IWindow } from '../modules/shared/interfaces/Speech';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +24,11 @@ export class SpeechService {
   listen(): Observable<string> {
     return new Observable<string>((observer) => {
       console.log('Listening....');
+      // const speech = new webkitSpeechRecognition();
+
+      const { webkitSpeechRecognition } = window as any;
       const speech = new webkitSpeechRecognition();
+
       console.log('Object Created');
       console.log(speech);
 

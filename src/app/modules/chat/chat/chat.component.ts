@@ -90,10 +90,12 @@ export class ChatComponent implements OnInit {
   }
 
   createMessage(message) {
-    this.message.content = message;
-    this._chat.createMessage(this.socketRef, this.message);
-    this.message.content = ''; // Refreshes the input element after the message is created
-    this.spokenKeyword$ = null;
+    if (message != '') {
+      this.message.content = message;
+      this._chat.createMessage(this.socketRef, this.message);
+      this.message.content = ''; // Refreshes the input element after the message is created
+      this.spokenKeyword$ = null;
+    }
   }
 
   getMessage() {
