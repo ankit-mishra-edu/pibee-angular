@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { IWindow } from '../modules/shared/interfaces/Speech';
 
 @Injectable({
   providedIn: 'root',
