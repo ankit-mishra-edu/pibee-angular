@@ -1,13 +1,10 @@
 <div class="container-fluid site-footer">
   <nav
     class="navbar navbar-expand-sm navbar-dark"
-    style="text-align: center; padding: 0px;"
+    style="text-align: center; padding: 0px"
   >
     <p></p>
-    <a
-      class="navbar-brand"
-      style="color: white; font-size: 25px;"
-      routerLink="/"
+    <a class="navbar-brand" style="color: white; font-size: 25px" routerLink="/"
       ><img src="../assets/media/logos/footerImage.png" alt="" />PiBee</a
     >
     <p></p>
@@ -16,35 +13,25 @@
   <div class="row mt-2">
     <ul class="navbar-nav">
       <li [routerLink]="['/']" routerLinkActive="router-link-active">
-        About PiBee
+        <a>{{ "About PiBee" }}</a>
       </li>
       <li *ngIf="!(loggedInUser$ | async)" class="ml-4">
-        Have an account?
+        {{ "Have an account?" }}
       </li>
       <li
         *ngIf="!(loggedInUser$ | async)"
         class="ml-2"
-        [routerLink]="['/login']"
+        [routerLink]="['auth/login']"
       >
-        Sign In
+        <a>{{ "Sign In" }}</a>
       </li>
-      <li *ngIf="loggedInUser$ | async" class="ml-2" [routerLink]="['/logout']">
-        Sign out
+      <li
+        *ngIf="loggedInUser$ | async"
+        class="ml-2"
+        [routerLink]="['auth/logout']"
+      >
+        <a>{{ "Sign out" }}</a>
       </li>
     </ul>
   </div>
-
-  <!-- <p
-    class="text-center"
-    style="margin-bottom: 0px; color: white; text-align: center;"
-  >
-    Coded with <span style="color: red;">&hearts;</span> by
-    <a href="https://github.com/amishm766" style="color: #0366d6;"
-      >Ankit Mishra.</a
-    >
-  </p> -->
-  <!-- <div class="footer-copyright text-center py-3">
-      © 2020 Copyright:
-      <a href="https://mdbootstrap.com/"> MDBootstrap.com</a>
-    </div> -->
 </div>

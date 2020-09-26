@@ -1,9 +1,8 @@
 import { SubSink } from 'subsink';
-import { IUser } from '../../../modules/shared/interfaces/User';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthService } from '../../../services/auth.service';
-import { DataService } from '../../../services/data.service';
 import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { DataService } from '../../../services/data.service';
+import { IUser } from '../../../modules/shared/interfaces/User';
 
 @Component({
   selector: 'app-view-profile',

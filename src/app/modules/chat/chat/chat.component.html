@@ -1,6 +1,6 @@
 <ng-container *ngIf="isReceiverNull">
   <div class="container-md box box-primary" *ngIf="loggedInUser$ | async">
-    <div class="box-body">
+    <div class="box-body text-center">
       <div *ngIf="allUsersProfile">
         <h4>Use search box to filter Users to Chat or see their Profile</h4>
         <table class="table table-sm table-dark table-hover">
@@ -57,7 +57,7 @@
       </div>
 
       <div *ngIf="!allUsersProfile">
-        <p>All profiles not loaded yet</p>
+        <div class="fa fa-spinner fa-spin"></div>
       </div>
     </div>
   </div>
@@ -69,8 +69,8 @@
       <div class="form-group chat-container">
         <div *ngFor="let messageObj of display.messageArray">
           <div id="textMessage" [ngClass]="messageObj.alignment">
-            <label style="color: #05858f"
-              >{{ messageObj.message.sender + ":" }}
+            <label style="color: var(--navbar-primary)"
+              ><strong>{{ messageObj.message.sender + ":" }}</strong>
             </label>
             <p style="text-align: left">
               {{ messageObj.message.content }}

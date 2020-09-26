@@ -166,7 +166,10 @@
                 <a
                   *ngIf="loggedInUser"
                   class="dropdown-item"
-                  style="background-color: #003542 !important; color: white"
+                  style="
+                    background-color: var(--navbar-primary) !important;
+                    color: white;
+                  "
                   [routerLink]="['user/view-profile', loggedInUser?.id]"
                 >
                   <li class="text-center">
@@ -218,7 +221,7 @@
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                Admin
+                <span>Admin</span>
               </a>
 
               <!-- Admin Dropdown -->

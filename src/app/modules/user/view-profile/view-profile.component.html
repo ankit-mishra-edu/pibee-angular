@@ -2,75 +2,78 @@
   <div class="row">
     <div class="col-md-4 col-sm-12">
       <div class="box box-primary">
-        <div class="box-body">
-          <div class="text-center">
-            <img
-              *ngIf="userProfile$ | async"
-              class="profile-user-img img-responsive img-circle"
-              src="{{ (userProfile$ | async)?.image }}"
-              alt="User profile picture"
-            />
+        <div class="box-body text-center">
+          <div *ngIf="userProfile$ | async">
+            <div class="text-center">
+              <img
+                *ngIf="userProfile$ | async"
+                class="profile-user-img img-responsive img-circle"
+                src="{{ (userProfile$ | async)?.image }}"
+                alt="User profile picture"
+              />
 
-            <div
-              *ngIf="!(userProfile$ | async)"
-              class="spinner-grow spinner-grow-sm"
-              role="status"
-            >
-              <span class="sr-only">Loading...</span>
+              <div
+                *ngIf="!(userProfile$ | async)"
+                class="text-center fa fa-spinner fa-spin"
+              ></div>
             </div>
+
+            <h3 class="profile-username text-center">
+              {{ (userProfile$ | async)?.address?.user?.first_name }} {{ " " }}
+              {{ (userProfile$ | async)?.address?.user?.last_name }}
+            </h3>
+
+            <p class="text-muted text-center">
+              {{ (userProfile$ | async)?.bio }}
+            </p>
+
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <b class="form-label">Username</b>
+                <a class="pull-right" name="username">
+                  {{ (userProfile$ | async)?.address?.user?.username }}
+                </a>
+              </li>
+
+              <li class="list-group-item">
+                <b class="form-label">DOB</b>
+                <a class="pull-right" name="birth_date">{{
+                  (userProfile$ | async)?.birth_date
+                }}</a>
+              </li>
+
+              <li class="list-group-item">
+                <b class="form-label">Email</b>
+                <a class="pull-right" name="email">
+                  {{ (userProfile$ | async)?.address?.user?.email }}
+                </a>
+              </li>
+
+              <li class="list-group-item">
+                <b class="form-label">Email Status</b>
+                <a
+                  class="pull-right"
+                  *ngIf="(userProfile$ | async)?.email_confirmed"
+                  name="email_confirmed"
+                >
+                  {{ "Verified" }}
+                </a>
+                <a
+                  class="pull-right"
+                  *ngIf="!(userProfile$ | async)?.email_confirmed"
+                  name="email_confirmed"
+                >
+                  {{ "Not Verified" }}
+                </a>
+              </li>
+            </ul>
+
+            <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
           </div>
-
-          <h3 class="profile-username text-center">
-            {{ (userProfile$ | async)?.address?.user?.first_name }} {{ " " }}
-            {{ (userProfile$ | async)?.address?.user?.last_name }}
-          </h3>
-
-          <p class="text-muted text-center">
-            {{ (userProfile$ | async)?.bio }}
-          </p>
-
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-              <b class="form-label">Username</b>
-              <a class="pull-right" name="username">
-                {{ (userProfile$ | async)?.address?.user?.username }}
-              </a>
-            </li>
-
-            <li class="list-group-item">
-              <b class="form-label">DOB</b>
-              <a class="pull-right" name="birth_date">{{
-                (userProfile$ | async)?.birth_date
-              }}</a>
-            </li>
-
-            <li class="list-group-item">
-              <b class="form-label">Email</b>
-              <a class="pull-right" name="email">
-                {{ (userProfile$ | async)?.address?.user?.email }}
-              </a>
-            </li>
-
-            <li class="list-group-item">
-              <b class="form-label">Email Status</b>
-              <a
-                class="pull-right"
-                *ngIf="(userProfile$ | async)?.email_confirmed"
-                name="email_confirmed"
-              >
-                {{ "Verified" }}
-              </a>
-              <a
-                class="pull-right"
-                *ngIf="!(userProfile$ | async)?.email_confirmed"
-                name="email_confirmed"
-              >
-                {{ "Not Verified" }}
-              </a>
-            </li>
-          </ul>
-
-          <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+          <div
+            *ngIf="!(userProfile$ | async)"
+            class="fa fa-spinner fa-spin"
+          ></div>
         </div>
       </div>
 
@@ -92,11 +95,11 @@
             <br />
             <p class="text-muted">
               {{
-                (userProfile$ | async).address.street +
+                (userProfile$ | async)?.address?.street +
                   ", " +
-                  (userProfile$ | async).address.city +
+                  (userProfile$ | async)?.address?.city +
                   ", " +
-                  (userProfile$ | async).address.state
+                  (userProfile$ | async)?.address?.state
               }}
             </p>
 

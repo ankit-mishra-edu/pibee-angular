@@ -56,9 +56,9 @@
 
 <div *ngIf="loggedInUser$ | async">
   <div *ngIf="allUsersProfile">
-    <h4>Use search box to filter users to see their profile</h4>
     <div style="margin: 0px 5px 0px 5px">
       <table class="table table-sm table-dark table-hover">
+        <h4>Use search box to filter users to see their profile</h4>
         <tbody>
           <tr *ngFor="let userProfile of matchingUsersArray$ | async">
             <td>

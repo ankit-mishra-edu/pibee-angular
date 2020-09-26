@@ -17,11 +17,11 @@ i .fa {
 
       .navbar-brand {
         grid-column: 1/2;
-        color: var(--navbar-primary);
         font-weight: 500;
-        margin: 0px 8px 0px 5px;
         font-size: xx-large;
         vertical-align: middle;
+        margin: 0px 8px 0px 5px;
+        color: var(--navbar-primary);
       }
 
       .searchBox {
@@ -50,7 +50,7 @@ i .fa {
     .navbar {
       padding: 0%;
       min-block-size: 50px;
-      background-color: var(--navbar-primary) !important;
+      background-color: var(--navbar-primary);
 
       .navbar-toggler {
         padding: 6px 8px;

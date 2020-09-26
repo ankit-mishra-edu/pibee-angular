@@ -1,4 +1,11 @@
 import { Component } from '@angular/core';
+import {
+  Event,
+  NavigationCancel,
+  NavigationEnd,
+  NavigationStart,
+  Router,
+} from '@angular/router';
 import { timer } from 'rxjs';
 import { tap, share } from 'rxjs/operators';
 import { SubSink } from 'subsink';
@@ -11,7 +18,12 @@ import { DataService } from './services/data.service';
 })
 export class AppComponent {
   subscriptions = new SubSink();
-  constructor(private _data: DataService) {}
+  loading: boolean;
+  constructor(private _data: DataService, private _router: Router) {
+    this._router.events.subscribe((routerEvent: Event) => {
+      this.checkRouterEvent(routerEvent);
+    });
+  }
 
   ngOnInit(): void {
     this.getLoggedInUser();
@@ -106,5 +118,19 @@ export class AppComponent {
         console.log('GetAllUsersProfiles() service called successfully');
       }
     );
+  }
+
+  checkRouterEvent(routerEvent: Event): void {
+    if (routerEvent instanceof NavigationStart) {
+      this.loading = true;
+    }
+
+    if (
+      routerEvent instanceof NavigationStart ||
+      routerEvent instanceof NavigationEnd ||
+      routerEvent instanceof NavigationCancel
+    ) {
+      this.loading = false;
+    }
   }
 }
