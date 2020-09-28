@@ -1,14 +1,14 @@
 <div
-  id="carouselExampleFade"
-  class="carousel slide"
-  data-ride="carousel"
   style="margin: 0px"
+  data-ride="carousel"
+  class="carousel slide"
+  id="carouselExampleFade"
 >
   <ol class="carousel-indicators">
     <li
-      data-target="#carouselExampleCaptions"
-      data-slide-to="0"
       class="active"
+      data-slide-to="0"
+      data-target="#carouselExampleCaptions"
     ></li>
     <div *ngFor="let number of numberArray">
       <li data-target="#carouselExampleCaptions" data-slide-to="number"></li>
@@ -17,37 +17,37 @@
   <div class="carousel-inner">
     <div class="carousel-item active" style="height: 300px">
       <img
-        src="../../../../assets/media/logos/card.jpg"
-        class="d-block w-100"
         alt="..."
+        class="d-block w-100"
+        src="../../../../assets/media/logos/card.jpg"
       />
     </div>
     <div
-      *ngFor="let number of numberArray"
       class="carousel-item"
       style="height: 300px"
+      *ngFor="let number of numberArray"
     >
       <img
-        src="../../../../assets/media/logos/card.jpg"
-        class="d-block w-100"
         alt="..."
+        class="d-block w-100"
+        src="../../../../assets/media/logos/card.jpg"
       />
     </div>
   </div>
   <a
-    class="carousel-control-prev"
-    href="#carouselExampleFade"
     role="button"
     data-slide="prev"
+    href="#carouselExampleFade"
+    class="carousel-control-prev"
   >
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="sr-only">Previous</span>
   </a>
   <a
-    class="carousel-control-next"
-    href="#carouselExampleFade"
     role="button"
     data-slide="next"
+    href="#carouselExampleFade"
+    class="carousel-control-next"
   >
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="sr-only">Next</span>
@@ -55,12 +55,12 @@
 </div>
 
 <div *ngIf="loggedInUser$ | async">
-  <div *ngIf="allUsersProfile">
+  <div *ngIf="allUserProfiles$">
+    <h4>Use search box to filter users to see their profile</h4>
     <div style="margin: 0px 5px 0px 5px">
       <table class="table table-sm table-dark table-hover">
-        <h4>Use search box to filter users to see their profile</h4>
         <tbody>
-          <tr *ngFor="let userProfile of matchingUsersArray$ | async">
+          <tr *ngFor="let userProfile of suggestedUsers$ | async">
             <td>
               <img
                 height="30px"
@@ -88,7 +88,8 @@
                   userProfile.address?.user.id
                 ]"
               >
-                {{ "Profile " }}<i class="fa fa-external-link"></i>
+                <span>{{ "Profile " }}</span
+                ><i class="fa fa-user"></i>
               </button>
             </td>
           </tr>

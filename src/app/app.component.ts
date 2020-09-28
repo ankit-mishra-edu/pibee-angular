@@ -86,11 +86,9 @@ export class AppComponent {
   }
 
   getAllUsers() {
-    this.subscriptions.sink = this._data.GetAllUsers().subscribe(
+    this.subscriptions.sink = this._data.allUsers$.subscribe(
       (getAllUsersResponse) => {
-        // this._data.allUsersArray = getAllUsersResponse;
         this._data.setAllUsers$(getAllUsersResponse);
-        // console.log(this._data.allUsersArray);
       },
 
       (getAllUsersError) => {
@@ -104,10 +102,9 @@ export class AppComponent {
   }
 
   getAllUsersProfiles() {
-    this.subscriptions.sink = this._data.GetAllUsersProfiles().subscribe(
+    this.subscriptions.sink = this._data.allUserProfiles$.subscribe(
       (getAllUsersProfilesResponse) => {
         this._data.setAllUserProfile$(getAllUsersProfilesResponse);
-        // this._data.allUsersProfileArray = getAllUsersProfilesResponse;
       },
 
       (getAllUsersProfilesError) => {

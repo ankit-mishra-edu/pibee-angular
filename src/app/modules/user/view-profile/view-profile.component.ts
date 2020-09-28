@@ -1,7 +1,11 @@
 import { SubSink } from 'subsink';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+
+// All Services
 import { DataService } from '../../../services/data.service';
+
+// All Interfaces
 import { IUser } from '../../../modules/shared/interfaces/User';
 
 @Component({
@@ -11,10 +15,11 @@ import { IUser } from '../../../modules/shared/interfaces/User';
 })
 export class ViewProfileComponent implements OnInit, OnDestroy {
   userId: number;
-  loggedInUser: IUser = this._data.loggedInUser;
+  profileKeys: string[];
   subscriptions = new SubSink();
+
+  loggedInUser: IUser = this._data.loggedInUser;
   userProfile$ = this._data.getUserProfile$();
-  profileKeys;
 
   constructor(
     private _data: DataService,

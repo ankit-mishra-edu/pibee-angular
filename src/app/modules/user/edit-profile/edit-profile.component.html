@@ -1,7 +1,7 @@
 <div class="edit-profile container-md">
   <div class="row">
     <div class="form-wrapper col-md-8 col-sm-12">
-      <form class="form-group" [formGroup]="profileForm">
+      <form class="form-group" [formGroup]="editProfileForm">
         <div class="form-group">
           <h3 class="form-heading">Edit Profile</h3>
           <div class="form-group">
@@ -96,10 +96,10 @@
             (click)="editProfile()"
             type="button"
             class="btn"
-            [disabled]="profileForm.invalid"
+            [disabled]="editProfileForm.invalid"
             [ngClass]="{
-              'form-valid': !profileForm.invalid,
-              'form-invalid': profileForm.invalid
+              'form-valid': !editProfileForm.invalid,
+              'form-invalid': editProfileForm.invalid
             }"
           >
             Save profile

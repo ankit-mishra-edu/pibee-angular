@@ -1,11 +1,11 @@
 <ng-container *ngIf="isReceiverNull">
   <div class="container-md box box-primary" *ngIf="loggedInUser$ | async">
     <div class="box-body text-center">
-      <div *ngIf="allUsersProfile">
+      <div *ngIf="allUserProfiles$ | async">
         <h4>Use search box to filter Users to Chat or see their Profile</h4>
         <table class="table table-sm table-dark table-hover">
           <tbody>
-            <tr *ngFor="let userProfile of matchingUsersArray$ | async">
+            <tr *ngFor="let userProfile of suggestedUsers$ | async">
               <td>
                 <img
                   height="30px"
@@ -33,7 +33,8 @@
                     userProfile.address?.user.id
                   ]"
                 >
-                  {{ "Profile " }}<i class="fa fa-external-link"></i>
+                  <span class="d-none d-md-block">{{ "Profile " }}</span
+                  ><i class="fa fa-user"></i>
                 </button>
               </td>
               <td>
@@ -48,7 +49,8 @@
                   "
                   (click)="setIsReceiverNull(userProfile.address?.user)"
                 >
-                  {{ "Chat " }}<i class="fa fa-comments-o"></i>
+                  <span class="d-none d-md-block">{{ "Chat " }}</span
+                  ><i class="fa fa-comments-o"></i>
                 </button>
               </td>
             </tr>
@@ -56,7 +58,7 @@
         </table>
       </div>
 
-      <div *ngIf="!allUsersProfile">
+      <div *ngIf="!(allUserProfiles$ | async)">
         <div class="fa fa-spinner fa-spin"></div>
       </div>
     </div>
@@ -94,7 +96,7 @@
             class="form-control"
             aria-describedby="search-mic-btn"
             #search
-            [ngModel]="keywords$ | async"
+            [ngModel]="chatSpokenKeyword$ | async"
           />
 
           <button

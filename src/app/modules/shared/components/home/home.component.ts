@@ -1,13 +1,17 @@
 import { SubSink } from 'subsink';
 import { switchMap } from 'rxjs/operators';
-import { merge, Observable, of, Subject } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { of, merge, Observable, combineLatest } from 'rxjs';
+
+// All Interfaces
 import { IUser } from '../../../../modules/shared/interfaces/User';
-import { DataService } from '../../../../services/data.service';
 import { IProfile } from '../../../../modules/shared/interfaces/Profile';
-import { NotificationService } from '../../../../services/notification.service';
+import { INotification } from '../../../../modules/shared/interfaces/Notification';
+
+// All Services
+import { DataService } from '../../../../services/data.service';
 import { SpeechService } from 'src/app/services/speech.service';
+import { NotificationService } from '../../../../services/notification.service';
 
 @Component({
   selector: 'app-home',
@@ -15,71 +19,52 @@ import { SpeechService } from 'src/app/services/speech.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  notification = {
-    type: '',
-    title: '',
-    message: '',
-  };
+  notification: INotification = <INotification>{};
 
-  loggedInUser$: Observable<IUser>;
-  userProfile$ = this._data.getUserProfile$();
-  subscriptions = new SubSink();
   numberArray = [1, 2, 3];
-
-  allUsersProfile: IProfile[];
-
-  typedKeywords$ = this._data.getSearchBoxQuery$();
+  subscriptions = new SubSink();
+  loggedInUser$: Observable<IUser> = this._data.getLoggedInUser$();
+  userProfile$: Observable<IProfile> = this._data.getUserProfile$();
+  allUserProfiles$: Observable<IProfile[]> = this._data.getAllUserProfile$();
 
   constructor(
     private _data: DataService,
-    private _speechService: SpeechService,
-    private _activatedRoute: ActivatedRoute,
-    private _notificationService: NotificationService
+    private _speech: SpeechService,
+    private _notification: NotificationService
   ) {}
 
   ngOnInit(): void {
     this.loggedInUser$ = this._data.getLoggedInUser$();
-
     this.showNotification();
-    this.setAllUsersProfiles();
   }
 
-  setAllUsersProfiles() {
-    this.subscriptions.sink = this._data
-      .getAllUserProfile$()
-      .subscribe((getAllUsersProfileResponse) => {
-        console.log(getAllUsersProfileResponse);
-        this.allUsersProfile = getAllUsersProfileResponse;
-      });
-  }
+  // Get All the Typed and Spoken Keywords from SearchBox, Merge them and process
+  typedKeywords$ = this._data.getSearchBoxQuery$();
 
-  spokenKeyword$ = this._speechService
+  spokenKeywords$ = this._speech
     .getListenClicks$()
-    .pipe(switchMap(() => this._speechService.listen()));
+    .pipe(switchMap(() => this._speech.listen()));
 
-  suggestedKeywords$ = merge(this.typedKeywords$, this.spokenKeyword$);
+  keywords$ = merge(this.typedKeywords$, this.spokenKeywords$);
 
-  matchingUsersArray$ = this.suggestedKeywords$.pipe(
-    switchMap((keyword) =>
-      this._data.ProcessKeywords(
-        keyword,
-        this.allUsersProfile,
-        this.suggestUsers
-      )
+  suggestedUsers$ = combineLatest([this.keywords$, this.allUserProfiles$]).pipe(
+    switchMap(([keyword, allUserProfiles]) =>
+      this._data.ProcessKeywords(keyword, allUserProfiles, this.suggestUsers)
     )
   );
 
   suggestUsers(
     keyword: string,
-    allUsersProfile: IProfile[]
+    allUserProfiles: IProfile[]
   ): Observable<IProfile[]> {
     let usernamesArray: IProfile[] = [];
     console.log(keyword);
-    allUsersProfile?.forEach((userProfile) => {
+    allUserProfiles?.forEach((userProfile) => {
       if (
         userProfile.address.user.username
           .toLowerCase()
-          .includes(keyword.toLowerCase())
+          .includes(keyword.toLowerCase()) &&
+        keyword != ''
       ) {
         usernamesArray.push(userProfile);
       }
@@ -89,23 +74,20 @@ export class HomeComponent implements OnInit {
   }
 
   getNotificationMessage() {
-    this._notificationService.getNotificationMessage().subscribe((message) => {
-      this.notification.type = message?.type;
-      this.notification.title = message?.title;
-      this.notification.message = message?.message;
-    });
+    this._notification
+      .getNotificationMessage()
+      .subscribe((message: INotification) => {
+        this.notification = message;
+        console.log(this.notification);
+      });
   }
 
   showNotification() {
     this.getNotificationMessage();
 
     if (this.notification?.message != null) {
-      this._notificationService.notify(
-        this.notification.type,
-        this.notification.title,
-        this.notification.message
-      );
-      this._notificationService.setNotification(null, null, null);
+      this._notification.notify(this.notification);
+      this._notification.setNotification(<INotification>{});
     }
   }
 }

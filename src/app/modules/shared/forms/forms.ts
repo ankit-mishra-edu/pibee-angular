@@ -1,32 +1,28 @@
+import { SubSink } from 'subsink';
 import { FormBuilder, Validators } from '@angular/forms';
 import {
-  validateNotTaken,
+  validateNotExists,
   patternValidator,
+  validateNotTakenByOthers,
 } from '../validators/custom.validator';
-import { DataService } from '../../../services/data.service';
-import { AuthService } from '../../../services/auth.service';
-import { SubSink } from 'subsink';
 import { IUser } from '../../../modules/shared/interfaces/User';
 
-export class SignUp {
+export class AuthenticationForms {
   subscriptions = new SubSink();
   allUsersArray: IUser[];
 
-  constructor(private _data: DataService, private _auth: AuthService) {
-    this.setAllUsers();
+  constructor() {}
+
+  public static LoginForm() {
+    let signInForm = new FormBuilder().group({
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+      email: 'amishm766@gmail.com',
+    });
+    return signInForm;
   }
 
-  setAllUsers() {
-    this.subscriptions.sink = this._data
-      .getAllUsers$()
-      .subscribe((getAllUsersResponse) => {
-        console.log(getAllUsersResponse);
-        this.allUsersArray = getAllUsersResponse;
-      });
-  }
-
-  public static SignUpForm(allUsersArray) {
-    console.log('Creating SignUp Form and All User Data is' + allUsersArray);
+  public static SignUpForm(allUsers: IUser[]) {
     let signUpForm = new FormBuilder().group({
       id: [''],
       username: [
@@ -36,7 +32,7 @@ export class SignUp {
           Validators.minLength(3),
           Validators.maxLength(150),
         ],
-        validateNotTaken(allUsersArray).bind(this),
+        validateNotExists(allUsers).bind(this),
       ],
       first_name: [''],
       last_name: [''],
@@ -48,7 +44,7 @@ export class SignUp {
             '^([a-zA-Z0-9_.-]+)@([a-zA-Z0-9_.-]+)\\.([a-zA-Z]{2,5})$'
           ),
         ],
-        validateNotTaken(allUsersArray).bind(this),
+        validateNotExists(allUsers).bind(this),
       ],
       password: [
         '',
@@ -65,5 +61,62 @@ export class SignUp {
       ],
     });
     return signUpForm;
+  }
+}
+
+export class UserDetailsForms {
+  public static ConfirmUserForm(currentUser: IUser) {
+    let confirmUserForm = new FormBuilder().group({
+      username: [currentUser.username],
+      password: ['', [Validators.required]],
+      email: 'amishm766@gmail.com',
+    });
+    return confirmUserForm;
+  }
+
+  public static EditDetailsForm(currentUser: IUser, allUsers: IUser[]) {
+    let editDetailsForm = new FormBuilder().group({
+      id: [{ value: null, disabled: false }],
+      username: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(150),
+        ],
+        validateNotTakenByOthers(currentUser, allUsers).bind(this),
+      ],
+      first_name: [''],
+      last_name: [''],
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            '^([a-zA-Z0-9_.-]+)@([a-zA-Z0-9_.-]+)\\.([a-zA-Z]{2,5})$'
+          ),
+        ],
+        validateNotTakenByOthers(currentUser, allUsers).bind(this),
+      ],
+    });
+    return editDetailsForm;
+  }
+
+  public static EditProfileForm(currentUser: IUser) {
+    let profileForm = new FormBuilder().group({
+      user: [currentUser?.id],
+      bio: ['', [Validators.maxLength(150)]],
+      address: new FormBuilder().group({
+        user: [currentUser],
+        city: [''],
+        state: [''],
+        street: [''],
+        zip_code: [''],
+      }),
+      birth_date: [null],
+      email_confirmed: [false],
+      image: [null],
+    });
+    return profileForm;
   }
 }

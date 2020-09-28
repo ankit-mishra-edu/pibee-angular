@@ -1,13 +1,21 @@
 import { SubSink } from 'subsink';
 import { Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+
+// All Services
 import { AuthService } from '../../../services/auth.service';
 import { DataService } from '../../../services/data.service';
-import { FormBuilder, Validators } from '@angular/forms';
+
+// All Interfaces
+import { IUser } from '../../shared/interfaces/User';
+
+// All related to Forms
+import { FormGroup } from '@angular/forms';
 import {
   isValid,
   isInValid,
 } from '../../../modules/shared/validators/custom.validator';
+import { UserDetailsForms } from '../../shared/forms/forms';
 
 @Component({
   selector: 'app-edit-profile',
@@ -18,23 +26,14 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   isValid = isValid;
   isInValid = isInValid;
   subscriptions = new SubSink();
-  profileForm = new FormBuilder().group({
-    user: [this._data.loggedInUser?.id],
-    bio: ['', [Validators.maxLength(150)]],
-    address: new FormBuilder().group({
-      user: [this._data.loggedInUser],
-      city: [''],
-      state: [''],
-      street: [''],
-      zip_code: [''],
-    }),
-    birth_date: [null],
-    email_confirmed: [false],
-    image: [null],
-  });
+  loggedInUser: IUser = this._data.loggedInUser;
+
+  editProfileForm: FormGroup = UserDetailsForms.EditProfileForm(
+    this.loggedInUser
+  );
 
   value(controlName: string) {
-    return this.profileForm.get(controlName);
+    return this.editProfileForm.get(controlName);
   }
 
   constructor(
@@ -53,15 +52,15 @@ export class EditProfileComponent implements OnInit, OnDestroy {
       .subscribe((profileResponse) => {
         console.log(profileResponse);
         profileResponse ? delete profileResponse.image : {};
-        this.profileForm.patchValue(profileResponse ? profileResponse : {});
+        this.editProfileForm.patchValue(profileResponse ? profileResponse : {});
       });
   }
 
   editProfile() {
-    this.profileForm.removeControl('image');
-    console.log(this.profileForm.value);
+    this.editProfileForm.removeControl('image');
+    console.log(this.editProfileForm.value);
     this.subscriptions.sink = this._auth
-      .EditProfile(this.profileForm.value)
+      .EditProfile(this.editProfileForm.value)
       .subscribe(
         (editProfileResponse) => {
           console.log(editProfileResponse);
