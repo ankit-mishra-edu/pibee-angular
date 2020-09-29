@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../../../services/chat.service';
 import { IMessage } from '../../../modules/shared/interfaces/Message';
 import { DataService } from '../../../services/data.service';
-import { merge, Observable, of } from 'rxjs';
+import { combineLatest, merge, Observable, of } from 'rxjs';
 import { IUser } from '../../../modules/shared/interfaces/User';
 import { SubSink } from 'subsink';
 import { IProfile } from '../../../modules/shared/interfaces/Profile';
@@ -20,8 +20,8 @@ export class ChatComponent implements OnInit {
   isReceiverNull: boolean = true;
 
   socketRef: WebSocket;
-  path: string = 'wss://pibeedjango.herokuapp.com/ws/chat/';
   // path: string = 'ws://localhost:8000/ws/chat/';
+  path: string = 'wss://pibeedjango.herokuapp.com/ws/chat/';
 
   display = {
     messageArray: [],
@@ -33,8 +33,8 @@ export class ChatComponent implements OnInit {
     content: '',
   };
 
-  loggedInUser$: Observable<IUser>;
-  allUsersProfile: IProfile[];
+  loggedInUser$: Observable<IUser> = this._data.getLoggedInUser$();
+  allUserProfiles$: Observable<IProfile[]> = this._data.getAllUserProfile$();
 
   constructor(
     private _data: DataService,
@@ -45,7 +45,6 @@ export class ChatComponent implements OnInit {
   ngOnInit(): void {
     this.loggedInUser$ = this._data.getLoggedInUser$();
     this.setLoggedInUser();
-    this.setAllUsersProfiles();
     this.message.sender = this.loggedInUser?.username;
   }
 
@@ -71,7 +70,7 @@ export class ChatComponent implements OnInit {
         } else {
           alignment = 'left';
         }
-        // document.getElementById("dataBlock").append('<p>receiverdMessageArray[i].content</p>')
+
         this.display.messageArray.push({
           alignment: alignment,
           message: receiverdMessageArray[i],
@@ -123,40 +122,39 @@ export class ChatComponent implements OnInit {
     this.isReceiverNull = false;
   }
 
-  setAllUsersProfiles() {
-    this.subscriptions.sink = this._data
-      .getAllUserProfile$()
-      .subscribe((getAllUsersProfileResponse) => {
-        console.log(getAllUsersProfileResponse);
-        this.allUsersProfile = getAllUsersProfileResponse;
-      });
-  }
+  // Get All the Typed and Spoken Keywords from SearchBox, Merge them and process
+  searchBoxTypedKeywords$ = this._data.getSearchBoxQuery$();
 
-  // For searching Users
+  searchBoxSpokenKeyword$ = this._speechService
+    .getListenClicks$()
+    .pipe(switchMap(() => this._speechService.listen()));
 
-  matchingUsersArray$ = this._data
-    .getSearchBoxQuery$()
-    .pipe(
-      switchMap((keyword) =>
-        this._data.ProcessKeywords(
-          keyword,
-          this.allUsersProfile,
-          this.suggestUsers
-        )
-      )
-    );
+  searchBoxKeywords$ = merge(
+    this.searchBoxTypedKeywords$,
+    this.searchBoxSpokenKeyword$
+  );
+
+  suggestedUsers$ = combineLatest([
+    this.searchBoxKeywords$,
+    this.allUserProfiles$,
+  ]).pipe(
+    switchMap(([keyword, allUserProfiles]) =>
+      this._data.ProcessKeywords(keyword, allUserProfiles, this.suggestUsers)
+    )
+  );
 
   suggestUsers(
-    partial: string,
+    keyword: string,
     allUsersProfile: IProfile[]
   ): Observable<IProfile[]> {
     let usernamesArray: IProfile[] = [];
-    console.log(partial);
+    console.log(keyword);
     allUsersProfile?.forEach((userProfile) => {
       if (
         userProfile.address.user.username
           .toLowerCase()
-          .includes(partial.toLowerCase())
+          .includes(keyword.toLowerCase()) &&
+        keyword != ''
       ) {
         usernamesArray.push(userProfile);
       }
@@ -166,17 +164,12 @@ export class ChatComponent implements OnInit {
   }
 
   // For Sending Chats
-
   setListenClicks$() {
     console.log('Button clicked....In SearchBox.ts');
     this._speechService.setListenClicks$('1');
   }
 
-  typedKeywords$ = this._data.getSearchBoxQuery$();
-
-  spokenKeyword$ = this._speechService
+  chatSpokenKeyword$ = this._speechService
     .getListenClicks$()
     .pipe(switchMap(() => this._speechService.listen()));
-
-  keywords$ = merge(this.typedKeywords$, this.spokenKeyword$);
 }

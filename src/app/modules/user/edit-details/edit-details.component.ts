@@ -1,15 +1,22 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { SubSink } from 'subsink';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+
+// All Interfaces
 import { IUser } from '../../../modules/shared/interfaces/User';
+
+// All Services
 import { AuthService } from '../../../services/auth.service';
 import { DataService } from '../../../services/data.service';
+
+// All related to Forms
+import { FormGroup } from '@angular/forms';
 import {
   isValid,
   isInValid,
 } from '../../../modules/shared/validators/custom.validator';
-import { of } from 'rxjs';
+import { UserDetailsForms } from '../../shared/forms/forms';
 
 @Component({
   selector: 'app-edit-details',
@@ -19,38 +26,21 @@ import { of } from 'rxjs';
 export class EditDetailsComponent implements OnInit, OnDestroy {
   isValid = isValid;
   isInValid = isInValid;
-  allUsersArray: IUser[];
+
   subscriptions = new SubSink();
   isUserConfirmed: boolean = false;
   loggedInUser: IUser = this._data.loggedInUser;
-  loggedInUser$ = this._data.getLoggedInUser$();
+  loggedInUser$: Observable<IUser> = this._data.getLoggedInUser$();
+  allUsers$: Observable<IUser[]> = this._data.getAllUsers$();
 
-  confirmUserForm = new FormBuilder().group({
-    username: [this.loggedInUser?.username],
-    password: ['', [Validators.required]],
-    email: 'amishm766@gmail.com',
-  });
+  confirmUserForm: FormGroup = UserDetailsForms.ConfirmUserForm(
+    this.loggedInUser
+  );
 
-  editDetailsForm = new FormBuilder().group({
-    id: [this.loggedInUser?.id],
-    username: [
-      '',
-      [Validators.required, Validators.minLength(3), Validators.maxLength(150)],
-      this.validateNotTaken.bind(this),
-    ],
-    first_name: [''],
-    last_name: [''],
-    email: [
-      '',
-      [
-        Validators.required,
-        Validators.pattern(
-          '^([a-zA-Z0-9_.-]+)@([a-zA-Z0-9_.-]+)\\.([a-zA-Z]{2,5})$'
-        ),
-      ],
-      this.validateNotTaken.bind(this),
-    ],
-  });
+  editDetailsForm: FormGroup = UserDetailsForms.EditDetailsForm(
+    <IUser>null,
+    <IUser[]>null
+  );
 
   value_c(controlName: string) {
     return this.confirmUserForm.get(controlName);
@@ -61,13 +51,18 @@ export class EditDetailsComponent implements OnInit, OnDestroy {
   }
 
   constructor(
+    private _route: Router,
     private _auth: AuthService,
-    private _data: DataService,
-    private _route: Router
+    private _data: DataService
   ) {}
 
   ngOnInit(): void {
-    this.setAllUsers();
+    this.allUsers$.subscribe((allUsers: IUser[]) => {
+      this.editDetailsForm = UserDetailsForms.EditDetailsForm(
+        this.loggedInUser,
+        allUsers
+      );
+    });
   }
 
   confirmUser() {
@@ -111,35 +106,6 @@ export class EditDetailsComponent implements OnInit, OnDestroy {
           console.log('Details edited Successfully');
         }
       );
-  }
-
-  setAllUsers() {
-    this.subscriptions.sink = this._data
-      .getAllUsers$()
-      .subscribe((getAllUsersResponse) => {
-        console.log(getAllUsersResponse);
-        this.allUsersArray = getAllUsersResponse;
-      });
-  }
-
-  validateNotTaken(control: AbstractControl) {
-    let validationStatus: boolean = false;
-    const controlName = Object.keys(control.parent.controls).find(
-      (key) => control.parent.controls[key] === control
-    );
-    if (this.allUsersArray) {
-      for (let user of this.allUsersArray) {
-        if (
-          user[controlName] == control.value &&
-          user[controlName] != this.loggedInUser[controlName]
-        ) {
-          validationStatus = true;
-          break;
-        }
-      }
-    }
-
-    return of(validationStatus ? { alreadyTakenError: true } : null);
   }
 
   ngOnDestroy() {

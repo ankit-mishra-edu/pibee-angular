@@ -1,14 +1,21 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthService } from '../../../services/auth.service';
-import { Router } from '@angular/router';
 import { SubSink } from 'subsink';
-import { IUser } from '../../../modules/shared/interfaces/User';
+import { Router } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+
+// All Sevices
+import { AuthService } from '../../../services/auth.service';
 import { DataService } from '../../../services/data.service';
-import { FormBuilder, Validators } from '@angular/forms';
+
+// All Intefaces
+import { IUser } from '../../../modules/shared/interfaces/User';
+
+// All Related to Forms
+import { FormGroup } from '@angular/forms';
 import {
   isValid,
   isInValid,
 } from '../../../modules/shared/validators/custom.validator';
+import { AuthenticationForms } from '../../shared/forms/forms';
 
 @Component({
   selector: 'app-login',
@@ -19,11 +26,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   isValid = isValid;
   isInValid = isInValid;
   subscriptions = new SubSink();
-  signInForm = new FormBuilder().group({
-    username: ['', [Validators.required]],
-    password: ['', [Validators.required]],
-    email: 'amishm766@gmail.com',
-  });
+
+  signInForm: FormGroup = AuthenticationForms.LoginForm();
 
   value(controlName: string) {
     return this.signInForm.get(controlName);

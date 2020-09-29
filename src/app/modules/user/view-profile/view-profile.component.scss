@@ -1,8 +1,9 @@
 .content {
-  min-height: 250px;
   padding: 5px;
-  margin-right: auto;
   margin-left: auto;
+  min-height: 250px;
+  margin-right: auto;
+  overflow-x: hidden;
 
   .profile-user-img {
     margin: 0 auto;

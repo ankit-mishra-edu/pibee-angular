@@ -1,19 +1,24 @@
-import { of } from 'rxjs';
 import { SubSink } from 'subsink';
-import { IUser } from '../../../modules/shared/interfaces/User';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { AbstractControl } from '@angular/forms';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+
+// All related to Forms
+import { FormBuilder, FormGroup } from '@angular/forms';
 import {
   isValid,
   isInValid,
 } from '../../../modules/shared/validators/custom.validator';
+import { AuthenticationForms } from '../../../modules/shared/forms/forms';
 
+// All Services
 import { AuthService } from '../../../services/auth.service';
 import { DataService } from '../../../services/data.service';
 import { NotificationService } from '../../../services/notification.service';
 
-import { SignUp } from '../../../modules/shared/forms/forms';
+// All Interfaces
+import { IUser } from '../../../modules/shared/interfaces/User';
+import { INotification } from '../../shared/interfaces/Notification';
 
 @Component({
   selector: 'app-register',
@@ -23,10 +28,12 @@ import { SignUp } from '../../../modules/shared/forms/forms';
 export class RegisterComponent implements OnInit, OnDestroy {
   isValid = isValid;
   isInValid = isInValid;
-  allUsersArray: IUser[] = null;
   subscriptions = new SubSink();
 
-  signUpForm = SignUp.SignUpForm(this.allUsersArray);
+  notification: INotification = <INotification>{};
+  allUsers$: Observable<IUser[]> = this._data.getAllUsers$();
+
+  signUpForm: FormGroup = AuthenticationForms.SignUpForm(<IUser[]>null);
 
   value(controlName: string) {
     return this.signUpForm.get(controlName);
@@ -40,18 +47,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.setAllUsers();
-  }
-
-  setAllUsers() {
-    this.subscriptions.sink = this._data
-      .getAllUsers$()
-      .subscribe((getAllUsersResponse) => {
-        console.log(getAllUsersResponse);
-        this.allUsersArray = getAllUsersResponse;
-
-        this.signUpForm = SignUp.SignUpForm(this.allUsersArray);
-      });
+    this.allUsers$.subscribe((allUsers: IUser[]) => {
+      this.signUpForm = AuthenticationForms.SignUpForm(allUsers);
+    });
   }
 
   signUp() {
@@ -62,11 +60,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
           localStorage.setItem('Token', signUpResponse.key);
           localStorage.setItem('user', signUpResponse.user.toString());
           console.log(signUpResponse);
-          this._notificationService.setNotification(
-            'success',
-            'Registration',
-            'Registered successfully'
-          );
+
+          this.notification.type = 'Success';
+          this.notification.title = 'Registration';
+          this.notification.message = 'Registered successfully';
+
+          this._notificationService.setNotification(this.notification);
           alert(
             'Hit the link sent to ' +
               signUpResponse.user.email +
@@ -77,11 +76,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
         },
         (signUpError) => {
           console.log(signUpError);
-          this._notificationService.setNotification(
-            'error',
-            'Registration',
-            'Try contacting admin'
-          );
+
+          this.notification.type = 'Error';
+          this.notification.title = 'Registration';
+          this.notification.message = 'Try contacting admin';
+
+          this._notificationService.setNotification(this.notification);
           // alert(signUpError.error);
           this._route.navigate(['']);
         },
@@ -89,23 +89,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
           console.log('Sign up service called Successfully');
         }
       );
-  }
-
-  validateNotTaken(control: AbstractControl) {
-    let validationStatus: boolean = false;
-    const controlName = Object.keys(control.parent.controls).find(
-      (key) => control.parent.controls[key] === control
-    );
-    if (this.allUsersArray) {
-      for (let user of this.allUsersArray) {
-        if (user[controlName] == control.value) {
-          validationStatus = true;
-          break;
-        }
-      }
-    }
-
-    return of(validationStatus ? { alreadyTakenError: true } : null);
   }
 
   ngOnDestroy() {

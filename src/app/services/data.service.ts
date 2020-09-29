@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
-import { IUser } from '../modules/shared/interfaces/User';
-import { IProfile } from '../modules/shared/interfaces/Profile';
-import { BehaviorSubject, Observable, of, throwError, Subject } from 'rxjs';
+import { Subject, throwError, Observable, BehaviorSubject } from 'rxjs';
 import {
-  distinctUntilChanged,
-  catchError,
+  tap,
   share,
-  switchMap,
+  catchError,
+  shareReplay,
+  distinctUntilChanged,
 } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+
+// All Interfaces
+import { IUser } from '../modules/shared/interfaces/User';
+import { IProfile } from '../modules/shared/interfaces/Profile';
 import { IMessage } from '../modules/shared/interfaces/Message';
 
 @Injectable({
@@ -56,7 +59,7 @@ export class DataService {
 
   // Subject for All Users
   private _allUsersSubject$ = new BehaviorSubject<IUser[]>(null);
-  private _allUsersArray$ = this._allUsersSubject$
+  private _allUsers$ = this._allUsersSubject$
     .asObservable()
     .pipe(
       distinctUntilChanged(
@@ -65,7 +68,7 @@ export class DataService {
     );
 
   getAllUsers$(): Observable<IUser[]> {
-    return this._allUsersArray$;
+    return this._allUsers$;
   }
   setAllUsers$(value: IUser[]) {
     this._allUsersSubject$.next(value);
@@ -131,23 +134,19 @@ export class DataService {
       .pipe(catchError(this.errorHandler));
   }
 
-  GetAllUsers(): Observable<IUser[]> {
-    return this._http
-      .get<IUser[]>(this.baseUrl + 'user/')
-      .pipe(share(), catchError(this.errorHandler));
-  }
-
   GetUserProfileById(id): Observable<IProfile> {
     return this._http
       .get<IProfile>(this.baseUrl + 'user_profile/' + <number>id)
       .pipe(catchError(this.errorHandler), share());
   }
 
-  GetAllUsersProfiles(): Observable<IProfile[]> {
-    return this._http
-      .get<IProfile[]>(this.baseUrl + 'user_profile/')
-      .pipe(catchError(this.errorHandler));
-  }
+  allUsers$: Observable<IUser[]> = this._http
+    .get<IUser[]>(this.baseUrl + 'user/')
+    .pipe(tap(console.log), shareReplay(), catchError(this.errorHandler));
+
+  allUserProfiles$: Observable<IProfile[]> = this._http
+    .get<IProfile[]>(this.baseUrl + 'user_profile/')
+    .pipe(tap(console.log), shareReplay(), catchError(this.errorHandler));
 
   errorHandler(error: HttpErrorResponse) {
     console.error(error);

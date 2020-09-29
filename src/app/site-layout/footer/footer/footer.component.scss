@@ -1,16 +1,16 @@
 .site-footer {
-  padding: 1% 6% 0% 6%;
-  position: relative;
   bottom: 0;
   width: 100%;
   color: white;
+  position: relative;
+  padding: 1% 6% 0% 6%;
   background-color: #08192b;
-}
 
-.site-footer p {
-  cursor: pointer;
-}
+  p {
+    cursor: pointer;
+  }
 
-.site-footer * {
-  color: white;
+  * {
+    color: white;
+  }
 }
